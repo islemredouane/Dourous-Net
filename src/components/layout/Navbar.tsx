@@ -53,7 +53,7 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.filter(link => link.label !== 'Dashboard' || user).map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -122,7 +122,7 @@ export function Navbar() {
       {menuOpen && (
         <div className="glass-strong border-t border-indigo-500/10 md:hidden">
           <div className="flex flex-col gap-2 p-4">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.filter(link => link.label !== 'Dashboard' || user).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

@@ -1,10 +1,19 @@
 import { AuthForm } from '@/components/auth/AuthForm'
 
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+
 export const metadata = {
   title: 'Sign In / Sign Up — Dourous-Net',
 }
 
-export default function AuthPage() {
+export default async function AuthPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (user) {
+    redirect('/dashboard')
+  }
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-24">
       {/* Background glow */}
