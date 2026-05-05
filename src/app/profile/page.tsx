@@ -21,8 +21,8 @@ export default async function ProfilePage() {
   if (!profile) redirect('/auth')
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
-      <div className="mx-auto max-w-2xl px-4 space-y-8">
+    <div className="min-h-screen pt-24 pb-24 md:pb-16">
+      <div className="mx-auto max-w-4xl px-4 space-y-8">
         <div>
           <p className="mb-1 text-sm font-semibold uppercase tracking-widest text-indigo-400">
             Account

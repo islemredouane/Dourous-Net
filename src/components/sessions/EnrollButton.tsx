@@ -2,8 +2,9 @@
 
 import { useEnrollment } from '@/hooks/useEnrollment'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Loader2, LogIn } from 'lucide-react'
+import { CheckCircle, Loader2, LogIn, Play } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface EnrollButtonProps {
   readonly sessionId: string
@@ -12,6 +13,7 @@ interface EnrollButtonProps {
 
 export function EnrollButton({ sessionId, studentId }: EnrollButtonProps) {
   const { enrollment, loading, enrolling, enroll } = useEnrollment(sessionId, studentId)
+  const router = useRouter()
 
   if (!studentId) {
     return (
@@ -35,28 +37,22 @@ export function EnrollButton({ sessionId, studentId }: EnrollButtonProps) {
 
   if (enrollment) {
     return (
-      <div className="space-y-2">
-        <Button
-          size="lg"
-          disabled
-          className="w-full bg-green-600/20 border border-green-500/30 text-green-400 cursor-default"
-        >
-          <CheckCircle className="mr-2 h-4 w-4" />
-          Enrolled — {enrollment.status === 'completed' ? '✓ Completed' : `${enrollment.progress}% progress`}
+      <Link href={`/sessions/${sessionId}/learn`}>
+        <Button size="lg" className="w-full bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-md">
+          <Play className="mr-2 h-4 w-4" />
+          {(enrollment.progress ?? 0) > 0 ? 'Continue Learning' : 'Start Learning'}
         </Button>
-        <Link href="/dashboard">
-          <Button size="sm" variant="ghost" className="w-full text-slate-500 hover:text-white text-xs">
-            Go to Dashboard →
-          </Button>
-        </Link>
-      </div>
+      </Link>
     )
   }
 
   return (
     <Button
       size="lg"
-      onClick={enroll}
+      onClick={async () => {
+        const result = await enroll()
+        if (!result?.error) router.push(`/sessions/${sessionId}/learn`)
+      }}
       disabled={enrolling}
       className="w-full bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-md hover:shadow-glow-lg transition-all"
     >

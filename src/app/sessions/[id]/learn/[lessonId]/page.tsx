@@ -74,28 +74,16 @@ export default async function LessonPage(props: Props) {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#030712' }}>
-      {/* Sticky top bar */}
-      <div className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#030712]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
-          <Link
-            href={`/sessions/${id}`}
-            className="flex items-center gap-1.5 flex-shrink-0 text-sm text-slate-500 transition-colors hover:text-indigo-400"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back to course</span>
-          </Link>
-          <div className="h-4 w-px flex-shrink-0 bg-white/10" />
-          <h2
-            className="truncate text-sm font-semibold"
-            style={{ fontFamily: 'var(--font-space-grotesk)' }}
-          >
-            <GradientText>{session.title}</GradientText>
-          </h2>
-        </div>
-      </div>
-
       {/* Content */}
-      <div className="mx-auto max-w-7xl px-4 py-8">
+      <div className="mx-auto max-w-7xl px-4 pt-24 pb-8">
+        {/* Back link */}
+        <Link
+          href={`/sessions/${id}`}
+          className="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-indigo-400"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to course · <GradientText>{session.title}</GradientText>
+        </Link>
         <LessonPageClient
           currentLesson={currentLesson}
           lessons={lessons}

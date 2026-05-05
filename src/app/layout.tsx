@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, Inter } from 'next/font/google'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { BottomNav } from '@/components/layout/BottomNav'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
   description:
     'Expert-led sessions in Mathematics, Computer Science, Languages, and more. Learn at your own pace, track your progress, and submit assignments — all in one place.',
   keywords: ['Algeria', 'education', 'online learning', 'sessions', 'courses'],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -39,6 +44,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <BottomNav />
       </body>
     </html>
   )

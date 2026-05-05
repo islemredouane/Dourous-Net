@@ -4,9 +4,10 @@ import { GlassCard } from '@/components/shared/GlassCard'
 import { GradientText } from '@/components/shared/GradientText'
 import { TeacherSessionsList } from '@/components/teacher/TeacherSessionsList'
 import { Button } from '@/components/ui/button'
-import { BookOpen, PlusCircle, Users, Clock } from 'lucide-react'
+import { BookOpen, PlusCircle, Users, Clock, FileText } from 'lucide-react'
 import Link from 'next/link'
 import type { Session } from '@/types'
+import { SubmissionsList } from '@/components/teacher/SubmissionsList'
 
 export const metadata = { title: 'Teacher Portal — Dourous-Net' }
 
@@ -49,6 +50,33 @@ export default async function TeacherPage() {
 
   const totalStudents = Object.values(enrollmentCounts).reduce((a, b) => a + b, 0)
   const totalHours = sessions.reduce((a, s) => a + (s.duration_hours ?? 0), 0)
+
+  // Fetch submissions for this teacher's sessions
+  const sessionIds = sessions.map((s) => s.id)
+  let submissions: {
+    id: string
+    submission_url: string
+    updated_at: string
+    student: { id: string; full_name: string; email: string } | null
+    session: { id: string; title: string } | null
+  }[] = []
+
+  if (sessionIds.length > 0) {
+    const { data: subsRaw } = await supabase
+      .from('enrollments')
+      .select(`
+        id,
+        submission_url,
+        updated_at,
+        student:students(id, full_name, email),
+        session:sessions(id, title)
+      `)
+      .in('session_id', sessionIds)
+      .not('submission_url', 'is', null)
+      .order('updated_at', { ascending: false })
+
+    submissions = (subsRaw ?? []) as typeof submissions
+  }
 
   return (
     <div className="min-h-screen pt-24 pb-16">
@@ -96,6 +124,22 @@ export default async function TeacherPage() {
             Published Sessions
           </h2>
           <TeacherSessionsList sessions={sessionsWithCount} />
+        </div>
+
+        {/* Submissions */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+              Student Submissions
+            </h2>
+            {submissions.length > 0 && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2.5 py-0.5 text-xs font-semibold text-indigo-400">
+                <FileText className="h-3 w-3" />
+                {submissions.length}
+              </span>
+            )}
+          </div>
+          <SubmissionsList submissions={submissions} />
         </div>
       </div>
     </div>
