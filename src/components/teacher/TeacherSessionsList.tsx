@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { GlassCard } from '@/components/shared/GlassCard'
-import { Badge } from '@/components/ui/badge'
 import { CATEGORY_COLORS } from '@/lib/constants'
-import { Clock, Users, ExternalLink, PlusCircle } from 'lucide-react'
+import { Clock, Users, ExternalLink, PlusCircle, BookOpen, ClipboardList } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Session } from '@/types'
 
@@ -77,14 +76,36 @@ export function TeacherSessionsList({ sessions }: TeacherSessionsListProps) {
               </div>
             </div>
 
-            {/* View link */}
-            <Link
-              href={`/sessions/${session.id}`}
-              className="shrink-0 text-slate-500 hover:text-indigo-400 transition-colors"
-              title="View session"
-            >
-              <ExternalLink className="h-4 w-4" />
-            </Link>
+            {/* Action buttons */}
+            <div className="flex items-center gap-2 shrink-0">
+              <Link href={`/teacher/sessions/${session.id}/lessons`}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 gap-1.5 text-xs text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 border border-transparent hover:border-indigo-500/20"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  Lessons
+                </Button>
+              </Link>
+              <Link href={`/teacher/sessions/${session.id}/quiz`}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 gap-1.5 text-xs text-slate-400 hover:text-purple-400 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
+                >
+                  <ClipboardList className="h-3.5 w-3.5" />
+                  Quiz
+                </Button>
+              </Link>
+              <Link
+                href={`/sessions/${session.id}`}
+                className="text-slate-600 hover:text-indigo-400 transition-colors p-1.5"
+                title="View session"
+              >
+                <ExternalLink className="h-4 w-4" />
+              </Link>
+            </div>
           </GlassCard>
         )
       })}
