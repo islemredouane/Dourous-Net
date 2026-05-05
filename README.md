@@ -5,7 +5,6 @@
 > Plateforme éducative algérienne de nouvelle génération — Next.js 16, Supabase, Three.js.
 
 **Live URL:** https://dourous-net-six.vercel.app    
-
 **GitHub:** https://github.com/islemredouane/Dourous-Net  
 **Identifiants de test :** `demo@dourous-net.dz` / `Demo1234!`
 
