@@ -124,5 +124,5 @@ Exécuter dans l'ordre dans l'éditeur SQL Supabase :
 
 | Nom & Prénom | Rôle |
 |---|---|
-| Islem Redouane | Frontend, 3D & Architecture |
-| [Prénom Nom de ton binôme] | Backend & DevOps |
+| Boukhanouf Abdelhak | Frontend, 3D & Architecture |
+| Zin Mohamed Khalil | Backend & DevOps |
