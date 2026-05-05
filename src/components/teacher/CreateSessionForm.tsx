@@ -88,7 +88,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
       thumbnail_url = urlData.publicUrl
     }
 
-    const { error } = await supabase.from('sessions').insert({
+    const { data: inserted, error } = await supabase.from('sessions').insert({
       teacher_id: teacherId,
       title: data.title,
       description: data.description,
@@ -96,14 +96,14 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
       duration_hours: data.duration_hours,
       is_free: data.is_free,
       thumbnail_url,
-    })
+    }).select('id').single()
 
     if (error) {
       setServerError(error.message)
       return
     }
 
-    router.push('/teacher')
+    router.push(`/teacher/sessions/${inserted.id}/lessons`)
     router.refresh()
   }
 

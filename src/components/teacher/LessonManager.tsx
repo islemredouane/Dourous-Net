@@ -31,6 +31,10 @@ function getYouTubeId(url: string): string | null {
   return match ? match[1] : null
 }
 
+function isGoogleDrive(url: string): boolean {
+  return url.includes('drive.google.com')
+}
+
 export function LessonManager({ sessionId, initialLessons }: LessonManagerProps) {
   const [lessons, setLessons] = useState<Lesson[]>(initialLessons)
   const [showForm, setShowForm] = useState(false)
@@ -122,7 +126,12 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
                 className="h-14 w-24 shrink-0 rounded-lg object-cover border border-white/5"
               />
             )}
-            {!ytId && (
+            {!ytId && lesson.video_url && isGoogleDrive(lesson.video_url) && (
+              <div className="flex h-14 w-24 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <PlayCircle className="h-6 w-6 text-blue-400" />
+              </div>
+            )}
+            {!ytId && (!lesson.video_url || !isGoogleDrive(lesson.video_url)) && (
               <div className="flex h-14 w-24 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/5">
                 <PlayCircle className="h-6 w-6 text-slate-600" />
               </div>
@@ -196,16 +205,16 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
           <div className="space-y-1.5">
             <Label className="text-xs text-slate-400 flex items-center gap-1.5">
               <Video className="h-3.5 w-3.5 text-red-400" />
-              Video URL <span className="text-slate-600">(YouTube or Vimeo link)</span>
+              Video URL <span className="text-slate-600">(optional)</span>
             </Label>
             <Input
               value={form.video_url}
               onChange={e => setForm(f => ({ ...f, video_url: e.target.value }))}
-              placeholder="https://www.youtube.com/watch?v=..."
+              placeholder="https://www.youtube.com/watch?v=... or Google Drive link"
               className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 text-sm"
             />
             <p className="text-[11px] text-slate-600">
-              Paste any YouTube or Vimeo link — students will watch it directly in the lesson player.
+              Supports <span className="text-red-400">YouTube</span> links and <span className="text-blue-400">Google Drive</span> share links — students will watch directly in the lesson player.
             </p>
           </div>
 
