@@ -1,112 +1,128 @@
 # Dourous-Net — Algeria's Digital Academy
 
-**ISI 2CP 2026 — Module SI | Theme 4: Education**
+**ISI 2CP 2026 — Module SI | Thème 4 : Éducation**
 
-> A futuristic, production-grade educational platform built with Next.js 16, Supabase, and Three.js.
+> Plateforme éducative algérienne de nouvelle génération — Next.js 16, Supabase, Three.js.
 
-**Live URL:** `https://dourous-net.vercel.app`  
-**GitHub:** `https://github.com/[your-team]/dourous-net`  
-**Test Credentials:** `demo@dourous-net.dz` / `Demo1234!`
+**Live URL:** https://dourous-net.vercel.app  
+**GitHub:** https://github.com/islemredouane/Dourous-Net  
+**Identifiants de test :** `demo@dourous-net.dz` / `Demo1234!`
 
 ---
 
-## Architecture Analysis (Mission 4)
+## Mission 4 — Rapport Architecte
 
-### 1. Table Mapping — Dourous-Net
+### 1. Mapping du Thème — Dourous-Net (Éducation)
 
-The three-table schema follows the **Entity-Resource-Interaction** pattern required by the project specification:
+Conformément au **Thème 4** du projet, voici la correspondance exacte entre les tables de notre application et l'architecture imposée :
 
-| Table | Role | Entities |
+| Rôle imposé | Table dans Supabase | Description dans Dourous-Net |
 |---|---|---|
-| `students` | **Table A — Users** | Both learners and teachers; the authentication identity |
-| `sessions` | **Table B — Resources** | Educational courses/sessions created by teachers |
-| `enrollments` | **Table C — Interactions** | The relationship between a student and a session |
+| **Table A — Utilisateurs** | `students` | Les élèves (et enseignants) — identités gérées via Supabase Auth |
+| **Table B — Ressources** | `sessions` | Les séances/cours publiés par les professeurs — éléments consultables par les élèves |
+| **Table C — Interactions** | `enrollments` | L'inscription d'un élève à une séance (statut, progression, soumission de devoir) |
+| **Fichier (Storage)** | bucket `submissions` | PDF du devoir rendu par l'élève, uploadé dans Supabase Storage |
 
-**Relationships:** `sessions.teacher_id → students.id` and `enrollments.student_id → students.id`, `enrollments.session_id → sessions.id`. The `UNIQUE(student_id, session_id)` constraint on enrollments prevents duplicate enrollments. The `enrollments.progress` field (0–100) and `status` field ('enrolled' | 'in_progress' | 'completed') track the lifecycle of each interaction.
+**Relations clés :**
+- `sessions.teacher_id → students.id` : chaque séance appartient à un professeur
+- `enrollments.student_id → students.id` : chaque inscription appartient à un élève
+- `enrollments.session_id → sessions.id` : chaque inscription est liée à une séance
+- Contrainte `UNIQUE(student_id, session_id)` : un élève ne peut s'inscrire qu'une seule fois par séance
+- Champ `submission_url` dans `enrollments` : lien vers le fichier PDF soumis dans Storage
 
-### 2. CAPEX vs. OPEX — Cloud Economics
-
-**Traditional On-Premise (CAPEX model):**  
-Building this platform on physical servers would require significant Capital Expenditure: purchasing servers (~$5,000–$20,000), networking equipment, storage arrays, UPS systems, and a data center space. Add ongoing maintenance, electricity, and IT staff, and the Total Cost of Ownership easily exceeds $50,000/year for a small-scale platform. Scaling requires purchasing more hardware months in advance — risky when demand is uncertain.
-
-**Dourous-Net Cloud Model (OPEX model):**  
-By choosing **Supabase** (managed PostgreSQL + Auth + Storage) and **Vercel** (serverless deployment), we convert all CAPEX to pure OPEX (Operating Expenditure). We pay only for what we consume:
-
-- **Supabase Free Tier**: 500 MB database, 1 GB file storage, 50,000 monthly active users — sufficient to launch and validate the product at zero cost.
-- **Supabase Pro ($25/month)**: Unlocks 8 GB database, 100 GB storage, and point-in-time recovery — enough for thousands of daily users.
-- **Vercel Free Tier**: Unlimited deployments, global CDN, serverless functions — sufficient for an academic project and early growth stage.
-- **Vercel Pro ($20/month)**: Advanced analytics, 1 TB bandwidth, priority support.
-
-Total launch cost: **$0/month**. Total at scale (10,000+ users): **~$45/month**. This is the fundamental advantage of the cloud OPEX model — predictable, elastic costs with no upfront commitment.
-
-### 3. Vercel Scalability
-
-Vercel's infrastructure is purpose-built for Next.js and provides several scalability mechanisms that would be impossible to replicate cheaply on-premise:
-
-**Edge Network (CDN):** Static assets, fonts, and pre-rendered pages are served from 40+ global PoPs (Points of Presence). An Algerian student accessing Dourous-Net gets their HTML from the nearest edge node — Frankfurt or Marseille — in under 50ms, not 200ms from a single Algerian server.
-
-**Serverless Functions:** Every API route and Server Component in Next.js compiles to an isolated serverless function. These auto-scale from 0 to thousands of concurrent instances within milliseconds, with no configuration. A viral session recommendation doesn't bring down the platform — it just spawns more function instances and scales back down when traffic subsides.
-
-**ISR (Incremental Static Regeneration) & Streaming:** With Next.js 16's streaming SSR, the session detail page streams the static shell immediately while the dynamic enrollment status loads in the background. Users see content in under 200ms.
-
-**Zero Ops:** No DevOps engineer needed. Git push → CI/CD pipeline → global deployment in under 2 minutes. Our team of 2 students can ship features without managing infrastructure.
-
-### 4. Structured vs. Unstructured Data
-
-Dourous-Net uses **both types of storage** strategically:
-
-**Structured Data (PostgreSQL via Supabase):**  
-`students`, `sessions`, and `enrollments` are relational, structured data with defined schemas, foreign key constraints, and complex queries (JOIN to fetch session + teacher in a single request). PostgreSQL's ACID guarantees ensure that when a student enrolls, the row either commits completely or rolls back — no partial enrollment states. Row-Level Security (RLS) policies at the database layer enforce authorization rules without requiring application-level filtering.
-
-**Unstructured Data (Supabase Storage — S3-compatible):**  
-Profile pictures, course thumbnails, and assignment submissions are binary blobs of variable size and format — they cannot be stored in a relational table. Supabase Storage (backed by S3-compatible object storage) handles these perfectly. Files are served via CDN URLs with access controlled by storage RLS policies mirroring the database policies. A student's assignment submission in `submissions/[student_id]/[timestamp].pdf` is only accessible to that student — enforced at the storage layer, not just the application layer.
-
-This dual-storage architecture matches the **right tool to each data type**: structured, queryable data in PostgreSQL; binary blobs in object storage.
+**Flux utilisateur complet :**  
+Inscription/Connexion → Consulter les séances (Table B) → S'inscrire (créer une ligne Table C) → Uploader le PDF du devoir (Storage) → Voir son tableau de bord personnel
 
 ---
 
-## Tech Stack
+### 2. CAPEX vs. OPEX — Pourquoi Vercel + Supabase ?
 
-| Layer | Technology |
+**Modèle classique On-Premise (CAPEX) :**  
+Héberger Dourous-Net sur des serveurs physiques nécessiterait des investissements en capital (CAPEX) considérables : achat de serveurs (~200 000–500 000 DZD), équipements réseau, onduleurs, espace data center climatisé, et une équipe IT dédiée à la maintenance. Le coût total de possession dépasserait facilement 1 000 000 DZD/an pour une plateforme à faible trafic initial, avec un risque élevé si le projet ne décolle pas.
+
+**Notre modèle Cloud (OPEX) :**  
+En choisissant **Supabase** (PostgreSQL managé + Auth + Storage) et **Vercel** (hébergement serverless), nous transformons la totalité du CAPEX en **OPEX (dépenses opérationnelles)** — nous payons uniquement ce que nous consommons :
+
+- **Supabase gratuit** : 500 Mo de base, 1 Go de fichiers, 50 000 utilisateurs/mois → coût = 0 DZD pour lancer le projet
+- **Supabase Pro ($25/mois)** : 8 Go de base, 100 Go de stockage → suffisant pour des milliers d'utilisateurs journaliers
+- **Vercel gratuit** : déploiements illimités, CDN mondial, fonctions serverless → suffisant pour la phase académique
+- **Coût total au lancement : 0 DZD. À 10 000 utilisateurs actifs : ~3 500 DZD/mois.**
+
+C'est l'avantage fondamental du modèle OPEX : des coûts prévisibles, élastiques, sans engagement initial. Un binôme d'étudiants peut lancer une plateforme mondiale sans capital de départ.
+
+---
+
+### 3. Scalabilité Vercel vs. Data Center Physique
+
+Un data center physique local en Algérie imposerait des contraintes structurelles : climatisation coûteuse (~30–40% du budget électrique), serveurs rack dimensionnés pour le pic maximal (surprovisionnement permanent), délais de plusieurs semaines pour ajouter de la capacité, et une équipe de maintenance 24/7.
+
+Vercel résout ces problèmes structurellement :
+
+**Edge Network (CDN mondial) :** Les pages statiques et assets de Dourous-Net sont distribués depuis 40+ Points de Présence (PoP) mondiaux. Un étudiant algérien accède au contenu depuis le nœud le plus proche (Francfort ou Marseille) en moins de 50 ms, contre 200–400 ms depuis un serveur unique en Algérie.
+
+**Fonctions Serverless auto-scalables :** Chaque route API et Server Component Next.js est compilé en une fonction serverless isolée. Ces fonctions s'exécutent de 0 à des milliers d'instances concurrentes en quelques millisecondes, sans configuration. Si 500 élèves consultent Dourous-Net simultanément lors d'un examen, la plateforme scale automatiquement puis revient à zéro — nous ne payons que les millisecondes d'exécution réelles.
+
+**CI/CD automatique :** Chaque `git push` déclenche un rebuild et un redéploiement mondial en moins de 2 minutes. Zéro intervention manuelle, zéro downtime, zéro ingénieur DevOps requis pour un binôme d'étudiants.
+
+---
+
+### 4. Données Structurées vs. Non-Structurées
+
+Dourous-Net utilise **les deux types de stockage** de façon stratégique et complémentaire :
+
+**Données structurées (PostgreSQL via Supabase) :**  
+Les tables `students`, `sessions` et `enrollments` sont des données relationnelles avec schémas définis, clés étrangères et contraintes d'intégrité. PostgreSQL garantit que chaque inscription (Table C) est atomique (ACID) — elle valide complètement ou annule, sans état partiel. Les politiques **Row Level Security (RLS)** assurent qu'un élève ne voit que ses propres inscriptions, directement au niveau base de données, sans filtrage applicatif. Les requêtes JOIN permettent de récupérer séance + professeur en une seule requête optimisée.
+
+**Données non-structurées (Supabase Storage) :**  
+Les PDFs de devoirs rendus par les élèves sont des blobs binaires de taille et format variables — impossibles à stocker dans une table relationnelle. Supabase Storage (compatible S3) les gère dans le bucket `submissions`. Chaque fichier est accessible via une URL CDN sécurisée, et les politiques de Storage RLS garantissent que seul l'élève propriétaire peut accéder à son fichier. Cette architecture **donne à chaque type de donnée l'outil adapté** : PostgreSQL pour le structuré requêtable, Storage objet pour les binaires variables.
+
+---
+
+## Stack Technique
+
+| Couche | Technologie |
 |---|---|
 | Framework | Next.js 16 (App Router, TypeScript) |
 | Styling | Tailwind CSS v4 + shadcn/ui |
 | 3D | Three.js + React Three Fiber |
 | Animation | Framer Motion |
-| Database | Supabase (PostgreSQL) |
-| Auth | Supabase Auth |
+| Base de données | Supabase (PostgreSQL) |
+| Auth | Supabase Auth (email + Google OAuth) |
 | Storage | Supabase Storage |
-| Deployment | Vercel |
+| AI | Google Gemini 1.5 Flash (AI Coach) |
+| Déploiement | Vercel (CI/CD) |
 
-## Getting Started
+## Lancer le projet localement
 
 ```bash
 npm install
-cp .env.local.example .env.local   # add your Supabase keys
+# Créer .env.local avec vos clés Supabase
 npm run dev
 ```
 
-Visit `http://localhost:3000`
-
-## Environment Variables
+## Variables d'environnement
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+GEMINI_API_KEY=...
 ```
 
-## Database Setup
+## Configuration base de données
 
-Run the SQL files in order in the Supabase SQL editor:
+Exécuter dans l'ordre dans l'éditeur SQL Supabase :
 
 1. `supabase/migrations/001_create_tables.sql`
 2. `supabase/migrations/002_rls_policies.sql`
 3. `supabase/migrations/003_storage_buckets.sql`
 4. `supabase/migrations/004_auth_trigger.sql`
+5. `supabase/migrations/006_add_role_field.sql`
+6. `supabase/seed/005_seed_data.sql`
+7. `supabase/migrations/007_lessons_assignments.sql`
 
-## Team
+## Équipe
 
-| Name | Role |
+| Nom & Prénom | Rôle |
 |---|---|
-| [Student 1] | Frontend & 3D |
-| [Student 2] | Backend & DevOps |
+| Islem Redouane | Frontend, 3D & Architecture |
+| [Prénom Nom de ton binôme] | Backend & DevOps |
