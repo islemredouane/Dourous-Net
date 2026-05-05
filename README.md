@@ -124,5 +124,6 @@ Exécuter dans l'ordre dans l'éditeur SQL Supabase :
 
 | Nom & Prénom | Rôle |
 |---|---|
-| Boukhanouf Abdelhak | Frontend, 3D & Architecture |
-| Zin Mohamed Khalil | Backend & DevOps |
+| Redouane Mohamed Islem | Frontend, 3D |
+| Boukhanouf Abdelhak | Architectur, Backend |
+| Zin Mohamed Khalil | DevOps |
