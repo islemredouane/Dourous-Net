@@ -1,0 +1,51 @@
+<svg width="32" height="32" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" rx="40" fill="url(#bg)"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="page" x1="20" y1="10" x2="180" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left page -->
+  <path d="M100 110 L96 10 L22 18 L28 108 Z" fill="url(#page)" stroke="#7dd3fc" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="30" y1="38" x2="95" y2="30" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="30" y1="55" x2="95" y2="47" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="30" y1="72" x2="95" y2="64" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="30" y1="89" x2="95" y2="81" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+
+  <!-- Right page -->
+  <path d="M100 110 L104 10 L178 18 L172 108 Z" fill="url(#page)" stroke="#7dd3fc" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="170" y1="38" x2="105" y2="30" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="170" y1="55" x2="105" y2="47" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="170" y1="72" x2="105" y2="64" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+  <line x1="170" y1="89" x2="105" y2="81" stroke="#7dd3fc" stroke-width="1.2" opacity="0.5"/>
+
+  <!-- Circuit LEFT -->
+  <polyline points="52,108 30,108 30,86 14,86" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="14" cy="86" r="5.5" stroke="#7dd3fc" stroke-width="2.8"/>
+  <circle cx="30" cy="108" r="4" stroke="#7dd3fc" stroke-width="2.5" fill="#bae6fd"/>
+  <polyline points="40,110 40,130 18,130 18,148" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="18" cy="148" r="5.5" stroke="#7dd3fc" stroke-width="2.8"/>
+  <circle cx="40" cy="130" r="4" stroke="#7dd3fc" stroke-width="2.5" fill="#bae6fd"/>
+  <polyline points="58,110 58,142 38,142 38,160" stroke="#7dd3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="38" cy="160" r="4.5" stroke="#7dd3fc" stroke-width="2.2"/>
+
+  <!-- Circuit RIGHT -->
+  <polyline points="148,108 170,108 170,86 186,86" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="186" cy="86" r="5.5" stroke="#7dd3fc" stroke-width="2.8"/>
+  <circle cx="170" cy="108" r="4" stroke="#7dd3fc" stroke-width="2.5" fill="#bae6fd"/>
+  <polyline points="160,110 160,130 182,130 182,148" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="182" cy="148" r="5.5" stroke="#7dd3fc" stroke-width="2.8"/>
+  <circle cx="160" cy="130" r="4" stroke="#7dd3fc" stroke-width="2.5" fill="#bae6fd"/>
+  <polyline points="142,110 142,142 162,142 162,160" stroke="#7dd3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="162" cy="160" r="4.5" stroke="#7dd3fc" stroke-width="2.2"/>
+
+  <!-- Spine center -->
+  <line x1="100" y1="110" x2="100" y2="130" stroke="#7dd3fc" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="100" cy="134" r="5" stroke="#7dd3fc" stroke-width="2.8"/>
+</svg>

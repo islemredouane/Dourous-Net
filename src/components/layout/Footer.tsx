@@ -1,63 +1,77 @@
 import Link from 'next/link'
+import { LogoIcon } from '@/components/shared/LogoIcon'
 import { GradientText } from '@/components/shared/GradientText'
-import { BookOpen } from 'lucide-react'
+
+const links = {
+  Platform: [
+    { label: 'Browse Courses', href: '/sessions' },
+    { label: 'Dashboard', href: '/dashboard' },
+    { label: 'Get Started', href: '/auth' },
+  ],
+  Learn: [
+    { label: 'Computer Science', href: '/sessions' },
+    { label: 'Mathematics', href: '/sessions' },
+    { label: 'Languages', href: '/sessions' },
+  ],
+  Company: [
+    { label: 'About Us', href: '/' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+  ],
+}
 
 export function Footer() {
   return (
-    <footer className="border-t border-indigo-500/10 bg-[#030712]">
-      <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
+    <footer className="border-t border-white/[0.06] bg-[#030712]">
+      <div className="mx-auto max-w-7xl px-4 py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-5">
+
           {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
-                <BookOpen className="h-4 w-4 text-white" />
-              </div>
+          <div className="md:col-span-2 space-y-4">
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <LogoIcon size={28} />
               <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 <GradientText>Dourous</GradientText>
                 <span className="text-slate-100">-Net</span>
               </span>
-            </div>
-            <p className="max-w-sm text-sm text-slate-500">
-              {"Algeria's premier digital academy. Expert-led sessions for the next generation of learners — learn anytime, anywhere."}
+            </Link>
+            <p className="text-sm leading-relaxed text-slate-500 max-w-xs">
+              Algeria&apos;s digital learning platform. Access expert-led courses, track your progress, and grow your skills — anytime, anywhere.
             </p>
           </div>
 
-          {/* Platform links */}
-          <div>
-            <h4 className="mb-4 font-semibold text-white">Platform</h4>
-            <ul className="space-y-2 text-sm text-slate-500">
-              <li>
-                <Link href="/sessions" className="transition-colors hover:text-indigo-400">
-                  Browse Sessions
-                </Link>
-              </li>
-              <li>
-                <Link href="/dashboard" className="transition-colors hover:text-indigo-400">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="/auth" className="transition-colors hover:text-indigo-400">
-                  Sign Up Free
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Project info */}
-          <div>
-            <h4 className="mb-4 font-semibold text-white">Project</h4>
-            <ul className="space-y-2 text-sm text-slate-500">
-              <li>ISI 2CP — Module SI 2026</li>
-              <li>Theme 4 — Education</li>
-              <li>Built with Next.js + Supabase</li>
-            </ul>
-          </div>
+          {/* Nav columns */}
+          {Object.entries(links).map(([group, items]) => (
+            <div key={group}>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                {group}
+              </p>
+              <ul className="space-y-3">
+                {items.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-slate-500 transition-colors hover:text-white"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="border-t border-indigo-500/10 pt-8 text-center text-sm text-slate-600">
-          © 2026 Dourous-Net — ISI 2CP Project. Built with Next.js, Supabase & Three.js.
+        {/* Bottom bar */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
+          <p className="text-xs text-slate-600">
+            © {new Date().getFullYear()} Dourous-Net. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 text-xs text-slate-600">
+            <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy</Link>
+            <Link href="/cookies" className="hover:text-slate-400 transition-colors">Cookies</Link>
+          </div>
         </div>
       </div>
     </footer>
