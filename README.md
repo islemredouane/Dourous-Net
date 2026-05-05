@@ -8,7 +8,6 @@
 |---|---|
 | **Live URL** | https://dourous-net-six.vercel.app |
 | **GitHub** | https://github.com/islemredouane/Dourous-Net |
-| **Compte étudiant** | `demo@dourous-net.dz` / `Demo1234!` |
 | **Compte enseignant** | `teacher@dourous-net.dz` / `Teacher1234!` |
 | **Thème** | 4 — Éducation |
 | **Année** | 2025–2026 |
