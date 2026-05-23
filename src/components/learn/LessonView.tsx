@@ -65,7 +65,7 @@ export function LessonView({
             {lesson.title}
           </h1>
           {lesson.duration_minutes > 0 && (
-            <div className="mt-2 flex items-center gap-1.5 text-slate-500 text-sm">
+            <div className="mt-2 flex items-center gap-1.5 text-slate-400 text-sm">
               <Clock className="h-4 w-4 text-indigo-400" />
               <span>{lesson.duration_minutes} minutes</span>
             </div>
@@ -85,7 +85,7 @@ export function LessonView({
         <VideoPlayer url={lesson.video_url} title={lesson.title} />
       ) : (
         <div className="glass flex aspect-video w-full items-center justify-center rounded-2xl">
-          <p className="text-slate-500">No video available for this lesson.</p>
+          <p className="text-slate-400">No video available for this lesson.</p>
         </div>
       )}
 

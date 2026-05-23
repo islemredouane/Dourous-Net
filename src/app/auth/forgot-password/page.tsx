@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md">
         <Link
           href="/auth"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-indigo-400"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-indigo-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Sign In
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
             <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               <GradientText>Reset Password</GradientText>
             </h1>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-slate-400">
               Enter your email and we&apos;ll send you a reset link.
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
                 />
               </div>
 

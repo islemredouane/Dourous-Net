@@ -81,7 +81,7 @@ export default function UpdatePasswordPage() {
             <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               <GradientText>New Password</GradientText>
             </h1>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-slate-400">
               Choose a strong password for your account.
             </p>
           </div>
@@ -120,12 +120,12 @@ export default function UpdatePasswordPage() {
                     placeholder="At least 8 characters"
                     required
                     disabled={!ready}
-                    className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11 pr-10"
+                    className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-500 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11 pr-10"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPw((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
                   >
                     {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -155,14 +155,14 @@ export default function UpdatePasswordPage() {
                     placeholder="Repeat your password"
                     required
                     disabled={!ready}
-                    className={`bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11 pr-10 transition-colors ${
+                    className={`bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-500 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11 pr-10 transition-colors ${
                       confirm && confirm !== password ? 'border-red-500/50' : confirm && confirm === password ? 'border-emerald-500/50' : ''
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirm((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
                   >
                     {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -194,7 +194,7 @@ export default function UpdatePasswordPage() {
           )}
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="mt-6 text-center text-sm text-slate-500">
           Remembered your password?{' '}
           <Link href="/auth" className="text-indigo-400 hover:text-indigo-300 transition-colors">
             Sign in

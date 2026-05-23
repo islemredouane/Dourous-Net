@@ -22,13 +22,13 @@ export function SessionFilters({
     <div className="mb-8 space-y-4">
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <Input
           type="text"
           placeholder="Search sessions..."
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          className="pl-10 bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500 h-11"
+          className="pl-10 bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500 h-11"
         />
       </div>
 

@@ -35,7 +35,7 @@ export function Footer() {
                 <span className="text-slate-100">-Net</span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-slate-500 max-w-xs">
+            <p className="text-sm leading-relaxed text-slate-400 max-w-xs">
               Algeria&apos;s digital learning platform. Access expert-led courses, track your progress, and grow your skills — anytime, anywhere.
             </p>
           </div>
@@ -51,7 +51,7 @@ export function Footer() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm text-slate-500 transition-colors hover:text-white"
+                      className="text-sm text-slate-400 transition-colors hover:text-white"
                     >
                       {item.label}
                     </Link>
@@ -64,10 +64,10 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} Dourous-Net. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-xs text-slate-600">
+          <div className="flex items-center gap-6 text-xs text-slate-500">
             <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy</Link>
             <Link href="/cookies" className="hover:text-slate-400 transition-colors">Cookies</Link>

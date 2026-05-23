@@ -78,10 +78,15 @@ export default async function SessionDetailPage(props: Props) {
       <div className={`relative overflow-hidden ${categoryGradient}`}>
         {session.thumbnail_url && (
           <img src={session.thumbnail_url} alt={session.title}
-            className="absolute inset-0 h-full w-full object-cover opacity-20" />
+            className="absolute inset-0 h-full w-full object-cover opacity-20"
+            style={{
+              backgroundAttachment: "fixed",
+              transform: "translateZ(-1px) scale(1.5)" // Simple CSS parallax approach
+            }}
+          />
         )}
         {/* dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-[#030712]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-[#030712] backdrop-blur-[2px]" />
 
         <div className="relative mx-auto max-w-6xl px-4 pt-28 pb-10">
           {/* Back */}
@@ -147,26 +152,15 @@ export default async function SessionDetailPage(props: Props) {
               </div>
             </div>
 
-            {/* Right: Enrollment card — visible in hero on desktop */}
+            {/* Right: Empty in hero on desktop to avoid double card */}
             <div className="hidden lg:block w-80 shrink-0">
-              <EnrollCard
-                session={session}
-                lessons={lessons}
-                assignments={assignments}
-                isEnrolled={isEnrolled}
-                enrollmentProgress={enrollmentProgress}
-                totalDuration={totalDuration}
-                sessionId={id}
-                userId={user?.id}
-                teacherInitial={teacherInitial}
-              />
             </div>
           </div>
         </div>
       </div>
 
       {/* ── BODY ── */}
-      <div className="mx-auto max-w-6xl px-4 pb-20">
+      <div className="mx-auto max-w-6xl px-4 pb-20 relative">
         <div className="flex flex-col lg:flex-row lg:gap-10">
 
           {/* ── MAIN COLUMN ── */}
@@ -192,7 +186,7 @@ export default async function SessionDetailPage(props: Props) {
               <section className="rounded-2xl border border-white/[0.07] bg-[#0c1120] p-8 text-center">
                 <BookOpen className="mx-auto mb-3 h-10 w-10 text-slate-700" />
                 <p className="text-sm font-medium text-slate-400">Curriculum coming soon</p>
-                <p className="text-xs text-slate-600 mt-1">The teacher hasn't added lessons yet.</p>
+                <p className="text-xs text-slate-500 mt-1">The teacher hasn't added lessons yet.</p>
               </section>
             )}
             {lessons.length > 0 && (
@@ -200,7 +194,7 @@ export default async function SessionDetailPage(props: Props) {
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
                   <h2 className="text-lg font-semibold text-white">Course Content</h2>
-                  <span className="text-xs text-slate-500 bg-white/5 rounded-full px-2.5 py-1">
+                  <span className="text-xs text-slate-400 bg-white/5 rounded-full px-2.5 py-1">
                     {lessons.length} lessons · {totalDuration}
                   </span>
                 </div>
@@ -209,9 +203,9 @@ export default async function SessionDetailPage(props: Props) {
                 <div className="divide-y divide-white/[0.04]">
                   {lessons.map((lesson, i) => (
                     <div key={lesson.id}
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors group">
+                      className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.04] transition-all duration-300 group hover:translate-x-1 cursor-pointer">
                       {/* Number */}
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-xs font-bold text-indigo-400">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-xs font-bold text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
                         {i + 1}
                       </div>
 
@@ -221,18 +215,18 @@ export default async function SessionDetailPage(props: Props) {
                           {lesson.title}
                         </p>
                         {lesson.duration_minutes && lesson.duration_minutes > 0 && (
-                          <p className="text-xs text-slate-600 mt-0.5">{lesson.duration_minutes} min</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{lesson.duration_minutes} min</p>
                         )}
                       </div>
 
                       {/* Action */}
                       {isEnrolled ? (
                         <Link href={`/sessions/${id}/learn/${lesson.id}`}
-                          className="shrink-0 flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-xs font-medium text-indigo-300 hover:bg-indigo-500/20 transition-colors opacity-0 group-hover:opacity-100">
+                          className="shrink-0 flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-xs font-medium text-indigo-300 hover:bg-indigo-500 hover:text-white transition-all opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100">
                           <Play className="h-3 w-3" /> Watch
                         </Link>
                       ) : (
-                        <Lock className="h-4 w-4 shrink-0 text-slate-700" />
+                        <Lock className="h-4 w-4 shrink-0 text-slate-700 group-hover:text-slate-500 transition-colors" />
                       )}
                     </div>
                   ))}
@@ -242,7 +236,7 @@ export default async function SessionDetailPage(props: Props) {
                 {isEnrolled && (
                   <div className="px-6 py-4 border-t border-white/[0.06] bg-indigo-500/5">
                     <Link href={`/sessions/${id}/learn`}
-                      className="flex items-center justify-center gap-2 rounded-xl bg-indigo-500 py-3 text-sm font-semibold text-white hover:bg-indigo-600 transition-colors shadow-glow-sm">
+                      className="flex items-center justify-center gap-2 rounded-xl bg-indigo-500 py-3 text-sm font-semibold text-white hover:bg-indigo-600 transition-colors shadow-glow-sm hover:-translate-y-0.5 mt-2 mb-2 duration-300">
                       <Play className="h-4 w-4" />
                       Continue Learning
                       <ChevronRight className="h-4 w-4" />
@@ -257,22 +251,22 @@ export default async function SessionDetailPage(props: Props) {
               <section className="rounded-2xl border border-white/[0.07] bg-[#0c1120] overflow-hidden">
                 <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
                   <h2 className="text-lg font-semibold text-white">Quizzes &amp; Assignments</h2>
-                  <span className="text-xs text-slate-500 bg-white/5 rounded-full px-2.5 py-1">
+                  <span className="text-xs text-slate-400 bg-white/5 rounded-full px-2.5 py-1">
                     {assignments.length} total
                   </span>
                 </div>
                 <div className="divide-y divide-white/[0.04]">
                   {assignments.map((a) => (
-                    <div key={a.id} className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors group">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-500/10">
-                        <FileText className="h-4 w-4 text-purple-400" />
+                    <div key={a.id} className="flex items-center gap-4 px-6 py-4 hover:bg-white/[0.02] transition-colors group hover:translate-x-1 duration-300">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-500/10 group-hover:bg-purple-500 transition-colors duration-300">
+                        <FileText className="h-4 w-4 text-purple-400 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <p className="flex-1 text-sm font-medium text-slate-300 group-hover:text-white transition-colors truncate">
                         {a.title}
                       </p>
                       {isEnrolled ? (
                         <Link href={`/sessions/${id}/quiz/${a.id}`}
-                          className="shrink-0 flex items-center gap-1 rounded-lg bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 text-xs font-medium text-purple-300 hover:bg-purple-500/20 transition-colors">
+                          className="shrink-0 flex items-center gap-1 rounded-lg bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 text-xs font-medium text-purple-300 hover:bg-purple-500/20 transition-colors opacity-0 group-hover:opacity-100">
                           Take Quiz <ChevronRight className="h-3 w-3" />
                         </Link>
                       ) : (
@@ -287,8 +281,18 @@ export default async function SessionDetailPage(props: Props) {
 
           {/* ── STICKY SIDEBAR (desktop only) ── */}
           <div className="hidden lg:block w-80 shrink-0">
-            <div className="sticky top-24 mt-8">
-              {/* spacer — card is already rendered in hero, so just empty here */}
+            <div className="sticky top-24 mt-[-200px] z-20">
+              <EnrollCard
+                session={session}
+                lessons={lessons}
+                assignments={assignments}
+                isEnrolled={isEnrolled}
+                enrollmentProgress={enrollmentProgress}
+                totalDuration={totalDuration}
+                sessionId={id}
+                userId={user?.id}
+                teacherInitial={teacherInitial}
+              />
             </div>
           </div>
         </div>
@@ -313,7 +317,8 @@ function EnrollCard({
   teacherInitial: string
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.09] bg-[#0c1120] shadow-[0_0_80px_rgba(99,102,241,0.1)] overflow-hidden">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-[40px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden hover:border-indigo-500/30 transition-colors duration-500">
+
       {/* Price header */}
       <div className="px-6 pt-6 pb-4 border-b border-white/[0.06]">
         <div className="flex items-baseline gap-2 mb-1">
@@ -323,10 +328,10 @@ function EnrollCard({
             ) : 'Paid'}
           </span>
           {session.is_free && (
-            <span className="text-sm text-slate-500">· No credit card needed</span>
+            <span className="text-sm text-slate-400">· No credit card needed</span>
           )}
         </div>
-        <p className="text-xs text-slate-500">{totalDuration} of content</p>
+        <p className="text-xs text-slate-400">{totalDuration} of content</p>
       </div>
 
       {/* CTA */}
@@ -352,7 +357,7 @@ function EnrollCard({
               {enrollmentProgress > 0 ? 'Continue Learning' : 'Start Learning'}
             </Link>
             <Link href="/dashboard"
-              className="block text-center text-xs text-slate-500 hover:text-slate-300 transition-colors">
+              className="block text-center text-xs text-slate-400 hover:text-slate-300 transition-colors">
               Go to Dashboard →
             </Link>
           </div>
@@ -363,7 +368,7 @@ function EnrollCard({
 
       {/* What's included */}
       <div className="px-6 pb-5 space-y-2.5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 mb-3">What's included</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">What's included</p>
         {[
           { icon: Play, text: `${lessons.length} video lesson${lessons.length !== 1 ? 's' : ''}` },
           { icon: FileText, text: `${assignments.length} quiz${assignments.length !== 1 ? 'zes' : ''}` },
@@ -380,7 +385,7 @@ function EnrollCard({
       {/* Instructor */}
       {session.teacher && (
         <div className="px-6 py-4 border-t border-white/[0.06] bg-white/[0.02]">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 mb-3">Instructor</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">Instructor</p>
           <Link href={`/teachers/${session.teacher_id}`} className="flex items-center gap-3 group">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white">
               {teacherInitial}
@@ -389,9 +394,9 @@ function EnrollCard({
               <p className="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
                 {session.teacher.full_name}
               </p>
-              <p className="text-xs text-slate-500 capitalize">{session.teacher.level} level</p>
+              <p className="text-xs text-slate-400 capitalize">{session.teacher.level} level</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-slate-600 group-hover:text-indigo-400 transition-colors ml-auto" />
+            <ChevronRight className="h-4 w-4 text-slate-500 group-hover:text-indigo-400 transition-colors ml-auto" />
           </Link>
         </div>
       )}

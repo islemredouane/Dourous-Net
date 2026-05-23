@@ -17,7 +17,7 @@ export default async function NewSessionPage() {
       <div className="mx-auto max-w-2xl px-4 space-y-8">
         <Link
           href="/teacher"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-indigo-400"
+          className="inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-indigo-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Teacher Portal
@@ -30,7 +30,7 @@ export default async function NewSessionPage() {
           <h1 className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
             New <GradientText>Session</GradientText>
           </h1>
-          <p className="mt-2 text-slate-500 text-sm">
+          <p className="mt-2 text-slate-400 text-sm">
             Share your knowledge with learners across Algeria.
           </p>
         </div>

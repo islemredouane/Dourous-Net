@@ -37,7 +37,7 @@ export default async function TeacherProfilePage(props: Props) {
         {/* Back */}
         <Link
           href="/sessions"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-indigo-400"
+          className="inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-indigo-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Sessions
@@ -56,7 +56,7 @@ export default async function TeacherProfilePage(props: Props) {
             {teacher.bio && (
               <p className="max-w-xl text-sm leading-relaxed text-slate-400">{teacher.bio}</p>
             )}
-            <div className="mt-3 flex flex-wrap justify-center gap-3 sm:justify-start text-xs text-slate-500">
+            <div className="mt-3 flex flex-wrap justify-center gap-3 sm:justify-start text-xs text-slate-400">
               <span className="flex items-center gap-1">
                 <User className="h-3.5 w-3.5 text-indigo-400" />
                 {teacher.level}
@@ -82,7 +82,7 @@ export default async function TeacherProfilePage(props: Props) {
             </div>
           </>
         ) : (
-          <div className="py-16 text-center text-slate-500">
+          <div className="py-16 text-center text-slate-400">
             <p className="text-lg">No sessions published yet.</p>
           </div>
         )}

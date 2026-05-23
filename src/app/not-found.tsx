@@ -15,7 +15,7 @@ export default function NotFound() {
       <h1 className="mb-3 text-2xl font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
         Page introuvable
       </h1>
-      <p className="mb-8 max-w-sm text-slate-500">
+      <p className="mb-8 max-w-sm text-slate-400">
         Cette page n&apos;existe pas ou a été déplacée. Retournez à l&apos;accueil.
       </p>
       <Link href="/">

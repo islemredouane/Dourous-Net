@@ -30,7 +30,7 @@ export default async function ProfilePage() {
           <h1 className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
             My <GradientText>Profile</GradientText>
           </h1>
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-400">
             Manage your personal information and preferences.
           </p>
         </div>

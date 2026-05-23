@@ -1,6 +1,7 @@
 'use client'
 
 import { ExternalLink, FileText, Inbox } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface Submission {
   id: string
@@ -36,11 +37,17 @@ const AVATAR_COLORS = [
 export function SubmissionsList({ submissions }: { submissions: Submission[] }) {
   if (submissions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02] py-16 text-center">
-        <Inbox className="mb-3 h-10 w-10 text-slate-700" />
-        <p className="text-sm font-medium text-slate-400">No submissions yet</p>
-        <p className="mt-1 text-xs text-slate-600">Students who upload assignments will appear here</p>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02] py-20 text-center"
+      >
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-800/50 shadow-glow-sm">
+          <Inbox className="h-8 w-8 text-slate-400" />
+        </div>
+        <p className="text-lg font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-space-grotesk)' }}>No submissions yet</p>
+        <p className="text-sm text-slate-400 max-w-sm">Students who upload assignments for your sessions will appear here.</p>
+      </motion.div>
     )
   }
 
@@ -48,10 +55,10 @@ export function SubmissionsList({ submissions }: { submissions: Submission[] }) 
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
       {/* Table header */}
       <div className="hidden sm:grid grid-cols-[1fr_1fr_auto_auto] gap-4 px-5 py-3 border-b border-white/[0.05]">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Student</p>
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Session</p>
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Submitted</p>
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">File</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Student</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Session</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Submitted</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">File</p>
       </div>
 
       {/* Rows */}
@@ -74,7 +81,7 @@ export function SubmissionsList({ submissions }: { submissions: Submission[] }) 
                   <p className="text-sm font-medium text-white truncate">
                     {sub.student?.full_name ?? 'Unknown'}
                   </p>
-                  <p className="text-xs text-slate-500 truncate">{sub.student?.email}</p>
+                  <p className="text-xs text-slate-400 truncate">{sub.student?.email}</p>
                 </div>
               </div>
 
@@ -86,7 +93,7 @@ export function SubmissionsList({ submissions }: { submissions: Submission[] }) 
               </div>
 
               {/* Time */}
-              <p className="text-xs text-slate-500 whitespace-nowrap">
+              <p className="text-xs text-slate-400 whitespace-nowrap">
                 {timeAgo(sub.updated_at)}
               </p>
 

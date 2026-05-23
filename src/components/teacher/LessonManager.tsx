@@ -98,7 +98,7 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
             🎬
           </div>
           <p className="mb-1 text-base font-semibold text-white">No lessons yet</p>
-          <p className="mb-5 text-sm text-slate-500">Add your first lesson to build the curriculum.</p>
+          <p className="mb-5 text-sm text-slate-400">Add your first lesson to build the curriculum.</p>
           <Button
             onClick={() => setShowForm(true)}
             className="bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-sm"
@@ -133,7 +133,7 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
             )}
             {!ytId && (!lesson.video_url || !isGoogleDrive(lesson.video_url)) && (
               <div className="flex h-14 w-24 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/5">
-                <PlayCircle className="h-6 w-6 text-slate-600" />
+                <PlayCircle className="h-6 w-6 text-slate-500" />
               </div>
             )}
 
@@ -141,9 +141,9 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white truncate">{lesson.title}</p>
               {lesson.description && (
-                <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{lesson.description}</p>
+                <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{lesson.description}</p>
               )}
-              <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-600">
+              <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500">
                 {lesson.duration_minutes > 0 && (
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" /> {lesson.duration_minutes} min
@@ -166,7 +166,7 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
             <button
               onClick={() => handleDelete(lesson.id)}
               disabled={deleteId === lesson.id}
-              className="shrink-0 rounded-lg p-1.5 text-slate-600 hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40"
+              className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40"
             >
               {deleteId === lesson.id
                 ? <Loader2 className="h-4 w-4 animate-spin" />
@@ -188,32 +188,32 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               placeholder="e.g. Introduction aux Algorithmes"
-              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 text-sm"
+              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 text-sm"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs text-slate-400">Description <span className="text-slate-600">(optional)</span></Label>
+            <Label className="text-xs text-slate-400">Description <span className="text-slate-500">(optional)</span></Label>
             <Input
               value={form.description}
               onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
               placeholder="What students will learn in this lesson"
-              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 text-sm"
+              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 text-sm"
             />
           </div>
 
           <div className="space-y-1.5">
             <Label className="text-xs text-slate-400 flex items-center gap-1.5">
               <Video className="h-3.5 w-3.5 text-red-400" />
-              Video URL <span className="text-slate-600">(optional)</span>
+              Video URL <span className="text-slate-500">(optional)</span>
             </Label>
             <Input
               value={form.video_url}
               onChange={e => setForm(f => ({ ...f, video_url: e.target.value }))}
               placeholder="https://www.youtube.com/watch?v=... or Google Drive link"
-              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 text-sm"
+              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 text-sm"
             />
-            <p className="text-[11px] text-slate-600">
+            <p className="text-[11px] text-slate-500">
               Supports <span className="text-red-400">YouTube</span> links and <span className="text-blue-400">Google Drive</span> share links — students will watch directly in the lesson player.
             </p>
           </div>
@@ -226,7 +226,7 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
               value={form.duration_minutes}
               onChange={e => setForm(f => ({ ...f, duration_minutes: e.target.value }))}
               placeholder="e.g. 30"
-              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 text-sm w-32"
+              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 text-sm w-32"
             />
           </div>
 
@@ -266,7 +266,7 @@ export function LessonManager({ sessionId, initialLessons }: LessonManagerProps)
       {lessons.length > 0 && !showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-indigo-500/20 py-3 text-sm text-slate-500 hover:border-indigo-500/50 hover:text-indigo-400 transition-all"
+          className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-indigo-500/20 py-3 text-sm text-slate-400 hover:border-indigo-500/50 hover:text-indigo-400 transition-all"
         >
           <Plus className="h-4 w-4" />
           Add Lesson

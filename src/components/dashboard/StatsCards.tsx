@@ -125,7 +125,7 @@ export function StatsCards({ enrollments }: StatsCardsProps) {
               </div>
 
               <div className="min-w-0">
-                <p className="text-xs text-slate-500 mb-0.5">{stat.sublabel}</p>
+                <p className="text-xs text-slate-400 mb-0.5">{stat.sublabel}</p>
                 <p
                   className="text-3xl font-bold text-white leading-none"
                   style={{ fontFamily: 'var(--font-space-grotesk)' }}

@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StatsCards } from '@/components/dashboard/StatsCards'
 import { EnrolledSessionsList } from '@/components/dashboard/EnrolledSessionsList'
+import { ContinueLearningCard } from '@/components/dashboard/ContinueLearningCard'
 import { UploadArea } from '@/components/dashboard/UploadArea'
 import { GradientText } from '@/components/shared/GradientText'
 import type { EnrollmentWithSession } from '@/types'
@@ -35,21 +36,28 @@ export default async function DashboardPage() {
   const profileData = profile as { full_name?: string } | null
   const firstName = profileData?.full_name?.split(' ')[0] ?? 'Learner'
 
+  // Find the most recently active, uncompleted session
+  const activeEnrollment = enrollments.find(e => e.status === 'in_progress') || 
+                           enrollments.find(e => e.status === 'enrolled') || null
+
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="mx-auto max-w-7xl px-4 space-y-8">
         {/* Header */}
         <div>
-          <p className="mb-1 text-sm text-slate-500">Welcome back</p>
+          <p className="mb-1 text-sm text-slate-400">Welcome back</p>
           <h1 className="text-3xl font-bold text-white md:text-4xl" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
             <GradientText>{firstName}</GradientText>
             {"'s Dashboard"}
           </h1>
-          <p className="mt-1 text-slate-500 text-sm">{user.email}</p>
+          <p className="mt-1 text-slate-400 text-sm">{user.email}</p>
         </div>
 
         {/* Stats */}
         <StatsCards enrollments={enrollments} />
+
+        {/* Up Next Card */}
+        <ContinueLearningCard enrollment={activeEnrollment} />
 
         {/* Main grid */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">

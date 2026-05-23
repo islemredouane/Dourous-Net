@@ -82,7 +82,7 @@ function ScoreCircle({ score, total, percentage }: { score: number; total: numbe
           >
             {score}
           </span>
-          <span className="text-xs text-slate-500">/ {total}</span>
+          <span className="text-xs text-slate-400">/ {total}</span>
         </div>
       </div>
 
@@ -134,7 +134,7 @@ export function QuizResults({
         {/* Back */}
         <Link
           href={`/sessions/${sessionId}`}
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-400 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-indigo-400 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Course
@@ -147,7 +147,7 @@ export function QuizResults({
               Quiz Results
             </p>
             <h1 className="text-2xl font-bold text-white">{assignmentTitle}</h1>
-            <p className="text-xs text-slate-600 mt-1">Submitted {gradedDate}</p>
+            <p className="text-xs text-slate-500 mt-1">Submitted {gradedDate}</p>
           </div>
 
           <ScoreCircle score={score} total={total_points} percentage={percentage} />
@@ -163,7 +163,7 @@ export function QuizResults({
             ].map(({ label, value, color }) => (
               <div key={label} className="rounded-xl bg-white/5 border border-white/[0.06] p-3">
                 <p className={`text-lg font-bold tabular-nums ${color}`}>{value}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{label}</p>
               </div>
             ))}
           </div>
@@ -214,7 +214,7 @@ export function QuizResults({
                       const isStudentAnswer = selectedIndex === oi
                       const isCorrectAnswer = q.correct_index === oi
                       let optClass =
-                        'border-white/[0.06] bg-white/[0.02] text-slate-500'
+                        'border-white/[0.06] bg-white/[0.02] text-slate-400'
                       if (isCorrectAnswer)
                         optClass = 'border-green-500/40 bg-green-500/10 text-green-300'
                       if (isStudentAnswer && !isCorrect)
@@ -231,7 +231,7 @@ export function QuizResults({
                                 ? 'border-green-500 bg-green-500/20 text-green-400'
                                 : isStudentAnswer && !isCorrect
                                 ? 'border-red-500 bg-red-500/20 text-red-400'
-                                : 'border-slate-700 text-slate-600'
+                                : 'border-slate-700 text-slate-500'
                             }`}
                           >
                             {OPTION_LABELS[oi]}
@@ -251,7 +251,7 @@ export function QuizResults({
                     })}
 
                     {wasUnanswered && (
-                      <p className="text-xs text-slate-600 italic">No answer submitted</p>
+                      <p className="text-xs text-slate-500 italic">No answer submitted</p>
                     )}
                   </div>
 
@@ -271,7 +271,7 @@ export function QuizResults({
                       className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
                         isCorrect
                           ? 'bg-green-500/15 text-green-400'
-                          : 'bg-slate-800 text-slate-500'
+                          : 'bg-slate-800 text-slate-400'
                       }`}
                     >
                       {isCorrect ? `+${q.points}` : '0'} / {q.points} pts

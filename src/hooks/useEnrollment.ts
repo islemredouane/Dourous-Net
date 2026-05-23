@@ -46,6 +46,9 @@ export function useEnrollment(sessionId: string, studentId?: string) {
 
     if (!error && data) {
       setEnrollment(data as Enrollment)
+    } else if (error) {
+      console.error('Enrollment error:', error)
+      alert(`Failed to enroll: ${error.message}`)
     }
 
     setEnrolling(false)

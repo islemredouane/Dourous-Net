@@ -18,6 +18,7 @@ type Level = 'Beginner' | 'Intermediate' | 'Advanced'
 
 interface OnboardingFlowProps {
   userId: string
+  email: string
   defaultName: string
 }
 
@@ -76,7 +77,7 @@ function ProgressBar({ step }: { step: 1 | 2 }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-slate-500 tracking-wide uppercase">
+        <span className="text-xs font-medium text-slate-400 tracking-wide uppercase">
           Step {step} of 2
         </span>
         <span className="text-xs font-medium text-indigo-400">
@@ -400,7 +401,7 @@ function Step2({ role, defaultName, onBack, onSubmit, submitting, error }: Step2
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your full name"
                   required
-                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus-visible:border-indigo-500 focus-visible:ring-indigo-500/30"
+                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus-visible:border-indigo-500 focus-visible:ring-indigo-500/30"
                 />
               </div>
 
@@ -470,7 +471,7 @@ function Step2({ role, defaultName, onBack, onSubmit, submitting, error }: Step2
               <div className="space-y-2">
                 <Label htmlFor="bio" className="text-sm font-medium text-slate-200">
                   About you{' '}
-                  <span className={isTeacher ? 'text-red-400' : 'text-slate-500'}>
+                  <span className={isTeacher ? 'text-red-400' : 'text-slate-400'}>
                     {isTeacher ? '(required)' : '(optional)'}
                   </span>
                 </Label>
@@ -485,7 +486,7 @@ function Step2({ role, defaultName, onBack, onSubmit, submitting, error }: Step2
                       ? 'Describe your expertise, teaching approach, and what students will gain from your sessions…'
                       : 'Tell us a bit about yourself and your learning goals… (optional)'
                   }
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 transition-colors outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/25"
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 transition-colors outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/25"
                 />
               </div>
 
@@ -619,7 +620,7 @@ function SuccessState() {
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 
-export function OnboardingFlow({ userId, defaultName }: OnboardingFlowProps) {
+export function OnboardingFlow({ userId, email, defaultName }: OnboardingFlowProps) {
   const router = useRouter()
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [role, setRole] = useState<Role | null>(null)
@@ -645,15 +646,16 @@ export function OnboardingFlow({ userId, defaultName }: OnboardingFlowProps) {
       const supabase = createClient()
       const { error: dbError } = await supabase
         .from('students')
-        .update({
+        .upsert({
+          id: userId,
+          email,
           full_name: name,
           role,
           field,
           level,
           bio: bio || null,
           onboarded: true,
-        })
-        .eq('id', userId)
+        }, { onConflict: 'id' })
 
       if (dbError) {
         setError(dbError.message ?? 'Something went wrong. Please try again.')

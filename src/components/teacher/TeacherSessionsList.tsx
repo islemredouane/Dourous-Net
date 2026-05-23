@@ -23,7 +23,7 @@ export function TeacherSessionsList({ sessions }: TeacherSessionsListProps) {
         <p className="mb-2 text-lg font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
           No sessions yet
         </p>
-        <p className="mb-6 text-sm text-slate-500">Create your first session and start teaching.</p>
+        <p className="mb-6 text-sm text-slate-400">Create your first session and start teaching.</p>
         <Link href="/teacher/new">
           <Button className="bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-sm">
             <PlusCircle className="mr-2 h-4 w-4" />
@@ -64,7 +64,7 @@ export function TeacherSessionsList({ sessions }: TeacherSessionsListProps) {
                 )}
               </div>
 
-              <div className="flex flex-wrap gap-4 text-xs text-slate-500">
+              <div className="flex flex-wrap gap-4 text-xs text-slate-400">
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3 text-indigo-400" />
                   {session.duration_hours}h
@@ -100,7 +100,7 @@ export function TeacherSessionsList({ sessions }: TeacherSessionsListProps) {
               </Link>
               <Link
                 href={`/sessions/${session.id}`}
-                className="text-slate-600 hover:text-indigo-400 transition-colors p-1.5"
+                className="text-slate-500 hover:text-indigo-400 transition-colors p-1.5"
                 title="View session"
               >
                 <ExternalLink className="h-4 w-4" />

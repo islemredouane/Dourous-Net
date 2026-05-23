@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { CATEGORY_COLORS, CATEGORY_GRADIENTS } from '@/lib/constants'
@@ -97,7 +98,7 @@ function EnrollmentCard({ enrollment: initial }: { enrollment: EnrollmentWithSes
                 {session.title}
               </h3>
               {session.teacher && (
-                <p className="mt-0.5 text-xs text-slate-500">by {session.teacher.full_name}</p>
+                <p className="mt-0.5 text-xs text-slate-400">by {session.teacher.full_name}</p>
               )}
             </div>
             <div className="flex shrink-0 items-center gap-2">
@@ -135,7 +136,7 @@ function EnrollmentCard({ enrollment: initial }: { enrollment: EnrollmentWithSes
                 variant="ghost"
                 disabled={updating}
                 onClick={() => updateProgress(nextStep)}
-                className="h-7 rounded-lg px-3 text-xs text-slate-500 hover:text-white hover:bg-white/5"
+                className="h-7 rounded-lg px-3 text-xs text-slate-400 hover:text-white hover:bg-white/5"
               >
                 <TrendingUp className="mr-1 h-3 w-3" />
                 +25%
@@ -145,7 +146,7 @@ function EnrollmentCard({ enrollment: initial }: { enrollment: EnrollmentWithSes
                 variant="ghost"
                 disabled={updating}
                 onClick={() => updateProgress(100)}
-                className="h-7 rounded-lg px-3 text-xs text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10"
+                className="h-7 rounded-lg px-3 text-xs text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10"
               >
                 <CheckCircle className="mr-1 h-3 w-3" />
                 Done
@@ -166,19 +167,26 @@ function EnrollmentCard({ enrollment: initial }: { enrollment: EnrollmentWithSes
 export function EnrolledSessionsList({ enrollments }: EnrolledSessionsListProps) {
   if (enrollments.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.07] bg-[#0f172a] py-14 text-center">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-          <BookOpen className="h-6 w-6 text-indigo-400" />
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.07] bg-[#0f172a] py-16 text-center"
+      >
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500/10 shadow-glow-sm">
+          <BookOpen className="h-8 w-8 text-indigo-400" />
         </div>
-        <p className="mb-1 text-sm font-medium text-slate-300">No sessions yet</p>
-        <p className="mb-4 text-xs text-slate-600">Start your learning journey today</p>
-        <Link
-          href="/sessions"
-          className="rounded-xl bg-indigo-500/15 border border-indigo-500/30 px-4 py-2 text-xs font-medium text-indigo-300 transition-colors hover:bg-indigo-500/25 hover:text-white"
-        >
-          Browse sessions →
+        <p className="mb-2 text-lg font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+          No sessions yet
+        </p>
+        <p className="mb-6 text-sm text-slate-400">
+          Start your learning journey by exploring available sessions today.
+        </p>
+        <Link href="/sessions">
+          <Button className="bg-indigo-500 hover:bg-indigo-600 shadow-glow-sm text-white">
+            Browse sessions
+          </Button>
         </Link>
-      </div>
+      </motion.div>
     )
   }
 

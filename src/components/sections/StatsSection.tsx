@@ -72,7 +72,7 @@ export function StatsSection() {
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </GradientText>
               </div>
-              <p className="text-sm text-slate-500">{stat.label}</p>
+              <p className="text-sm text-slate-400">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>

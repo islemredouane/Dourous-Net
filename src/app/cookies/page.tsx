@@ -54,7 +54,7 @@ export default function CookiesPage() {
   return (
     <div className="min-h-screen pt-24 pb-20" style={{ backgroundColor: '#030712', fontFamily: 'var(--font-space-grotesk)' }}>
       <div className="mx-auto max-w-3xl px-4">
-        <Link href="/" className="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-400 transition-colors">
+        <Link href="/" className="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-indigo-400 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back to Home
         </Link>
 
@@ -64,7 +64,7 @@ export default function CookiesPage() {
             <span className="text-xs font-semibold text-slate-400">Transparency first</span>
           </div>
           <h1 className="text-4xl font-bold text-white">Cookie Policy</h1>
-          <p className="mt-3 text-sm text-slate-500">Last updated: May 2026</p>
+          <p className="mt-3 text-sm text-slate-400">Last updated: May 2026</p>
         </div>
 
         <p className="mb-10 text-slate-400 leading-relaxed">
@@ -94,7 +94,7 @@ export default function CookiesPage() {
                     <code className="mt-0.5 shrink-0 rounded-md bg-white/5 border border-white/[0.08] px-2 py-0.5 text-xs text-indigo-300 font-mono">
                       {cookie.name}
                     </code>
-                    <p className="text-sm text-slate-500">{cookie.purpose}</p>
+                    <p className="text-sm text-slate-400">{cookie.purpose}</p>
                   </div>
                 ))}
               </div>
@@ -115,12 +115,12 @@ export default function CookiesPage() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-xs text-slate-600">
+          <p className="mt-3 text-xs text-slate-500">
             Refer to your browser&apos;s help documentation for cookie management instructions.
           </p>
         </div>
 
-        <div className="mt-8 flex gap-4 text-sm text-slate-500">
+        <div className="mt-8 flex gap-4 text-sm text-slate-400">
           <Link href="/terms" className="hover:text-indigo-400 transition-colors">Terms of Service →</Link>
           <Link href="/privacy" className="hover:text-indigo-400 transition-colors">Privacy Policy →</Link>
         </div>

@@ -39,7 +39,7 @@ export function BottomNav() {
                   'flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-colors min-w-0',
                   active
                     ? 'text-indigo-400'
-                    : 'text-slate-500 hover:text-slate-300'
+                    : 'text-slate-400 hover:text-slate-300'
                 )}
               >
                 <div className={cn(

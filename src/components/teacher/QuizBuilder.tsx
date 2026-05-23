@@ -118,7 +118,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Chapter 1 — Fundamentals Quiz"
-            className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-indigo-500/60"
+            className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-indigo-500/60"
           />
         </div>
 
@@ -129,13 +129,13 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Brief instructions or context for students…"
             rows={3}
-            className="w-full rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-slate-600 px-3 py-2 focus:outline-none focus:border-indigo-500/60 resize-none transition-colors"
+            className="w-full rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-slate-500 px-3 py-2 focus:outline-none focus:border-indigo-500/60 resize-none transition-colors"
           />
         </div>
 
         <div className="space-y-1.5">
           <Label className="text-slate-300 text-sm">
-            Time Limit (minutes) — <span className="text-slate-500">0 = no time limit</span>
+            Time Limit (minutes) — <span className="text-slate-400">0 = no time limit</span>
           </Label>
           <Input
             type="number"
@@ -180,7 +180,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
                 onChange={(e) => updateQuestion(qi, { question: e.target.value })}
                 placeholder="Type your question here…"
                 rows={2}
-                className="w-full rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-slate-600 px-3 py-2 focus:outline-none focus:border-indigo-500/60 resize-none transition-colors"
+                className="w-full rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-slate-500 px-3 py-2 focus:outline-none focus:border-indigo-500/60 resize-none transition-colors"
               />
             </div>
 
@@ -199,7 +199,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
                         className={`flex-shrink-0 flex h-6 w-6 items-center justify-center rounded-full border-2 text-xs font-bold transition-all ${
                           isCorrect
                             ? 'border-green-500 bg-green-500/20 text-green-400'
-                            : 'border-slate-600 text-slate-600 hover:border-slate-400'
+                            : 'border-slate-600 text-slate-500 hover:border-slate-400'
                         }`}
                         title={`Mark ${OPTION_LABELS[oi]} as correct`}
                       >
@@ -213,7 +213,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
                           isCorrect
                             ? 'bg-green-500/10 border-green-500/40 text-white focus:border-green-500/60'
                             : 'bg-white/5 border-white/10 text-white focus:border-indigo-500/60'
-                        } placeholder:text-slate-600`}
+                        } placeholder:text-slate-500`}
                       />
                       {isCorrect && (
                         <span className="absolute right-2.5 text-green-400 text-xs font-medium">✓ Correct</span>
@@ -222,7 +222,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
                   )
                 })}
               </div>
-              <p className="text-xs text-slate-600">Click the letter circle to mark the correct answer</p>
+              <p className="text-xs text-slate-500">Click the letter circle to mark the correct answer</p>
             </div>
 
             {/* Points + Explanation row */}
@@ -244,7 +244,7 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
                   value={q.explanation ?? ''}
                   onChange={(e) => updateQuestion(qi, { explanation: e.target.value })}
                   placeholder="Why is this the correct answer?"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-indigo-500/60"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-indigo-500/60"
                 />
               </div>
             </div>
@@ -265,9 +265,9 @@ export function QuizBuilder({ sessionId, onSuccess }: QuizBuilderProps) {
       {/* Footer: total points + submit */}
       <GlassCard className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <p className="text-sm text-slate-500">Total Points</p>
+          <p className="text-sm text-slate-400">Total Points</p>
           <p className="text-2xl font-bold text-white tabular-nums" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-            {totalPoints} <span className="text-sm font-normal text-slate-500">pts across {questions.length} question{questions.length !== 1 ? 's' : ''}</span>
+            {totalPoints} <span className="text-sm font-normal text-slate-400">pts across {questions.length} question{questions.length !== 1 ? 's' : ''}</span>
           </p>
         </div>
 

@@ -82,7 +82,11 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-indigo-500/50 ring-offset-2 ring-offset-[#030712] transition-shadow;
   }
 
   html {
@@ -182,4 +186,8 @@
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
   50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.5); }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
 }

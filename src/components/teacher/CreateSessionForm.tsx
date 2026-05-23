@@ -119,7 +119,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
           <Input
             {...register('title')}
             placeholder="e.g. Algorithmes et Structures de Données"
-            className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+            className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
           />
           {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
         </div>
@@ -131,7 +131,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
             {...register('description')}
             rows={5}
             placeholder="Describe what students will learn, prerequisites, and course structure…"
-            className="w-full rounded-lg bg-white/5 border border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 px-3 py-2 text-sm resize-none"
+            className="w-full rounded-lg bg-white/5 border border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 px-3 py-2 text-sm resize-none"
           />
           {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
         </div>
@@ -161,7 +161,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
               max={200}
               {...register('duration_hours', { valueAsNumber: true })}
               placeholder="e.g. 12"
-              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+              className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
             />
             {errors.duration_hours && <p className="text-xs text-red-400">{errors.duration_hours.message}</p>}
           </div>
@@ -170,7 +170,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
         {/* Thumbnail Upload */}
         <div className="space-y-2">
           <Label className="text-slate-300">
-            Thumbnail <span className="text-slate-600">(optional)</span>
+            Thumbnail <span className="text-slate-500">(optional)</span>
           </Label>
 
           {thumbnailPreview ? (
@@ -188,14 +188,14 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-indigo-500/30 bg-white/3 px-4 py-8 text-slate-500 hover:border-indigo-500/60 hover:text-slate-300 hover:bg-white/5 transition-all"
+              className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-indigo-500/30 bg-white/3 px-4 py-8 text-slate-400 hover:border-indigo-500/60 hover:text-slate-300 hover:bg-white/5 transition-all"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10">
                 <ImageIcon className="h-5 w-5 text-indigo-400" />
               </div>
               <div className="text-center">
                 <p className="text-sm font-medium text-slate-300">Click to upload thumbnail</p>
-                <p className="text-xs text-slate-600 mt-0.5">JPG, PNG, WebP — max 10 MB</p>
+                <p className="text-xs text-slate-500 mt-0.5">JPG, PNG, WebP — max 10 MB</p>
               </div>
               <div className="flex items-center gap-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5">
                 <Upload className="h-3.5 w-3.5 text-indigo-400" />
@@ -217,7 +217,7 @@ export function CreateSessionForm({ teacherId }: CreateSessionFormProps) {
         <div className="flex items-center justify-between rounded-xl border border-indigo-500/10 bg-white/3 px-4 py-3">
           <div>
             <p className="text-sm font-medium text-white">Free session</p>
-            <p className="text-xs text-slate-500">Make this session available at no cost</p>
+            <p className="text-xs text-slate-400">Make this session available at no cost</p>
           </div>
           <button
             type="button"

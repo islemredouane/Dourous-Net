@@ -1,15 +1,15 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Groq from 'groq-sdk'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
     const { message, courseTitle, courseDescription, courseCategory, history = [] } = await request.json()
 
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ reply: 'AI Coach is not configured. Add GEMINI_API_KEY to environment variables.' })
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json({ reply: 'AI Coach is not configured. Add GROQ_API_KEY to environment variables.' })
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
     const systemPrompt = `You are an expert AI learning coach for the course "${courseTitle}" on Dourous-Net, an Algerian educational platform.
 
@@ -27,20 +27,25 @@ Your role:
 
 You are NOT a general assistant. You exclusively help students understand this course's material.`
 
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      systemInstruction: systemPrompt,
-    })
-
-    // Build chat history (Gemini format: role is 'user' | 'model')
     const recentHistory = history.slice(-10).map((m: { role: string; content: string }) => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
+      role: (m.role === 'assistant' || m.role === 'model' ? 'assistant' : 'user') as 'user' | 'assistant',
+      content: m.content,
     }))
 
-    const chat = model.startChat({ history: recentHistory })
-    const result = await chat.sendMessage(message)
-    const reply = result.response.text()
+    const messages = [
+      { role: 'system' as const, content: systemPrompt },
+      ...recentHistory,
+      { role: 'user' as const, content: message },
+    ]
+
+    const completion = await groq.chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
+      messages,
+      max_tokens: 600,
+      temperature: 0.7,
+    })
+
+    const reply = completion.choices[0]?.message?.content ?? "I couldn't generate a response. Please try again."
 
     return NextResponse.json({ reply })
   } catch (error) {

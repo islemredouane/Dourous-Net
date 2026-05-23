@@ -104,7 +104,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           </h3>
 
           {/* Email */}
-          <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
+          <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-400">
             <Lock className="h-3 w-3" />
             {profile.email}
           </div>
@@ -124,7 +124,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           </div>
 
           {/* Member since */}
-          <p className="mt-4 text-xs text-slate-600">
+          <p className="mt-4 text-xs text-slate-500">
             Member since {memberSince(profile.created_at)}
           </p>
         </div>
@@ -132,7 +132,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         {/* Tip card */}
         <div className="rounded-2xl border border-white/[0.07] bg-[#0a0f1e] p-4">
           <p className="text-xs font-semibold text-slate-400 mb-1">Profile tip</p>
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-slate-500 leading-relaxed">
             A complete profile with a bio and level helps teachers tailor their content to you.
           </p>
         </div>
@@ -153,29 +153,29 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Your full name"
-                className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11"
+                className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-500 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11"
               />
             </div>
 
             <div className="space-y-1.5">
               <Label className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Field / Specialty <span className="normal-case text-slate-600">(optional)</span>
+                Field / Specialty <span className="normal-case text-slate-500">(optional)</span>
               </Label>
               <Input
                 value={field}
                 onChange={(e) => setField(e.target.value)}
                 placeholder="e.g. Computer Science, Mathematics, Languages…"
-                className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-600 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11"
+                className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-slate-500 focus:border-indigo-500 focus:ring-indigo-500/20 rounded-xl h-11"
               />
             </div>
 
             <div className="space-y-1.5">
               <Label className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Email <span className="normal-case text-slate-600">— managed by your auth provider</span>
+                Email <span className="normal-case text-slate-500">— managed by your auth provider</span>
               </Label>
               <div className="flex items-center gap-2 rounded-xl border border-white/[0.05] bg-white/[0.02] px-4 h-11">
-                <Lock className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-                <span className="text-sm text-slate-500">{profile.email}</span>
+                <Lock className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                <span className="text-sm text-slate-400">{profile.email}</span>
               </div>
             </div>
           </div>
@@ -197,7 +197,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                 className={`flex flex-col items-center gap-1.5 rounded-xl border px-3 py-3 text-sm font-medium transition-all duration-200 ${
                   level === l.value
                     ? l.color
-                    : 'border-white/[0.07] bg-white/[0.03] text-slate-500 hover:border-white/[0.12] hover:text-slate-300'
+                    : 'border-white/[0.07] bg-white/[0.03] text-slate-400 hover:border-white/[0.12] hover:text-slate-300'
                 }`}
               >
                 <span className={`h-2 w-2 rounded-full ${level === l.value ? l.dot : 'bg-slate-700'}`} />
@@ -215,7 +215,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             <h4 className="text-sm font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               About Me
             </h4>
-            <span className={`text-xs tabular-nums ${bio.length > 280 ? 'text-red-400' : 'text-slate-600'}`}>
+            <span className={`text-xs tabular-nums ${bio.length > 280 ? 'text-red-400' : 'text-slate-500'}`}>
               {bio.length}/300
             </span>
           </div>
@@ -224,7 +224,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             onChange={(e) => setBio(e.target.value.slice(0, 300))}
             rows={4}
             placeholder="Tell others about yourself — your background, expertise, or what you're learning…"
-            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] text-white placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/20 px-4 py-3 text-sm resize-none transition-colors"
+            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/20 px-4 py-3 text-sm resize-none transition-colors"
           />
         </div>
 

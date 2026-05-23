@@ -17,5 +17,5 @@ export default async function OnboardingPage() {
   const defaultName =
     (user.user_metadata?.full_name as string | undefined) ?? ''
 
-  return <OnboardingFlow userId={user.id} defaultName={defaultName} />
+  return <OnboardingFlow userId={user.id} email={user.email!} defaultName={defaultName} />
 }

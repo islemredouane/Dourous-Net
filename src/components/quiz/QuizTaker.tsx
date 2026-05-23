@@ -133,7 +133,7 @@ export function QuizTaker({ assignment, studentId, sessionId, existingSubmission
           <div className="rounded-xl bg-white/5 border border-white/10 p-5 space-y-1">
             <p className="text-4xl font-bold text-white tabular-nums">
               {existingSubmission.score}
-              <span className="text-lg text-slate-500 font-normal">/{existingSubmission.total_points}</span>
+              <span className="text-lg text-slate-400 font-normal">/{existingSubmission.total_points}</span>
             </p>
             <p
               className={`text-lg font-semibold ${passed ? 'text-green-400' : 'text-red-400'}`}
@@ -190,7 +190,7 @@ export function QuizTaker({ assignment, studentId, sessionId, existingSubmission
 
       <div className="mx-auto max-w-3xl px-4 pt-8 space-y-6">
         {/* Quiz meta */}
-        <div className="flex flex-wrap gap-3 text-sm text-slate-500">
+        <div className="flex flex-wrap gap-3 text-sm text-slate-400">
           <span>{questions.length} questions</span>
           <span>·</span>
           <span>{assignment.total_points} points total</span>
@@ -244,7 +244,7 @@ export function QuizTaker({ assignment, studentId, sessionId, existingSubmission
                         className={`flex-shrink-0 flex h-6 w-6 items-center justify-center rounded-full border text-xs font-bold transition-all ${
                           isSelected
                             ? 'border-indigo-400 bg-indigo-500 text-white'
-                            : 'border-slate-600 text-slate-500 group-hover:border-slate-400'
+                            : 'border-slate-600 text-slate-400 group-hover:border-slate-400'
                         }`}
                       >
                         {OPTION_LABELS[oi]}
@@ -260,7 +260,7 @@ export function QuizTaker({ assignment, studentId, sessionId, existingSubmission
 
               {/* Points badge */}
               <div className="pl-12">
-                <span className="text-xs text-slate-600">{q.points} point{q.points !== 1 ? 's' : ''}</span>
+                <span className="text-xs text-slate-500">{q.points} point{q.points !== 1 ? 's' : ''}</span>
               </div>
             </div>
           )
@@ -276,7 +276,7 @@ export function QuizTaker({ assignment, studentId, sessionId, existingSubmission
                   : `${questions.length - answeredCount} question${questions.length - answeredCount !== 1 ? 's' : ''} remaining`}
               </p>
               {!allAnswered && (
-                <p className="text-xs text-slate-500 mt-0.5">Answer all questions to submit</p>
+                <p className="text-xs text-slate-400 mt-0.5">Answer all questions to submit</p>
               )}
             </div>
             <div className="flex flex-col items-end gap-2 flex-shrink-0">

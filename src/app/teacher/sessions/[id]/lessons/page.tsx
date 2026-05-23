@@ -41,7 +41,7 @@ export default async function TeacherLessonsPage(props: Props) {
         {/* Back */}
         <Link
           href="/teacher"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-400 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-indigo-400 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Teacher Portal
@@ -55,7 +55,7 @@ export default async function TeacherLessonsPage(props: Props) {
           <h1 className="text-3xl font-bold text-white">
             Manage <GradientText>Lessons</GradientText>
           </h1>
-          <p className="text-slate-500 text-sm mt-2 flex items-center gap-1.5">
+          <p className="text-slate-400 text-sm mt-2 flex items-center gap-1.5">
             <BookOpen className="h-4 w-4 text-indigo-400" />
             {lessons?.length ?? 0} lesson{(lessons?.length ?? 0) !== 1 ? 's' : ''} in curriculum
           </p>

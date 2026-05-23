@@ -30,12 +30,31 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${origin}/auth?error=${encodeURIComponent('Failed to get user after sign in')}`)
     }
 
-    // Check if student profile exists and is onboarded
-    const { data: profile } = await supabase
+    // Check if student profile exists
+    let { data: profile } = await supabase
       .from('students')
       .select('onboarded')
       .eq('id', user.id)
       .single()
+
+    // Fallback: If profile doesn't exist (e.g. Supabase trigger failed/missing), create it!
+    if (!profile) {
+      const { data: newProfile, error: insertError } = await supabase
+        .from('students')
+        .upsert({
+          id: user.id,
+          email: user.email || '',
+          full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Student',
+        })
+        .select('onboarded')
+        .single()
+
+      if (insertError) {
+        console.error('[Auth Callback] Failed to create student profile:', insertError.message)
+      } else {
+        profile = newProfile
+      }
+    }
 
     if (!profile?.onboarded) {
       return NextResponse.redirect(`${origin}/onboarding`)

@@ -75,13 +75,13 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
           <h3 className="font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
             Submit Assignment
           </h3>
-          <p className="text-xs text-slate-500">Upload your work — max 50 MB</p>
+          <p className="text-xs text-slate-400">Upload your work — max 50 MB</p>
         </div>
       </div>
 
       {/* Session selector */}
       {activeEnrollments.length === 0 ? (
-        <p className="rounded-xl border border-slate-700 bg-white/3 px-4 py-3 text-sm text-slate-500 text-center">
+        <p className="rounded-xl border border-slate-700 bg-white/3 px-4 py-3 text-sm text-slate-400 text-center">
           Enroll in a session to submit assignments.
         </p>
       ) : (
@@ -101,7 +101,7 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
                     </option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
@@ -137,12 +137,12 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
                 <File className="h-8 w-8 text-indigo-400" />
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">{selectedFile.name}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                   </p>
                 </div>
                 <button
-                  className="ml-2 text-slate-500 hover:text-red-400"
+                  className="ml-2 text-slate-400 hover:text-red-400"
                   onClick={(e) => { e.stopPropagation(); setSelectedFile(null) }}
                 >
                   <X className="h-4 w-4" />
@@ -150,12 +150,12 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
               </div>
             ) : (
               <div>
-                <CloudUpload className="mx-auto mb-3 h-10 w-10 text-slate-600" />
+                <CloudUpload className="mx-auto mb-3 h-10 w-10 text-slate-500" />
                 <p className="text-sm text-slate-400">
                   Drag & drop a file here, or{' '}
                   <span className="text-indigo-400">click to browse</span>
                 </p>
-                <p className="mt-1 text-xs text-slate-600">PDF, DOC, ZIP, images — up to 50 MB</p>
+                <p className="mt-1 text-xs text-slate-500">PDF, DOC, ZIP, images — up to 50 MB</p>
               </div>
             )}
           </div>

@@ -48,7 +48,7 @@ export function CourseSidebar({
             Course Content
           </h3>
         </div>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-400">
           {completedCount} / {totalCount} lessons completed
         </p>
         {/* Progress bar */}
@@ -92,7 +92,7 @@ export function CourseSidebar({
                       </div>
                     ) : (
                       <div className="flex h-6 w-6 items-center justify-center rounded-full border border-white/10">
-                        <span className="text-[10px] font-medium text-slate-500">
+                        <span className="text-[10px] font-medium text-slate-400">
                           {lesson.order_index + 1}
                         </span>
                       </div>
@@ -114,7 +114,7 @@ export function CourseSidebar({
                       {lesson.title}
                     </p>
                     {lesson.duration_minutes > 0 && (
-                      <div className="mt-0.5 flex items-center gap-1 text-slate-600">
+                      <div className="mt-0.5 flex items-center gap-1 text-slate-500">
                         <Clock className="h-3 w-3" />
                         <span className="text-[11px]">
                           {lesson.duration_minutes} min
@@ -131,7 +131,7 @@ export function CourseSidebar({
         {/* Assignments section */}
         {assignments.length > 0 && (
           <div className="border-t border-white/[0.06] py-2">
-            <p className="px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-slate-600">
+            <p className="px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
               Quizzes &amp; Assignments
             </p>
             <ul>

@@ -39,7 +39,7 @@ export async function CoursesPreviewSection() {
         </div>
 
         {sessions.length === 0 ? (
-          <div className="py-16 text-center text-slate-500">
+          <div className="py-16 text-center text-slate-400">
             <p className="mb-2 text-lg">No sessions yet.</p>
             <p className="text-sm">Be the first teacher to publish a session!</p>
           </div>

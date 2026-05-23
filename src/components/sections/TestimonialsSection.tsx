@@ -20,25 +20,32 @@ const ROW2 = [...LEARNERS.slice(5), ...LEARNERS.slice(5)]
 
 function TweetCard({ learner }: { learner: typeof LEARNERS[0] }) {
   return (
-    <div className="flex-shrink-0 w-64 rounded-2xl border border-white/[0.08] bg-[#0d1117] p-4 mx-2.5">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2.5">
-          <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${learner.color} text-[10px] font-bold text-white`}>
-            {learner.avatar}
+    <div className="relative flex-shrink-0 w-[300px] rounded-2xl mx-3 group overflow-hidden bg-[#0a0d14]">
+      {/* Animated gradient border on hover */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-indigo-500/0 via-purple-500/0 to-cyan-500/0 transition-all duration-500 group-hover:from-indigo-500/20 group-hover:via-purple-500/20 group-hover:to-cyan-500/20"></div>
+      
+      <div className="relative z-10 h-full rounded-2xl border border-white/[0.05] bg-white/[0.01] backdrop-blur-3xl p-5 hover:border-white/[0.1] transition-colors duration-300">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${learner.color} text-xs font-bold text-white shadow-lg`}>
+              {/* Outer glow ring */}
+              <div className="absolute inset-0 rounded-full border border-white/20"></div>
+              {learner.avatar}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white leading-tight">{learner.name}</p>
+              <p className="text-xs text-indigo-200/60 leading-tight mt-0.5">{learner.handle}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-white leading-tight">{learner.name}</p>
-            <p className="text-[11px] text-slate-500 leading-tight">{learner.handle}</p>
-          </div>
+          <X className="h-4 w-4 text-slate-600 shrink-0 transition-colors group-hover:text-slate-400" />
         </div>
-        <X className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-      </div>
 
-      {/* Text */}
-      <p className="text-sm leading-relaxed text-slate-400">
-        {learner.text}
-      </p>
+        {/* Text */}
+        <p className="text-[14px] leading-relaxed text-slate-300">
+          {learner.text}
+        </p>
+      </div>
     </div>
   )
 }

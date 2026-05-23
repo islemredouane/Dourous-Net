@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useUser } from '@/hooks/useUser'
 import { HeroScene } from '@/components/3d/HeroScene'
 import { GradientText } from '@/components/shared/GradientText'
 import { Button } from '@/components/ui/button'
@@ -9,6 +10,8 @@ import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { ArrowRight, Play, Star } from 'lucide-react'
 
 export function HeroSection() {
+  const { user, loading } = useUser()
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* 3D Canvas — full screen background */}
@@ -60,15 +63,29 @@ export function HeroSection() {
 
           {/* CTAs */}
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
-            <Link href="/auth">
-              <Button
-                size="lg"
-                className="group bg-indigo-500 text-white hover:bg-indigo-600 px-8 py-6 text-base shadow-glow-md hover:shadow-glow-lg transition-all duration-300"
-              >
-                Start Learning Free
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
+            {loading ? (
+              <div className="h-16 w-52 rounded-xl bg-indigo-500/20 animate-pulse border border-indigo-500/30" />
+            ) : user ? (
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="group bg-indigo-500 text-white hover:bg-indigo-600 px-8 py-6 text-base shadow-glow-md hover:shadow-glow-lg transition-all duration-300"
+                >
+                  Go to Dashboard
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/auth">
+                <Button
+                  size="lg"
+                  className="group bg-indigo-500 text-white hover:bg-indigo-600 px-8 py-6 text-base shadow-glow-md hover:shadow-glow-lg transition-all duration-300"
+                >
+                  Start Learning Free
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+            )}
             <Link href="/sessions">
               <Button
                 size="lg"
@@ -99,7 +116,7 @@ export function HeroSection() {
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
               </div>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-400">
                 <span className="text-white font-semibold">12,000+</span> active students
               </p>
             </div>

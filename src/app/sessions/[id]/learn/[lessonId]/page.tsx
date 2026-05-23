@@ -79,7 +79,7 @@ export default async function LessonPage(props: Props) {
         {/* Back link */}
         <Link
           href={`/sessions/${id}`}
-          className="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-indigo-400"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-indigo-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to course · <GradientText>{session.title}</GradientText>

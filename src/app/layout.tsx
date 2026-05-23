@@ -40,9 +40,9 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
-      <body className="min-h-screen bg-[#030712] text-slate-100 antialiased">
+      <body className="min-h-screen flex flex-col bg-[#030712] text-slate-100 antialiased">
         <Navbar />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
         <Footer />
         <BottomNav />
       </body>

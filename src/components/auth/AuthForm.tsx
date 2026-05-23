@@ -168,7 +168,7 @@ export function AuthForm() {
             <div className="w-full border-t border-slate-700/60" />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-[#0f172a] px-3 text-xs text-slate-500">or continue with email</span>
+            <span className="bg-[#0f172a] px-3 text-xs text-slate-400">or continue with email</span>
           </div>
         </div>
 
@@ -197,7 +197,7 @@ export function AuthForm() {
                   id="si-email"
                   type="email"
                   placeholder="you@example.com"
-                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
                   {...signInForm.register('email')}
                 />
                 {signInForm.formState.errors.email && (
@@ -212,12 +212,12 @@ export function AuthForm() {
                     id="si-password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
-                    className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500 pr-10"
+                    className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500 pr-10"
                     {...signInForm.register('password')}
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                     onClick={() => setShowPassword((v) => !v)}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -242,7 +242,7 @@ export function AuthForm() {
               <div className="text-center">
                 <Link
                   href="/auth/forgot-password"
-                  className="text-xs text-slate-500 hover:text-indigo-400 transition-colors"
+                  className="text-xs text-slate-400 hover:text-indigo-400 transition-colors"
                 >
                   Forgot your password?
                 </Link>
@@ -265,7 +265,7 @@ export function AuthForm() {
                   id="su-name"
                   type="text"
                   placeholder="Yasmine Hadj"
-                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
                   {...signUpForm.register('fullName')}
                 />
                 {signUpForm.formState.errors.fullName && (
@@ -279,7 +279,7 @@ export function AuthForm() {
                   id="su-email"
                   type="email"
                   placeholder="you@example.com"
-                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500"
+                  className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500"
                   {...signUpForm.register('email')}
                 />
                 {signUpForm.formState.errors.email && (
@@ -294,12 +294,12 @@ export function AuthForm() {
                     id="su-password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Min. 8 characters"
-                    className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-600 focus:border-indigo-500 pr-10"
+                    className="bg-white/5 border-indigo-500/20 text-white placeholder:text-slate-500 focus:border-indigo-500 pr-10"
                     {...signUpForm.register('password')}
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                     onClick={() => setShowPassword((v) => !v)}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -321,7 +321,7 @@ export function AuthForm() {
                 Create Account
               </Button>
 
-              <p className="text-center text-xs text-slate-600">
+              <p className="text-center text-xs text-slate-500">
                 By signing up, you agree to use this platform responsibly.
               </p>
             </motion.form>

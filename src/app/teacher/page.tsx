@@ -113,7 +113,7 @@ export default async function TeacherPage() {
               <p className={`text-2xl font-bold tabular-nums ${color}`} style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 {value}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+              <p className="text-xs text-slate-400 mt-0.5">{label}</p>
             </GlassCard>
           ))}
         </div>

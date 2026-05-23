@@ -86,7 +86,7 @@ export default async function TeacherQuizPage(props: Props) {
         {/* Back */}
         <Link
           href="/teacher"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-400 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-indigo-400 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Teacher Portal
@@ -100,7 +100,7 @@ export default async function TeacherQuizPage(props: Props) {
           <h1 className="text-3xl font-bold text-white">
             Quiz <GradientText>Manager</GradientText>
           </h1>
-          <p className="text-slate-500 text-sm mt-2">
+          <p className="text-slate-400 text-sm mt-2">
             Create and manage quizzes for your students
           </p>
         </div>
@@ -131,7 +131,7 @@ export default async function TeacherQuizPage(props: Props) {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-600">
+                      <p className="text-xs text-slate-500">
                         {a.total_points} pts · Created {createdDate}
                       </p>
                     </div>
@@ -140,12 +140,12 @@ export default async function TeacherQuizPage(props: Props) {
                       {stat ? (
                         <>
                           <div className="flex items-center gap-1.5 text-sm">
-                            <Users className="h-4 w-4 text-slate-500" />
+                            <Users className="h-4 w-4 text-slate-400" />
                             <span className="text-slate-300 font-medium">{stat.count}</span>
-                            <span className="text-slate-600 text-xs">students</span>
+                            <span className="text-slate-500 text-xs">students</span>
                           </div>
                           <div className="flex items-center gap-1.5 text-sm">
-                            <BarChart2 className="h-4 w-4 text-slate-500" />
+                            <BarChart2 className="h-4 w-4 text-slate-400" />
                             <span
                               className={`font-medium ${
                                 stat.avgPct >= 70
@@ -157,11 +157,11 @@ export default async function TeacherQuizPage(props: Props) {
                             >
                               {Math.round(stat.avgPct)}%
                             </span>
-                            <span className="text-slate-600 text-xs">avg</span>
+                            <span className="text-slate-500 text-xs">avg</span>
                           </div>
                         </>
                       ) : (
-                        <span className="text-xs text-slate-600 italic">No submissions yet</span>
+                        <span className="text-xs text-slate-500 italic">No submissions yet</span>
                       )}
                       <Link
                         href={`/sessions/${sessionId}/quiz/${a.id}`}
@@ -184,7 +184,7 @@ export default async function TeacherQuizPage(props: Props) {
               <div className="w-full border-t border-white/[0.06]" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[#030712] px-4 text-xs font-medium text-slate-600 uppercase tracking-wider">
+              <span className="bg-[#030712] px-4 text-xs font-medium text-slate-500 uppercase tracking-wider">
                 Create New Quiz
               </span>
             </div>

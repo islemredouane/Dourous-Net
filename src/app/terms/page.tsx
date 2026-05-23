@@ -54,14 +54,14 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen pt-24 pb-20" style={{ backgroundColor: '#030712', fontFamily: 'var(--font-space-grotesk)' }}>
       <div className="mx-auto max-w-3xl px-4">
-        <Link href="/" className="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-400 transition-colors">
+        <Link href="/" className="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-indigo-400 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back to Home
         </Link>
 
         <div className="mb-10">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-indigo-400">Legal</p>
           <h1 className="text-4xl font-bold text-white">Terms of Service</h1>
-          <p className="mt-3 text-sm text-slate-500">Last updated: May 2026</p>
+          <p className="mt-3 text-sm text-slate-400">Last updated: May 2026</p>
         </div>
 
         <p className="mb-10 text-slate-400 leading-relaxed">
@@ -77,7 +77,7 @@ export default function TermsPage() {
           ))}
         </div>
 
-        <div className="mt-12 flex gap-4 text-sm text-slate-500">
+        <div className="mt-12 flex gap-4 text-sm text-slate-400">
           <Link href="/privacy" className="hover:text-indigo-400 transition-colors">Privacy Policy →</Link>
           <Link href="/cookies" className="hover:text-indigo-400 transition-colors">Cookie Policy →</Link>
         </div>
