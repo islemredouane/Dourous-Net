@@ -1,11 +1,71 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { SessionCard } from '@/components/sessions/SessionCard'
+import { SITE_CONFIG } from '@/lib/constants'
 import { ArrowLeft, BookOpen, GraduationCap, Layers } from 'lucide-react'
 import Link from 'next/link'
 import type { SessionWithTeacher, Student } from '@/types'
 
 type Props = { params: Promise<{ id: string }> }
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { id } = await props.params
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('students')
+    .select('id, full_name, field, level, bio')
+    .eq('id', id)
+    .single()
+
+  if (!data) {
+    return {
+      title: 'Educator Not Found',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const educator = data as {
+    id: string
+    full_name: string
+    field: string | null
+    level: string | null
+    bio: string | null
+  }
+
+  const title = educator.full_name
+  const roleLabel = [educator.field, educator.level].filter(Boolean).join(' · ')
+  const description =
+    educator.bio?.trim() ||
+    `Explore structured courses and mentorship from ${title}${roleLabel ? ` (${roleLabel})` : ''} on ${SITE_CONFIG.name}.`
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/teachers/${educator.id}` },
+    openGraph: {
+      type: 'profile',
+      url: `/teachers/${educator.id}`,
+      title: `${title} · ${SITE_CONFIG.name}`,
+      description,
+      images: [
+        {
+          url: '/og/teachers.jpg',
+          width: 1200,
+          height: 630,
+          alt: `${title} — Educator dossier on ${SITE_CONFIG.name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} · ${SITE_CONFIG.name}`,
+      description,
+      images: ['/og/teachers.jpg'],
+    },
+  }
+}
 
 export default async function TeacherProfilePage(props: Props) {
   const { id } = await props.params

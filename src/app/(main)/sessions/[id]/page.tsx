@@ -1,7 +1,8 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { EnrollButton } from '@/components/sessions/EnrollButton'
-import { CATEGORY_COLORS, CATEGORY_GRADIENTS } from '@/lib/constants'
+import { CATEGORY_COLORS, CATEGORY_GRADIENTS, SITE_CONFIG } from '@/lib/constants'
 import {
   ArrowLeft,
   Award,
@@ -18,6 +19,69 @@ import Link from 'next/link'
 import type { SessionWithTeacher, Lesson, Assignment } from '@/types'
 
 type Props = { params: Promise<{ id: string }> }
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { id } = await props.params
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('sessions')
+    .select('id, title, description, category, thumbnail_url, teacher:students(full_name)')
+    .eq('id', id)
+    .single()
+
+  if (!data) {
+    return {
+      title: 'Session Not Found',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const sessionMeta = data as {
+    id: string
+    title: string
+    description: string | null
+    category: string
+    thumbnail_url: string | null
+    teacher: { full_name?: string } | { full_name?: string }[] | null
+  }
+
+  const teacherName = Array.isArray(sessionMeta.teacher)
+    ? sessionMeta.teacher[0]?.full_name
+    : sessionMeta.teacher?.full_name
+
+  const title = sessionMeta.title
+  const description =
+    sessionMeta.description?.trim() ||
+    `${sessionMeta.category} course${teacherName ? ` taught by ${teacherName}` : ''} on ${SITE_CONFIG.name}.`
+  const ogImage = sessionMeta.thumbnail_url || '/og/sessions.jpg'
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/sessions/${sessionMeta.id}` },
+    openGraph: {
+      type: 'article',
+      url: `/sessions/${sessionMeta.id}`,
+      title: `${title} · ${SITE_CONFIG.name}`,
+      description,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${title} — ${sessionMeta.category} course on ${SITE_CONFIG.name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} · ${SITE_CONFIG.name}`,
+      description,
+      images: [ogImage],
+    },
+  }
+}
 
 export default async function SessionDetailPage(props: Props) {
   const { id } = await props.params

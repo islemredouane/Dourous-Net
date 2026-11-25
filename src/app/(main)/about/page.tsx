@@ -1,11 +1,37 @@
+import type { Metadata } from 'next'
 import { SectionTitle } from '@/components/shared/SectionTitle'
 import { AboutCta } from '@/components/about/AboutCta'
+import { SITE_CONFIG } from '@/lib/constants'
 import { Cloud, Database, Layers, Sparkles } from 'lucide-react'
 
-export const metadata = {
-  title: 'How It Works & Architecture',
-  description:
-    'Learn how Dourous-Net connects Algerian students and teachers through Next.js App Router, Supabase PostgreSQL RLS, and AI tutoring.',
+const PAGE_TITLE = 'How It Works & Architecture'
+const PAGE_DESC =
+  'Learn how Dourous-Net connects Algerian students and teachers through Next.js App Router, Supabase PostgreSQL RLS, and AI tutoring.'
+
+export const metadata: Metadata = {
+  title: PAGE_TITLE,
+  description: PAGE_DESC,
+  alternates: { canonical: '/about' },
+  openGraph: {
+    type: 'website',
+    url: '/about',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: [
+      {
+        url: '/og/about.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${PAGE_TITLE} — ${SITE_CONFIG.name}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: ['/og/about.jpg'],
+  },
 }
 
 const STEPS = [

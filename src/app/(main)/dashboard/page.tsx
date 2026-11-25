@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
@@ -8,8 +9,9 @@ import { UploadArea } from '@/components/dashboard/UploadArea'
 import { ArrowRight, GraduationCap } from 'lucide-react'
 import type { EnrollmentWithSession, Student } from '@/types'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard',
+  robots: { index: false, follow: false },
 }
 
 export default async function DashboardPage() {

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TeacherSessionsList } from '@/components/teacher/TeacherSessionsList'
@@ -6,7 +7,10 @@ import { BookOpen, Clock, FileText, PlusCircle, Users } from 'lucide-react'
 import Link from 'next/link'
 import type { Session } from '@/types'
 
-export const metadata = { title: 'Teacher Studio' }
+export const metadata: Metadata = {
+  title: 'Teacher Studio',
+  robots: { index: false, follow: false },
+}
 
 interface SessionWithCount extends Session {
   enrollment_count: number

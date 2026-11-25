@@ -6,6 +6,7 @@ import { OfflineActions } from '@/components/pwa/OfflineActions'
 export const metadata: Metadata = {
   title: 'Offline',
   description: 'You are currently offline. Reconnect to access Dourous-Net.',
+  robots: { index: false, follow: false },
 }
 
 export default function OfflinePage() {

@@ -1,0 +1,31 @@
+# Dourous-Net — Algeria's Digital Academy
+
+> Structured courses, video curricula, instant-graded timed quizzes, private PDF coursework drops, and a course-scoped AI Learning Coach for Algerian students and university educators across all 69 wilayas.
+
+- Canonical URL: https://dourous-nett.vercel.app
+- Contact: contact@dourous-net.dz
+- GitHub: https://github.com/islemredouane/Dourous-Net
+- Academic Context: ISI 2CP 2026 — Systèmes d'Information · Thème 4 : Éducation
+
+## Primary Public Pages
+
+- [Home](https://dourous-nett.vercel.app/): Overview of Dourous-Net, six core disciplines, platform metrics, course previews, FAQ, and role-adaptive member home when signed in.
+- [Course Catalog](https://dourous-nett.vercel.app/sessions): Browse, filter, and search free video courses across Computer Science, Mathematics, Physics, Chemistry, Languages, and General tracks.
+- [Educators Directory](https://dourous-nett.vercel.app/teachers): Public directory of Algerian university lecturers, PhDs, and engineers teaching on the platform.
+- [How It Works & Architecture](https://dourous-nett.vercel.app/about): End-to-end learning workflow and serverless cloud architecture built with Next.js App Router, Supabase PostgreSQL RLS, and Groq Cloud AI.
+- [Sign In & Interactive Demo](https://dourous-nett.vercel.app/auth): Account login, Google OAuth, and one-click Student and Teacher demo sandboxes.
+
+## Academic Disciplines
+
+- Computer Science (`/sessions?category=Computer%20Science`)
+- Mathematics (`/sessions?category=Mathematics`)
+- Physics (`/sessions?category=Physics`)
+- Chemistry (`/sessions?category=Chemistry`)
+- Languages (`/sessions?category=Languages`)
+- General (`/sessions?category=General`)
+
+## Authenticated Portals (Non-Indexed)
+
+- Student Dashboard (`/dashboard`): Enrolled courses, resume-lesson progress, timed quiz scores, and private PDF assignment drops.
+- Teacher Studio (`/teacher`): Create courses (`/teacher/new`), sequence chapters, build instant-graded MCQ quizzes, and review student PDF submissions.
+- Lesson Workspace (`/sessions/[id]/learn/[lessonId]`): Distraction-free video player (YouTube, Google Drive, Vimeo) alongside a course-scoped Groq AI Learning Coach.

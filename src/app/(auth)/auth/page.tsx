@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
@@ -5,10 +6,37 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { HeroScene } from '@/components/3d/HeroScene'
 import { BrandLogo } from '@/components/shared/BrandLogo'
+import { SITE_CONFIG } from '@/lib/constants'
 import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 
-export const metadata = {
-  title: 'Sign In / Sign Up',
+const PAGE_TITLE = 'Sign In / Sign Up'
+const PAGE_DESC =
+  'Sign in to Dourous-Net as a Student or Educator, or launch an instant portfolio demo sandbox across all 69 wilayas.'
+
+export const metadata: Metadata = {
+  title: PAGE_TITLE,
+  description: PAGE_DESC,
+  alternates: { canonical: '/auth' },
+  openGraph: {
+    type: 'website',
+    url: '/auth',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: [
+      {
+        url: '/og/default.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} — Sign In & Interactive Demo`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: ['/og/default.jpg'],
+  },
 }
 
 export default async function AuthPage() {

@@ -1,15 +1,41 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import {
   TeachersDirectoryClient,
   type TeacherSummary,
 } from '@/components/teachers/TeachersDirectoryClient'
 import { TeachersHeaderAction } from '@/components/teachers/TeachersHeaderAction'
+import { SITE_CONFIG } from '@/lib/constants'
 import type { Student } from '@/types'
 
-export const metadata = {
-  title: 'Educators & Instructors',
-  description:
-    'Meet the Algerian professors, engineers, and educators publishing structured video sessions on Dourous-Net.',
+const PAGE_TITLE = 'Educators & Instructors'
+const PAGE_DESC =
+  'Meet the Algerian professors, engineers, and educators publishing structured video sessions on Dourous-Net.'
+
+export const metadata: Metadata = {
+  title: PAGE_TITLE,
+  description: PAGE_DESC,
+  alternates: { canonical: '/teachers' },
+  openGraph: {
+    type: 'website',
+    url: '/teachers',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: [
+      {
+        url: '/og/teachers.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${PAGE_TITLE} — ${SITE_CONFIG.name}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${PAGE_TITLE} · ${SITE_CONFIG.name}`,
+    description: PAGE_DESC,
+    images: ['/og/teachers.jpg'],
+  },
 }
 
 export default async function TeachersPage() {

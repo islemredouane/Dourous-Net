@@ -1,9 +1,13 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ProfileForm } from '@/components/profile/ProfileForm'
 import type { Student } from '@/types'
 
-export const metadata = { title: 'My Profile' }
+export const metadata: Metadata = {
+  title: 'My Profile',
+  robots: { index: false, follow: false },
+}
 
 export default async function ProfilePage() {
   const supabase = await createClient()

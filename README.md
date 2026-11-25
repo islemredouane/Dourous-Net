@@ -342,8 +342,10 @@ dourous-net/
 ├── .github/assets/                      # Pre-rendered README banner, stats, preview & screens/*.webp
 ├── public/
 │   ├── favicon.svg                      # Static brand emblem fallback
+│   ├── llms.txt                         # LLM-friendly academy index (llmstxt.org)
 │   ├── sw.js                            # Service Worker (static chunk cache + offline fallback)
 │   ├── icons/                           # PWA PNG icons (192x192, 512x512, maskable 512x512)
+│   ├── og/                              # 1200x630 Open Graph / X social cards (default, sessions, teachers, about)
 │   └── screenshots/                     # Richer Install UI desktop & mobile WebP screenshots
 ├── supabase/
 │   ├── migrations/                      # Ordered PostgreSQL DDL, RLS, Storage & triggers (001–007)
@@ -365,10 +367,12 @@ dourous-net/
 │   │   ├── api/                         # ai-coach, auth/callback, demo/*, seed (dev-guarded)
 │   │   ├── offline/page.tsx             # Branded offline fallback route for PWA navigation
 │   │   ├── manifest.ts                  # Typed Next.js 16 Web App Manifest + app shortcuts
+│   │   ├── robots.ts                    # Search/citation rules & AI training bot disallow list
+│   │   ├── sitemap.ts                   # Dynamic public sessions & educators XML sitemap
 │   │   ├── apple-icon.png               # 180x180 Apple touch icon auto-linked by App Router
 │   │   ├── globals.css                  # Theme tokens, radii, standalone PWA & scrollbar styles
 │   │   ├── icon.svg                     # App Router vector favicon
-│   │   └── layout.tsx                   # Google Fonts, Viewport, PwaProvider & CommandPalette
+│   │   └── layout.tsx                   # Google Fonts, Viewport, OG/Twitter metadata & Schema.org JSON-LD
 │   └── components/
 │       ├── 3d/                          # HeroScene, HeroSceneInner, FloatingGeometry, ParticleField, GradientOrb
 │       ├── about/                       # AboutCta

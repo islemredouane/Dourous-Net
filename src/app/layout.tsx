@@ -52,14 +52,56 @@ export const metadata: Metadata = {
     template: `%s · ${SITE_CONFIG.name}`,
   },
   description: SITE_CONFIG.description,
+  keywords: [
+    'Dourous-Net',
+    'Algeria education',
+    'digital academy',
+    'Algerian universities',
+    'online learning Algeria',
+    'video courses',
+    'AI tutor',
+    'ESTIN',
+    'ISI',
+  ],
+  authors: [{ name: 'Redouane Mohamed Islem' }, { name: 'Dourous-Net Team' }],
+  creator: SITE_CONFIG.name,
+  publisher: SITE_CONFIG.name,
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
     type: 'website',
+    locale: 'en_US',
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
     title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
     description: SITE_CONFIG.description,
+    images: [
+      {
+        url: '/og/default.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} — Structured courses across 69 Algerian wilayas`,
+      },
+    ],
   },
-  keywords: ['Algeria', 'education', 'online learning', 'sessions', 'courses', 'ESTIN', 'ISI'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+    description: SITE_CONFIG.description,
+    images: ['/og/default.jpg'],
+  },
   manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
@@ -81,6 +123,40 @@ export const metadata: Metadata = {
   },
 }
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'EducationalOrganization',
+      '@id': `${SITE_CONFIG.url}/#organization`,
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+      logo: `${SITE_CONFIG.url}/icons/icon-512x512.png`,
+      image: `${SITE_CONFIG.url}/og/default.jpg`,
+      description: SITE_CONFIG.description,
+      email: SITE_CONFIG.email,
+      areaServed: {
+        '@type': 'Country',
+        name: 'Algeria',
+      },
+      sameAs: [SITE_CONFIG.githubUrl],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_CONFIG.url}/#website`,
+      url: SITE_CONFIG.url,
+      name: SITE_CONFIG.name,
+      description: SITE_CONFIG.description,
+      publisher: { '@id': `${SITE_CONFIG.url}/#organization` },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${SITE_CONFIG.url}/sessions?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -92,6 +168,12 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${lora.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-[#0B1120] text-[#DDE3EC] antialiased selection:bg-[#2563EB] selection:text-white">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[120] focus:px-4 focus:py-2 focus:bg-[#2563EB] focus:text-white focus:text-sm focus:font-medium"
