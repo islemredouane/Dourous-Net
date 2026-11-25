@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://dourous-net-six.vercel.app">
+<a href="https://dourous-nett.vercel.app">
   <img src=".github/assets/banner.webp" alt="Dourous-Net — Structured courses. Built for mastery. Algeria's Digital Academy." width="100%" />
 </a>
 
@@ -10,7 +10,7 @@
 
 ### *Structured courses. Built for mastery — across all 69 Algerian wilayas.*
 
-[![Live Platform](https://img.shields.io/badge/Live-dourous--net--six.vercel.app-2563EB?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0B1120)](https://dourous-net-six.vercel.app)
+[![Live Platform](https://img.shields.io/badge/Live-dourous--nett.vercel.app-2563EB?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0B1120)](https://dourous-nett.vercel.app)
 [![GitHub Stars](https://img.shields.io/badge/Star_on_GitHub-islemredouane%2FDourous--Net-121A2E?style=for-the-badge&logo=github&logoColor=F59E0B&labelColor=0B1120)](https://github.com/islemredouane/Dourous-Net)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.4-2563EB?style=for-the-badge&logo=next.js&logoColor=white&labelColor=0B1120)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.4-3B82F6?style=for-the-badge&logo=react&logoColor=white&labelColor=0B1120)](https://react.dev)
@@ -25,7 +25,7 @@ Full-stack Algerian digital academy uniting video curricula, instant-graded quiz
 
 <br>
 
-[**Explore Live App**](https://dourous-net-six.vercel.app) &nbsp;✦&nbsp;
+[**Explore Live App**](https://dourous-nett.vercel.app) &nbsp;✦&nbsp;
 [**Screenshots**](#-screenshots--ui-tour) &nbsp;✦&nbsp;
 [**Try Demo**](#-try-the-interactive-demo) &nbsp;✦&nbsp;
 [**Features**](#-features) &nbsp;✦&nbsp;
@@ -110,7 +110,7 @@ Full-stack Algerian digital academy uniting video curricula, instant-graded quiz
 
 Dourous-Net ships with a built-in **Portfolio Demo Engine** (`src/lib/demo/`) paired with a **600 ms Supabase reachability circuit breaker** (`src/lib/supabase/reachability.ts`), allowing reviewers, juries, and recruiters to test both **Student** and **Teacher** workflows immediately — even without provisioning a live backend.
 
-1. Visit **[dourous-net-six.vercel.app/auth](https://dourous-net-six.vercel.app/auth)** (or `http://localhost:3000/auth` locally).
+1. Visit **[dourous-nett.vercel.app/auth](https://dourous-nett.vercel.app/auth)** (or `http://localhost:3000/auth` locally).
 2. Click either **Student · Yasmine Hadj** or **Teacher · Dr. Ahmed Benali** under **Portfolio Demo Accounts** for instant zero-signup cookie session switching.
 3. Explore student workflows (course enrollment, video progress tracking, timed MCQ quiz grading, PDF homework upload, AI Learning Coach) or switch seamlessly to **Teacher Studio** (`/teacher`) to publish courses, sequence lessons, build quizzes, and review submissions.
 

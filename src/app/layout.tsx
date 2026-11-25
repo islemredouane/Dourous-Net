@@ -45,12 +45,20 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.url),
   applicationName: SITE_CONFIG.name,
   title: {
     default: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
     template: `%s · ${SITE_CONFIG.name}`,
   },
   description: SITE_CONFIG.description,
+  openGraph: {
+    type: 'website',
+    url: SITE_CONFIG.url,
+    siteName: SITE_CONFIG.name,
+    title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+    description: SITE_CONFIG.description,
+  },
   keywords: ['Algeria', 'education', 'online learning', 'sessions', 'courses', 'ESTIN', 'ISI'],
   manifest: '/manifest.webmanifest',
   appleWebApp: {

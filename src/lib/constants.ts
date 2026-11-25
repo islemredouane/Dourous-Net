@@ -7,7 +7,7 @@ export const SITE_CONFIG = {
   quote: 'Education moves forward when knowledge is structured, open, and guided.',
   description:
     'Expert-led video sessions, instant-graded quizzes, assignment submissions, and an AI Learning Coach for Algerian students and educators.',
-  url: 'https://dourous-net-six.vercel.app',
+  url: 'https://dourous-nett.vercel.app',
   email: 'contact@dourous-net.dz',
   githubUrl: 'https://github.com/islemredouane/Dourous-Net',
   country: 'Algeria · 69 Wilayas',
