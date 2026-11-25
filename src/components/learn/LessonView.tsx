@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CheckCircle2, ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 import { VideoPlayer } from '@/components/learn/VideoPlayer'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import type { Lesson } from '@/types'
 
@@ -41,11 +40,10 @@ export function LessonView({
     setMarking(true)
     await markComplete(lesson.id)
     setMarking(false)
-    // Auto-advance to next lesson after a brief moment
     if (nextLesson) {
       setTimeout(() => {
         router.push(`/sessions/${sessionId}/learn/${nextLesson.id}`)
-      }, 800)
+      }, 650)
     }
   }
 
@@ -54,114 +52,118 @@ export function LessonView({
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Lesson header */}
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <h1
-            className="text-2xl font-bold text-white md:text-3xl leading-tight"
-            style={{ fontFamily: 'var(--font-space-grotesk)' }}
-          >
-            {lesson.title}
-          </h1>
-          {lesson.duration_minutes > 0 && (
-            <div className="mt-2 flex items-center gap-1.5 text-slate-400 text-sm">
-              <Clock className="h-4 w-4 text-indigo-400" />
-              <span>{lesson.duration_minutes} minutes</span>
+    <div className="flex flex-col gap-5">
+      {/* Video */}
+      {lesson.video_url ? (
+        <VideoPlayer url={lesson.video_url} title={lesson.title} />
+      ) : (
+        <div className="rounded-2xl border border-[#DDE3EC]/12 bg-[#121A2E] flex aspect-video w-full items-center justify-center">
+          <p className="text-sm text-[#94A3B8]">No video provided for this lesson.</p>
+        </div>
+      )}
+
+      {/* Title & Status */}
+      <div className="rounded-2xl border border-[#DDE3EC]/12 bg-[#121A2E] p-5 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="eyebrow text-[#7F97C7] mb-1.5">
+              Lesson {String(currentIndex + 1).padStart(2, '0')} of {String(sortedLessons.length).padStart(2, '0')}
+            </p>
+            <h1
+              className="text-2xl font-bold text-white md:text-3xl leading-tight"
+              style={{ fontFamily: 'var(--font-space-grotesk)' }}
+            >
+              {lesson.title}
+            </h1>
+            {lesson.duration_minutes > 0 && (
+              <div className="mt-2 inline-flex items-center gap-1.5 font-mono text-xs text-[#8A94A8]">
+                <Clock className="h-3.5 w-3.5 text-[#60A5FA]" />
+                <span>{lesson.duration_minutes} minutes</span>
+              </div>
+            )}
+          </div>
+
+          {isCompleted && (
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/35 bg-emerald-500/15 px-3 py-1.5 font-mono text-xs font-semibold text-emerald-300">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              <span>Completed</span>
             </div>
           )}
         </div>
 
-        {isCompleted && (
-          <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 text-xs font-medium text-emerald-400">
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            Completed
+        {lesson.description && (
+          <div className="mt-5 pt-5 border-t border-[#DDE3EC]/10">
+            <h2
+              className="mb-2 text-sm font-bold uppercase tracking-wider text-white"
+              style={{ fontFamily: 'var(--font-space-grotesk)' }}
+            >
+              Lesson Overview
+            </h2>
+            <p className="text-sm text-[#DDE3EC]/80 leading-relaxed">
+              {lesson.description}
+            </p>
           </div>
         )}
       </div>
 
-      {/* Video player */}
-      {lesson.video_url ? (
-        <VideoPlayer url={lesson.video_url} title={lesson.title} />
-      ) : (
-        <div className="glass flex aspect-video w-full items-center justify-center rounded-2xl">
-          <p className="text-slate-400">No video available for this lesson.</p>
-        </div>
-      )}
-
-      {/* Description */}
-      {lesson.description && (
-        <div className="glass rounded-2xl p-6">
-          <h2
-            className="mb-3 text-base font-semibold text-white"
-            style={{ fontFamily: 'var(--font-space-grotesk)' }}
-          >
-            About this lesson
-          </h2>
-          <p className="text-slate-400 leading-relaxed text-sm">{lesson.description}</p>
-        </div>
-      )}
-
-      {/* Navigation bar */}
-      <div className="glass rounded-2xl p-4 flex items-center justify-between gap-3 flex-wrap">
-        {/* Previous */}
-        <Button
-          variant="ghost"
-          className={cn(
-            'flex items-center gap-2 text-slate-400 hover:text-white transition-colors',
-            !prevLesson && 'invisible pointer-events-none',
-          )}
+      {/* Controls Bar */}
+      <div className="rounded-2xl border border-[#DDE3EC]/12 bg-[#121A2E] p-4 flex items-center justify-between gap-3 flex-wrap">
+        <button
+          type="button"
           onClick={() => prevLesson && navigate(prevLesson.id)}
           disabled={!prevLesson}
+          className={cn(
+            'inline-flex items-center gap-2 h-10 rounded-full px-4 border border-[#DDE3EC]/15 text-xs font-medium text-[#DDE3EC] hover:border-white hover:text-white transition-colors',
+            !prevLesson && 'invisible pointer-events-none',
+          )}
         >
           <ChevronLeft className="h-4 w-4" />
           <span className="hidden sm:inline">Previous</span>
-        </Button>
+        </button>
 
-        {/* Mark complete */}
         {studentId && (
-          <Button
+          <button
+            type="button"
             onClick={handleMarkComplete}
             disabled={isCompleted || marking}
             className={cn(
-              'flex items-center gap-2 px-6 font-medium transition-all duration-300',
+              'inline-flex items-center gap-2 h-10 rounded-full px-6 text-xs font-semibold transition-colors',
               isCompleted
-                ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 cursor-default hover:bg-emerald-500/10'
-                : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 shadow-glow-sm hover:shadow-glow-md',
+                ? 'border border-emerald-400/35 bg-emerald-500/15 text-emerald-300 cursor-default'
+                : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white',
             )}
           >
             {isCompleted ? (
               <>
                 <CheckCircle2 className="h-4 w-4" />
-                Completed
+                <span>Completed</span>
               </>
             ) : marking ? (
               <>
-                <div className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                Marking...
+                <span className="h-3.5 w-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                <span>Saving...</span>
               </>
             ) : (
               <>
                 <CheckCircle2 className="h-4 w-4" />
-                Mark as Complete
+                <span>Mark Complete</span>
               </>
             )}
-          </Button>
+          </button>
         )}
 
-        {/* Next */}
-        <Button
-          variant="ghost"
-          className={cn(
-            'flex items-center gap-2 text-slate-400 hover:text-white transition-colors',
-            !nextLesson && 'invisible pointer-events-none',
-          )}
+        <button
+          type="button"
           onClick={() => nextLesson && navigate(nextLesson.id)}
           disabled={!nextLesson}
+          className={cn(
+            'inline-flex items-center gap-2 h-10 rounded-full px-4 border border-[#DDE3EC]/15 text-xs font-medium text-[#DDE3EC] hover:border-white hover:text-white transition-colors',
+            !nextLesson && 'invisible pointer-events-none',
+          )}
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="h-4 w-4" />
-        </Button>
+        </button>
       </div>
     </div>
   )

@@ -9,26 +9,39 @@ export function useLessonProgress(
   initialCompleted: string[] = [],
 ) {
   const [completedIds, setCompletedIds] = useState<Set<string>>(
-    new Set(initialCompleted),
+    () => new Set(initialCompleted),
   )
-  const [loading, setLoading] = useState(!initialCompleted.length)
+  const [fetchedKey, setFetchedKey] = useState<string | null>(
+    initialCompleted.length > 0 && studentId ? `${studentId}:${sessionId}` : null,
+  )
+
+  const queryKey = studentId ? `${studentId}:${sessionId}` : null
+  const loading = queryKey !== null && fetchedKey !== queryKey
 
   useEffect(() => {
-    if (!studentId) {
-      setLoading(false)
-      return
-    }
+    if (!studentId || !queryKey) return
+    let active = true
     const supabase = createClient()
     supabase
       .from('lesson_progress')
       .select('lesson_id')
       .eq('student_id', studentId)
       .eq('completed', true)
-      .then(({ data }) => {
-        setCompletedIds(new Set((data ?? []).map((r) => r.lesson_id)))
-        setLoading(false)
-      })
-  }, [studentId, sessionId])
+      .then(
+        ({ data }) => {
+          if (!active) return
+          setCompletedIds(new Set((data ?? []).map((r) => r.lesson_id)))
+          setFetchedKey(queryKey)
+        },
+        () => {
+          if (!active) return
+          setFetchedKey(queryKey)
+        },
+      )
+    return () => {
+      active = false
+    }
+  }, [studentId, sessionId, queryKey])
 
   const markComplete = useCallback(
     async (lessonId: string) => {

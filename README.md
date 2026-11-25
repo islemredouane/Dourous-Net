@@ -1,431 +1,472 @@
-# Dourous-Net — Algeria's Digital Learning Platform
+<div align="center">
 
-**ISI 2CP 2026 — Module Systèmes d'Information | Thème 4 : Éducation**
+<a href="https://dourous-net-six.vercel.app">
+  <img src=".github/assets/banner.webp" alt="Dourous-Net — Structured courses. Built for mastery. Algeria's Digital Academy." width="100%" />
+</a>
 
-> Plateforme éducative algérienne de nouvelle génération — cours vidéo, quiz interactifs, suivi de progression et assistant IA, le tout déployé sur le cloud.
+<br><br>
 
-| | |
+# Dourous-Net
+
+### *Structured courses. Built for mastery — across all 69 Algerian wilayas.*
+
+[![Live Platform](https://img.shields.io/badge/Live-dourous--net--six.vercel.app-2563EB?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0B1120)](https://dourous-net-six.vercel.app)
+[![GitHub Stars](https://img.shields.io/badge/Star_on_GitHub-islemredouane%2FDourous--Net-121A2E?style=for-the-badge&logo=github&logoColor=F59E0B&labelColor=0B1120)](https://github.com/islemredouane/Dourous-Net)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.4-2563EB?style=for-the-badge&logo=next.js&logoColor=white&labelColor=0B1120)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.2.4-3B82F6?style=for-the-badge&logo=react&logoColor=white&labelColor=0B1120)](https://react.dev)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL_%2B_RLS-10B981?style=for-the-badge&logo=supabase&logoColor=white&labelColor=0B1120)](https://supabase.com)
+[![Groq AI](https://img.shields.io/badge/AI_Coach-Groq_Cloud-F59E0B?style=for-the-badge&labelColor=0B1120)](https://groq.com)
+[![Three.js](https://img.shields.io/badge/3D_Hero-Three.js_0.184-60A5FA?style=for-the-badge&logo=threedotjs&logoColor=white&labelColor=0B1120)](https://threejs.org)
+
+<br>
+
+**ISI 2CP 2026 — Module Systèmes d'Information · Thème 4 : Éducation · Année 2025–2026**<br>
+Full-stack Algerian digital academy uniting video curricula, instant-graded quizzes, private PDF coursework drops, an Educator Studio, and a course-scoped AI Coach — built on Next.js 16, Supabase, Groq Cloud, and Vercel.
+
+<br>
+
+[**Explore Live App**](https://dourous-net-six.vercel.app) &nbsp;✦&nbsp;
+[**Screenshots**](#-screenshots--ui-tour) &nbsp;✦&nbsp;
+[**Try Demo**](#-try-the-interactive-demo) &nbsp;✦&nbsp;
+[**Features**](#-features) &nbsp;✦&nbsp;
+[**Architecture**](#-architecture) &nbsp;✦&nbsp;
+[**Mission 4 Report**](#-mission-4--architectural-report) &nbsp;✦&nbsp;
+[**Database**](#-database--storage) &nbsp;✦&nbsp;
+[**Deploy & Setup**](#-vercel-deployment) &nbsp;✦&nbsp;
+[**Team**](#-team--academic-context)
+
+</div>
+
+<br>
+
+<img src=".github/assets/stats.webp" alt="Architecture at a glance: 69 Algerian wilayas, 6 core disciplines, 7 PostgreSQL tables, 3 router groups, 2 member portals, 100% free and resilient" width="100%" />
+
+<br><br>
+
+---
+
+## ✦ Overview
+
+**Dourous-Net** organizes university and self-paced education for Algerian students and instructors across **69 wilayas** into one cohesive workspace. Instead of scattering recordings across messaging channels and isolated shared links, every course follows an integrated cloud workflow: **discover by discipline → enroll in one click → stream modular video lessons with an AI Learning Coach → take timed MCQs with instant breakdowns → submit private PDF coursework**.
+
+| Portal | Adaptive Landing (`/`) | Primary Routes |
+|---|---|---|
+| **Guest / Visitor** | 3D interactive hero (`Three.js`), 6 core disciplines grid, catalog search hub, platform stats, tabbed course preview, compact Campus Voices feedback, FAQ accordion | `/`, `/sessions`, `/sessions/[id]`, `/teachers`, `/teachers/[id]`, `/about` |
+| **Student** | **Student Member Home** with welcome pulse, resume-last-lesson links, completion telemetry, and tailored recommendations | `/`, `/dashboard`, `/sessions/[id]/learn/[lessonId]`, `/sessions/[id]/quiz/[assignmentId]`, `/profile` |
+| **Educator** | **Teacher Member Home** with active cohort metrics, quick session creation, and direct studio navigation | `/`, `/teacher`, `/teacher/new`, `/teacher/sessions/[id]/lessons`, `/teacher/sessions/[id]/quiz`, `/profile` |
+
+<br>
+
+<div align="center">
+  <img src=".github/assets/preview.webp" alt="Dourous-Net desktop and mobile platform mockup" width="100%" />
+</div>
+
+<br>
+
+---
+
+## ✦ Screenshots & UI Tour
+
+### Desktop Experience
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src=".github/assets/screens/desktop-home.webp" alt="Dourous-Net Desktop Landing & Catalog Search Hub" width="100%" />
+      <br><sub><b>Hero & Catalog Search Hub</b> — 3D canvas, sequential reveal typography, instant search & Explore mega-menu</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src=".github/assets/screens/desktop-sessions.webp" alt="Dourous-Net Browse Sessions Catalog" width="100%" />
+      <br><sub><b>Course Catalog (<code>/sessions</code>)</b> — Discipline filter pills, sort order, free toggle & instant search</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src=".github/assets/screens/desktop-teachers.webp" alt="Dourous-Net Faculty & Educators Directory" width="100%" />
+      <br><sub><b>Educators Directory (<code>/teachers</code>)</b> — Public faculty profiles, discipline specialties & session counts</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src=".github/assets/screens/desktop-auth.webp" alt="Dourous-Net Authentication & Portfolio Demo Switcher" width="100%" />
+      <br><sub><b>Auth & Demo Sandbox (<code>/auth</code>)</b> — Email/Password, Google OAuth & 1-click Student / Teacher sandboxes</sub>
+    </td>
+  </tr>
+</table>
+
+### Mobile Experience (`390×844` · Floating Bottom Navigation)
+
+<div align="center">
+  <img src=".github/assets/screens/mobile-home.webp" alt="Mobile Home" width="23%" />
+  &nbsp;
+  <img src=".github/assets/screens/mobile-sessions.webp" alt="Mobile Sessions" width="23%" />
+  &nbsp;
+  <img src=".github/assets/screens/mobile-about.webp" alt="Mobile About Blueprint" width="23%" />
+  &nbsp;
+  <img src=".github/assets/screens/mobile-auth.webp" alt="Mobile Auth" width="23%" />
+</div>
+
+---
+
+## ✦ Try the Interactive Demo
+
+Dourous-Net ships with a built-in **Portfolio Demo Engine** (`src/lib/demo/`) paired with a **600 ms Supabase reachability circuit breaker** (`src/lib/supabase/reachability.ts`), allowing reviewers, juries, and recruiters to test both **Student** and **Teacher** workflows immediately — even without provisioning a live backend.
+
+1. Visit **[dourous-net-six.vercel.app/auth](https://dourous-net-six.vercel.app/auth)** (or `http://localhost:3000/auth` locally).
+2. Click either **Student · Yasmine Hadj** or **Teacher · Dr. Ahmed Benali** under **Portfolio Demo Accounts** for instant zero-signup cookie session switching.
+3. Explore student workflows (course enrollment, video progress tracking, timed MCQ quiz grading, PDF homework upload, AI Learning Coach) or switch seamlessly to **Teacher Studio** (`/teacher`) to publish courses, sequence lessons, build quizzes, and review submissions.
+
+> [!NOTE]
+> When connected to a seeded development Supabase instance, sample accounts can also be exercised via email/password on `/auth` (the `/api/seed` endpoint is strictly disabled with HTTP `403` in production).
+
+---
+
+## ✦ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🎓 Learner Experience
+
+- **Role-Adaptive Landing:** Signed-in students land on **Student Member Home** with active course resumption, quiz scores, and curated tracks.
+  <br><sub>Routes: `/` · `/dashboard`</sub>
+
+- **Explore Mega-Menu & Command Palette (`⌘K`):** Hover-intent discipline drawer and keyboard-first global switcher for courses, faculty, and pages.
+  <br><sub>Routes: `/sessions` · `ExploreMegaMenu` · `CommandPalette`</sub>
+
+- **Distraction-Free Video Workspace:** Responsive player supporting YouTube, Vimeo, and Google Drive lessons with automatic chapter progression sync.
+  <br><sub>Routes: `/sessions/[id]/learn` · `/sessions/[id]/learn/[lessonId]`</sub>
+
+- **Scoped Groq AI Coach:** Context-aware tutoring seeded with the active session's title, category, syllabus summary, and turn history, with built-in structured offline fallback.
+  <br><sub>API: `POST /api/ai-coach`</sub>
+
+- **Timed Quizzes & Coursework Drops:** Countdown MCQ assessments with instant rationale explanations plus private RLS-secured PDF uploads.
+  <br><sub>Routes: `/sessions/[id]/quiz/[assignmentId]` · `/dashboard`</sub>
+
+</td>
+<td width="50%" valign="top">
+
+### 🧑‍🏫 Educator Studio & Platform Core
+
+- **Teacher Member Home & Studio:** Portfolio analytics (`totalLearners`, `publishedSessions`, `submissionsCount`) and one-click studio actions.
+  <br><sub>Routes: `/` · `/teacher`</sub>
+
+- **Session Publisher & Cover Upload:** Create sessions across 6 flagship disciplines (+ general tracks) with thumbnail uploads stored in Supabase Storage.
+  <br><sub>Routes: `/teacher/new`</sub>
+
+- **Curriculum Sequencer & Quiz Builder:** Order video lessons by duration/index and construct multi-question timed MCQs with instant grading keys.
+  <br><sub>Routes: `/teacher/sessions/[id]/lessons` · `/teacher/sessions/[id]/quiz`</sub>
+
+- **Educator Dossiers & Reviews Table:** Public instructor roster (`/teachers`, `/teachers/[id]`) plus student submission review queues with direct PDF preview.
+  <br><sub>Routes: `/teachers` · `/teachers/[id]` · `/teacher`</sub>
+
+- **Installable PWA & Custom UI Chrome:** Native Web App Manifest (`/manifest.webmanifest`), Service Worker (`/sw.js`) with branded offline fallback (`/offline`), maskable & Apple touch icons, iOS/Android install prompts, floating `-Net` blue scrollbar indicator, and mobile bottom capsule nav.
+  <br><sub>Routes: `/auth` · `/onboarding` · `/profile`</sub>
+
+</td>
+</tr>
+</table>
+
+<br>
+
+---
+
+## ✦ Architecture
+
+```mermaid
+flowchart LR
+    U(["🌐 Browser Client<br>Next.js 16 App Router · Three.js Hero · Motion UI"])
+
+    subgraph V["▲ Vercel Cloud / Next.js 16 Runtime"]
+        direction TB
+        P["<b>Request Proxy & Auth Gate</b><br>src/proxy.ts (matchesRoutePrefix + demo cookie)<br>60s Supabase reachability circuit breaker"]
+        SSR["<b>Partitioned Route Groups</b><br>(main) · (auth) · (workspace)<br>Server Components + Client Islands"]
+        AI["<b>AI Tutor Route</b><br>POST /api/ai-coach<br>Groq Cloud cascade + offline fallback"]
+    end
+
+    subgraph S["🟢 Supabase Managed Cloud"]
+        direction TB
+        SA["Supabase Auth<br>Email + Google OAuth PKCE"]
+        DB[("PostgreSQL + RLS<br>7 relational tables")]
+        ST[("Object Storage<br>avatars · thumbnails · submissions")]
+    end
+
+    DEMO[("🧪 Demo Store<br>src/lib/demo/*<br>Isolated cookie sandbox")]
+    GROQ["⚡ Groq Cloud LLM API<br>gpt-oss-120b → gpt-oss-20b → qwen3.8-27b"]
+
+    U --> P
+    P -- "Online / Auth" --> SSR
+    SSR <--> SA
+    SSR <--> DB
+    SSR <--> ST
+    P -- "Demo cookie or Offline" --> DEMO
+    U --> AI
+    AI -- "GROQ_API_KEY set" --> GROQ
+    AI -. "No key / timeout" .-> AI
+```
+
+| Architectural Layer | Implementation Details |
 |---|---|
-| **Live URL** | https://dourous-net-six.vercel.app |
-| **GitHub** | https://github.com/islemredouane/Dourous-Net |
-| **Compte étudiant** | `student@dourous-net.dz` / `Student1234!` |
-| **Compte enseignant** | `teacher@dourous-net.dz` / `Teacher1234!` |
-| **Thème** | 4 — Éducation |
-| **Année** | 2025–2026 |
+| **Route Group Isolation** | Split cleanly into `(main)` (adaptive navbar/footer shell), `(auth)` (focused auth & onboarding canvas), and `(workspace)` (distraction-free player & timed assessment shell). |
+| **Boundary-Safe Proxy (`src/proxy.ts`)** | `matchesRoutePrefix()` enforces authentication on `/dashboard`, `/teacher`, `/profile`, `/onboarding` and teacher-only authorization on `/teacher/*` without falsely intercepting public `/teachers/*`. |
+| **Zero-Fail Offline Resilience** | `reachability.ts` caches network health for 60s so unreachable local environments fail over to `src/lib/demo/*` instead of hanging SSR requests. |
+| **AI Coach Waterfall** | `POST /api/ai-coach` strips `<think>` tags cleanly and cascades `openai/gpt-oss-120b` → `openai/gpt-oss-20b` → `qwen/qwen3.8-27b`, falling back gracefully to structured topic guidance offline. |
+
+<br>
 
 ---
 
-## Équipe
+## ✦ Mission 4 — Architectural Report
 
-| Nom & Prénom | Rôle | Responsabilités |
+> **Module Context:** *ISI 2CP 2026 — Systèmes d'Information · Thème 4 : Éducation (Architecture Cloud)*
+
+### 1. Entity Mapping (Thème 4)
+
+| Required Role | Supabase Resource | Responsibility in Dourous-Net |
 |---|---|---|
-| **Redouane Mohamed Islem** | Frontend Developer & UI/UX | Interface utilisateur complète, design system, animations, pages publiques, tableau de bord, intégration API |
-| **Boukhanouf Abdelhak** | Frontend, 3D & Architecture Cloud | Scène 3D (Three.js), architecture Supabase, déploiement Vercel |
-| **Zin Mohamed Khalil** | Backend & DevOps | Migrations SQL, politiques RLS, routes API, CI/CD |
+| **Table A — Utilisateurs** | `public.students` | Unified profile table for **learners and teachers** (`role`: `student` \| `teacher`), automatically hydrated on signup via `auth.users` trigger (`004_auth_trigger.sql`). |
+| **Table B — Ressources** | `public.sessions` | Course catalog published by educators (`teacher_id → students.id`), linked to child curriculum `lessons` and `assignments`. |
+| **Table C — Interactions** | `public.enrollments` | Many-to-many learner enrollment with `UNIQUE(student_id, session_id)` constraint, completion progress (`0–100%`), and `submission_url`. |
+| **Fichiers (Storage)** | `submissions` (+ `avatars`, `thumbnails`) | Variable-size binary PDF homework drops (private bucket under strict user RLS) alongside public course covers and profile avatars. |
 
----
+**End-to-End Integrity Flow:**
+`Sign Up / Sign In` → `Browse Sessions (Table B)` → `One-Click Enroll (Insert Table C)` → `Watch Lessons (lesson_progress)` → `Complete Timed Quiz (assignment_submissions)` → `Upload Homework PDF (Storage RLS)` → `Teacher Studio Review`
 
-## Vue d'ensemble
+### 2. CAPEX → OPEX Cloud Economics
 
-Dourous-Net est une **plateforme d'apprentissage en ligne** conçue pour les étudiants et enseignants algériens. Elle permet aux professeurs de créer et gérer des cours vidéo, et aux élèves de s'inscrire, suivre leur progression, passer des quiz et interagir avec un assistant IA.
+- **On-Premise Model (CAPEX):** Self-hosting on bare-metal campus servers requires upfront capital procurement (servers ~200,000–500,000 DZD, networking, UPS backup, cooling, and permanent sysadmin maintenance — over 1,000,000 DZD/year total cost regardless of idle traffic).
+- **Serverless Cloud Model (OPEX — Vercel + Supabase):** Converts fixed hardware investment into elastic operational expenditure aligned with active usage:
 
-### Rôles utilisateur
-
-| Rôle | Accès | Description |
-|---|---|---|
-| **Étudiant** | `/dashboard`, `/sessions`, `/sessions/[id]`, `/sessions/[id]/learn` | Consulte les cours, s'inscrit, regarde les leçons, passe les quiz, upload ses devoirs |
-| **Enseignant** | `/teacher`, `/teacher/new`, `/teacher/sessions/[id]/lessons`, `/teacher/sessions/[id]/quiz` | Crée des sessions, ajoute des leçons vidéo, crée des quiz, suit les soumissions |
-
----
-
-## Fonctionnalités
-
-### Côté Étudiant
-
-| Fonctionnalité | Description | Page |
-|---|---|---|
-| Authentification | Inscription / connexion par email ou Google OAuth | `/auth` |
-| Réinitialisation mot de passe | Envoi d'un email de reset + page de saisie du nouveau mot de passe | `/auth/forgot-password`, `/auth/update-password` |
-| Onboarding | Formulaire de profil (niveau, domaine, bio) à la première connexion | `/onboarding` |
-| Catalogue de cours | Grille de sessions avec filtres par catégorie | `/sessions` |
-| Détail d'un cours | Titre, description, curriculum, professeur, bouton d'inscription | `/sessions/[id]` |
-| Inscription | Un clic pour s'inscrire et accéder aux leçons | `/sessions/[id]` |
-| Lecteur vidéo | Lecture des leçons YouTube/Vimeo intégrées avec suivi de complétion | `/sessions/[id]/learn/[lessonId]` |
-| Quiz interactif | QCM avec timer, soumission et correction instantanée | `/sessions/[id]/quiz/[assignmentId]` |
-| Résultats quiz | Score, pourcentage, réponses correctes / incorrectes | `/sessions/[id]/quiz/[assignmentId]/results` |
-| Upload de devoir | Dépôt de PDF directement depuis le tableau de bord | `/dashboard` |
-| Tableau de bord | Statistiques personnelles, cours inscrits, progression | `/dashboard` |
-| Profil redesigné | Mise en page deux colonnes — carte profil + formulaire (nom, bio, niveau, domaine, avatar) | `/profile` |
-| Assistant IA | Chat contextuel avec Google Gemini 1.5 Flash | Sidebar des leçons |
-
-### Côté Enseignant
-
-| Fonctionnalité | Description | Page |
-|---|---|---|
-| Tableau de bord enseignant | Liste de ses sessions avec statistiques (sessions, étudiants, heures) | `/teacher` |
-| Créer une session | Formulaire : titre, description, catégorie, durée, thumbnail (upload image depuis l'appareil) | `/teacher/new` |
-| Gérer les leçons | Ajouter / supprimer des leçons vidéo (titre, URL YouTube/Vimeo, durée) | `/teacher/sessions/[id]/lessons` |
-| Créer des quiz | Créer des QCM avec questions, options et réponses correctes | `/teacher/sessions/[id]/quiz` |
-| Soumissions des élèves | Tableau des devoirs reçus : nom, session, date, bouton "Open PDF" | `/teacher` |
-
----
-
-## Architecture Technique
-
-### Stack
-
-| Couche | Technologie | Version | Rôle |
+| Cloud Provider | Free Tier (Academic / Launch) | Growth / Production Tier | Role in Dourous-Net |
 |---|---|---|---|
-| Framework | Next.js | 16.2.4 | App Router, Server Components, API Routes |
-| Langage | TypeScript | 5.x | Typage statique complet |
-| Styling | Tailwind CSS | v4 | Utility-first CSS, dark mode |
-| Composants UI | shadcn/ui + Radix UI | — | Composants accessibles |
-| Animations | Framer Motion | 12.x | Scroll-driven animations, transitions |
-| 3D | Three.js + React Three Fiber | 0.184 | Scène hero interactive |
-| Base de données | Supabase (PostgreSQL) | 2.x | Données relationnelles + RLS |
-| Authentification | Supabase Auth | — | Email/password + Google OAuth |
-| Stockage fichiers | Supabase Storage | — | Thumbnails, PDFs de devoirs |
-| Intelligence Artificielle | Google Gemini 1.5 Flash | — | Assistant pédagogique contextuel |
-| Déploiement | Vercel | — | CI/CD automatique, CDN mondial |
-| Icons | Lucide React | 1.x | Bibliothèque d'icônes SVG |
-| Formulaires | React Hook Form + Zod | — | Validation côté client |
-| Notifications | Sonner | 2.x | Toasts non-intrusifs |
+| **Supabase** | 500 MB PostgreSQL · 1 GB Storage · 50k MAU | Pro: `$25/mo` (8 GB DB · 100 GB Storage) | Auth, PostgreSQL + RLS, Object Storage |
+| **Vercel** | Unlimited Git previews · Global Edge CDN | Pro: `$20/mo` | Next.js 16 SSR, App Router & Serverless APIs |
+| **Total** | **0 DZD** *(Zero upfront CAPEX)* | Elastic scaling at peak load | Scales elastically during exam periods |
+
+### 3. Scalability: Physical Data Center vs. Vercel Serverless
+
+| Dimension | Single On-Premise Data Center | Vercel Serverless + Global Edge |
+|---|---|---|
+| **Latency from Algeria** | `200–400 ms` (single origin bottleneck) | **`< 50 ms`** (Frankfurt / Marseille edge proximity) |
+| **Traffic Spikes (Exam Week)** | Weeks (hardware ordering & provisioning) | **Milliseconds** (automatic serverless concurrency) |
+| **Low-Traffic Cost** | High fixed power/maintenance overhead | **Scale to zero** (idle cost stays minimal) |
+| **Deployment Pipeline** | Manual SSH / container restarts | **Zero-downtime CI/CD** on Git push |
+| **Availability & Ops Team** | Dedicated sysadmin + hardware redundancy | **99.99% SLA** managed by a 3-student engineering team |
+
+### 4. Structured vs. Unstructured Storage Strategy
+
+| Paradigm | Backing Store | Stored Data | Engineering Justification |
+|---|---|---|---|
+| **Structured Relational** | **PostgreSQL (Supabase)** | `students`, `sessions`, `enrollments`, `lessons`, `lesson_progress`, `assignments`, `assignment_submissions` | Foreign-key integrity (`teacher_id`, `session_id`), transactional grading, composite indexes, `UNIQUE` enrollment guards, and DB-enforced Row-Level Security (`auth.uid()`). |
+| **Unstructured Object Storage** | **Supabase Storage** | Course `thumbnails` (10 MB public), `avatars` (5 MB public), student `submissions` PDFs (50 MB private) | Avoids bloating relational rows with binary blobs; delivers public covers via CDN while protecting student homework PDFs with signed paths and Storage RLS. |
+
+<br>
 
 ---
 
-## Structure du Projet
+## ✦ Tech Stack & Design System
 
-```
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Tech Stack
+
+| Layer | Technology | Version |
+|---|---|---|
+| **Framework** | Next.js (App Router + Turbopack) | `16.2.4` |
+| **UI Library** | React / TypeScript | `19.2.4` / `5.x` |
+| **Styling & Motion** | Tailwind CSS `v4` · Framer Motion | `v4` / `12.38.0` |
+| **UI Primitives** | `@base-ui/react` · `shadcn` | `1.4.1` / `4.5.0` |
+| **3D Engine** | Three.js · R3F · Drei | `0.184.0` / `9.6.0` |
+| **Forms & Toasts** | React Hook Form · Zod · Sonner | `7.73.1` / `4.3.6` / `2.0.7` |
+| **Backend & AI** | `@supabase/ssr` · `@supabase/supabase-js` · `groq-sdk` | `0.10.2` / `2.104.1` / `1.2.0` |
+
+</td>
+<td width="50%" valign="top">
+
+### Visual Identity & Tokens
+
+| Token / Hex | Preview | Surface & Role |
+|---|---|---|
+| `--bg-canvas` (`#0B1120`) | ![](https://img.shields.io/badge/-%230B1120-0B1120?style=flat-square) | Deep Space navy canvas & header/footer |
+| `--bg-surface` (`#121A2E`) | ![](https://img.shields.io/badge/-%23121A2E-121A2E?style=flat-square) | Architectural cards, studio panels & dialogs |
+| `--bg-deep` (`#080E1D`) | ![](https://img.shields.io/badge/-%23080E1D-080E1D?style=flat-square) | Embedded search hubs, code pills & deep cards |
+| `--brand-primary` (`#2563EB`) | ![](https://img.shields.io/badge/-%232563EB-2563EB?style=flat-square) | Primary CTAs, active nav & `-Net` brand accent |
+| `--brand-ice` (`#AEC6FF`) | ![](https://img.shields.io/badge/-%23AEC6FF-AEC6FF?style=flat-square) | Eyebrow indices, highlights & subtle borders |
+| `--bg-editorial` (`#F5F6F8`) | ![](https://img.shields.io/badge/-%23F5F6F8-F5F6F8?style=flat-square) | High-contrast Editorial Mist bands |
+
+**Typography:** `Space Grotesk` (headings), `Inter` (body & dense controls), `JetBrains Mono` (eyebrows & telemetry), `Lora` (italic editorial quotes).
+
+</td>
+</tr>
+</table>
+
+<br>
+
+---
+
+## ✦ Database & Storage
+
+Run these SQL scripts sequentially inside **Supabase Dashboard → SQL Editor**:
+
+| Order | Script Path | Purpose |
+|---|---|---|
+| `1` | [`001_create_tables.sql`](supabase/migrations/001_create_tables.sql) | Core tables `students`, `sessions`, `enrollments`, indexes & `updated_at` trigger |
+| `2` | [`002_rls_policies.sql`](supabase/migrations/002_rls_policies.sql) | Row-Level Security policies scoping learner & instructor mutations (`auth.uid()`) |
+| `3` | [`003_storage_buckets.sql`](supabase/migrations/003_storage_buckets.sql) | Storage buckets `avatars` (5 MB public), `thumbnails` (10 MB public), `submissions` (50 MB private) + RLS |
+| `4` | [`004_auth_trigger.sql`](supabase/migrations/004_auth_trigger.sql) | Auto-provisions `public.students` profile row whenever `auth.users` inserts a user |
+| `5` | [`006_add_role_field.sql`](supabase/migrations/006_add_role_field.sql) | Extends profiles with `role` (`student` \| `teacher`), `field` & `onboarded` flags |
+| `6` | [`005_seed_data.sql`](supabase/seed/005_seed_data.sql) | Starter Algerian faculty profiles & sample courses *(staging / development only)* |
+| `7` | [`007_lessons_assignments.sql`](supabase/migrations/007_lessons_assignments.sql) | Curriculum tables `lessons`, `lesson_progress`, `assignments`, `assignment_submissions` + RLS |
+
+<details>
+<summary><b>API Routes & App Navigation Map</b></summary>
+<br>
+
+| Method | Endpoint / Route | Behavior |
+|---|---|---|
+| `POST` | `/api/ai-coach` | Scoped Groq Cloud cascade (`gpt-oss-120b` → `gpt-oss-20b` → `qwen3.8-27b`) with deterministic offline fallback |
+| `GET` | `/api/auth/callback` | Exchanges Supabase PKCE OAuth code and routes new accounts to `/onboarding` |
+| `POST` | `/api/demo/action` | Toggles isolated `student` / `teacher` Demo Mode cookies & resets demo data |
+| `GET` | `/api/demo/sample-submission` | Serves a sample coursework PDF preview inside Teacher Studio demo mode |
+| `GET` | `/api/seed` | Development-only starter data helper (returns HTTP `403` in production) |
+
+</details>
+
+<details>
+<summary><b>Project Structure</b></summary>
+<br>
+
+```text
 dourous-net/
-├── src/
-│   ├── app/                          # Pages (Next.js App Router)
-│   │   ├── page.tsx                  # Landing page
-│   │   ├── auth/                     # Connexion / inscription / reset mot de passe
-│   │   │   ├── page.tsx              # Connexion & inscription
-│   │   │   ├── forgot-password/      # Demande de reset par email
-│   │   │   └── update-password/      # Saisie du nouveau mot de passe (via lien email)
-│   │   ├── dashboard/                # Tableau de bord étudiant
-│   │   ├── onboarding/               # Profil première connexion
-│   │   ├── profile/                  # Modifier son profil
-│   │   ├── sessions/                 # Catalogue et détail des cours
-│   │   │   └── [id]/
-│   │   │       ├── page.tsx          # Détail du cours
-│   │   │       ├── learn/            # Lecteur de leçons
-│   │   │       └── quiz/             # Quiz interactif
-│   │   ├── teacher/                  # Espace enseignant
-│   │   │   ├── page.tsx              # Dashboard enseignant
-│   │   │   ├── new/                  # Créer une session
-│   │   │   └── sessions/[id]/        # Gérer leçons et quiz
-│   │   ├── teachers/[id]/            # Profil public d'un enseignant
-│   │   ├── api/
-│   │   │   ├── ai-coach/             # Route API Gemini
-│   │   │   └── auth/callback/        # Callback OAuth Google
-│   │   ├── terms/                    # CGU
-│   │   ├── privacy/                  # Politique de confidentialité
-│   │   └── cookies/                  # Politique cookies
-│   ├── components/
-│   │   ├── sections/                 # Sections de la landing page
-│   │   │   ├── HeroSection.tsx
-│   │   │   ├── FeaturesSection.tsx   # Scroll Stack animé
-│   │   │   ├── StatsSection.tsx
-│   │   │   ├── CoursesPreviewSection.tsx
-│   │   │   ├── TestimonialsSection.tsx  # Marquee infini
-│   │   │   └── CtaSection.tsx
-│   │   ├── layout/                   # Navbar, Footer, BottomNav (mobile), PageWrapper
-│   │   ├── auth/                     # Formulaire auth
-│   │   ├── dashboard/                # Stats, liste cours, upload
-│   │   ├── teacher/                  # Formulaires enseignant
-│   │   ├── learn/                    # Lecteur vidéo, sidebar, AI Coach
-│   │   ├── sessions/                 # SessionCard, filtres, bouton d'inscription
-│   │   ├── quiz/                     # QuizTaker, QuizResults
-│   │   ├── profile/                  # Formulaire profil
-│   │   ├── 3d/                       # Scène Three.js
-│   │   ├── shared/                   # GlassCard, GradientText, LogoIcon (SVG), Spinner...
-│   │   └── ui/                       # Boutons, inputs, tabs (shadcn)
-│   ├── hooks/                        # useUser, useEnrollment, useSessions...
-│   ├── lib/
-│   │   ├── supabase/                 # Client browser + client serveur
-│   │   ├── utils.ts                  # Helpers généraux
-│   │   └── constants.ts              # Catégories, constantes
-│   └── types/
-│       ├── database.ts               # Types générés Supabase
-│       └── index.ts                  # Types applicatifs
+├── .github/assets/                      # Pre-rendered README banner, stats, preview & screens/*.webp
+├── public/
+│   ├── favicon.svg                      # Static brand emblem fallback
+│   ├── sw.js                            # Service Worker (static chunk cache + offline fallback)
+│   ├── icons/                           # PWA PNG icons (192x192, 512x512, maskable 512x512)
+│   └── screenshots/                     # Richer Install UI desktop & mobile WebP screenshots
 ├── supabase/
-│   ├── migrations/                   # Scripts SQL dans l'ordre
-│   └── seed/                         # Données de démonstration
-├── public/                           # Assets statiques
-├── .env.local                        # Variables d'environnement (non versionné)
-└── package.json
+│   ├── migrations/                      # Ordered PostgreSQL DDL, RLS, Storage & triggers (001–007)
+│   └── seed/                            # Starter seed script (005_seed_data.sql)
+├── src/
+│   ├── proxy.ts                         # Request auth/role proxy (matchesRoutePrefix + offline breaker)
+│   ├── types/                           # Generated Supabase DB types & domain interfaces
+│   ├── hooks/                           # useUser, useSessions, useEnrollment, useLessonProgress, useUpload, useScrollAnimation
+│   ├── lib/
+│   │   ├── constants.ts                 # Site metadata, 6 disciplines, filters (69 wilayas)
+│   │   ├── discipline-icons.ts          # Shared Lucide icon lookup across navigation menus
+│   │   ├── utils.ts                     # Tailwind helpers & multi-provider video URL parsers
+│   │   ├── demo/                        # Self-contained Student/Teacher offline sandbox
+│   │   └── supabase/                    # SSR server client, browser client & 60s reachability guard
+│   ├── app/
+│   │   ├── (main)/                      # /, /sessions, /teachers, /about, /dashboard, /teacher, /profile, legal
+│   │   ├── (auth)/                      # /auth, /auth/forgot-password, /auth/update-password, /onboarding
+│   │   ├── (workspace)/                 # /sessions/[id]/learn/[lessonId], /sessions/[id]/quiz/[assignmentId]
+│   │   ├── api/                         # ai-coach, auth/callback, demo/*, seed (dev-guarded)
+│   │   ├── offline/page.tsx             # Branded offline fallback route for PWA navigation
+│   │   ├── manifest.ts                  # Typed Next.js 16 Web App Manifest + app shortcuts
+│   │   ├── apple-icon.png               # 180x180 Apple touch icon auto-linked by App Router
+│   │   ├── globals.css                  # Theme tokens, radii, standalone PWA & scrollbar styles
+│   │   ├── icon.svg                     # App Router vector favicon
+│   │   └── layout.tsx                   # Google Fonts, Viewport, PwaProvider & CommandPalette
+│   └── components/
+│       ├── 3d/                          # HeroScene, HeroSceneInner, FloatingGeometry, ParticleField, GradientOrb
+│       ├── about/                       # AboutCta
+│       ├── auth/                        # AuthForm (Email + Google OAuth + Portfolio Demo Mode)
+│       ├── dashboard/                   # StatsCards, ContinueLearningCard, EnrolledSessionsList, UploadArea
+│       ├── home/                        # StudentMemberHome, TeacherMemberHome, MemberWelcomeBand, MemberPulseCard
+│       ├── layout/                      # Navbar, ExploreMegaMenu, FloatingScrollbar, Footer, MobileMenu, BottomNav, CommandPalette, PageWrapper
+│       ├── learn/                       # VideoPlayer, LessonView, CourseSidebar, AICoachChat
+│       ├── onboarding/                  # OnboardingFlow (first-login role/field/bio setup)
+│       ├── profile/                     # ProfileForm (two-column profile & avatar editor)
+│       ├── pwa/                         # PwaProvider, InstallAppButton, OfflineActions
+│       ├── quiz/                        # Timed QuizTaker & graded QuizResults breakdown
+│       ├── sections/                    # HeroSection, FeaturesSection, SubjectsExplorerSection, StatsSection, CoursesPreviewSection, TestimonialsSection, FaqSection, CtaSection
+│       ├── sessions/                    # SessionsCatalogClient, SessionCard, SessionFilters, EnrollButton
+│       ├── shared/                      # BrandLogo, LogoIcon, CatalogSearchPill, GitHubStarButton, BlurText, SpotlightCard, SectionTitle, LoadingSpinner
+│       ├── teacher/                     # TeacherSessionsList, CreateSessionForm, LessonManager, QuizBuilder, SubmissionsList
+│       ├── teachers/                    # TeachersDirectoryClient, TeachersHeaderAction
+│       └── ui/                          # custom-select, button, input, label, card, badge, avatar, progress, sonner
+├── .env.example                         # Safe environment variable template (zero secrets)
+├── vercel.json                          # Security & Service Worker cache-control headers
+└── .vercelignore                        # Excludes .github/, *.md, supabase/, test artifacts from Vercel deploy
 ```
 
----
+</details>
 
-## Base de Données
-
-### Tables Supabase (PostgreSQL)
-
-| Table | Rôle | Colonnes principales |
-|---|---|---|
-| `students` | Utilisateurs (élèves ET enseignants) | `id`, `email`, `full_name`, `role`, `level`, `field`, `bio`, `avatar_url`, `onboarded` |
-| `sessions` | Cours créés par les enseignants | `id`, `teacher_id`, `title`, `description`, `category`, `thumbnail_url`, `duration_hours`, `is_free` |
-| `enrollments` | Inscription d'un élève à un cours | `id`, `student_id`, `session_id`, `status`, `progress`, `submission_url` |
-| `lessons` | Leçons vidéo d'un cours | `id`, `session_id`, `title`, `description`, `video_url`, `order_index`, `duration_minutes` |
-| `lesson_progress` | Suivi de complétion des leçons | `id`, `student_id`, `lesson_id`, `completed`, `completed_at` |
-| `assignments` | Quiz créés par les enseignants | `id`, `session_id`, `title`, `description`, `questions` (JSON), `total_points`, `time_limit_minutes` |
-| `assignment_submissions` | Réponses et scores des élèves | `id`, `assignment_id`, `student_id`, `answers` (JSON), `score`, `percentage`, `graded_at` |
-
-### Relations
-
-| Relation | Clé étrangère | Description |
-|---|---|---|
-| Session → Enseignant | `sessions.teacher_id → students.id` | Chaque cours appartient à un professeur |
-| Inscription → Élève | `enrollments.student_id → students.id` | Chaque inscription est liée à un élève |
-| Inscription → Session | `enrollments.session_id → sessions.id` | Chaque inscription est liée à un cours |
-| Leçon → Session | `lessons.session_id → sessions.id` | Les leçons appartiennent à un cours |
-| Progression → Leçon | `lesson_progress.lesson_id → lessons.id` | Suivi par leçon et par élève |
-| Quiz → Session | `assignments.session_id → sessions.id` | Les quiz appartiennent à un cours |
-| Soumission → Quiz | `assignment_submissions.assignment_id → assignments.id` | Résultats par élève |
-
-### Stockage (Supabase Storage)
-
-| Bucket | Contenu | Accès |
-|---|---|---|
-| `thumbnails` | Images de couverture des cours (uploadées par l'enseignant) | Public |
-| `submissions` | PDFs de devoirs rendus par les élèves | Privé (RLS — élève propriétaire uniquement) |
-
-### Sécurité (Row Level Security)
-
-Toutes les tables sont protégées par des politiques RLS Supabase :
-
-| Règle | Détail |
-|---|---|
-| Un élève ne voit que ses propres inscriptions | `student_id = auth.uid()` |
-| Un enseignant ne gère que ses propres sessions | `teacher_id = auth.uid()` |
-| Un élève ne voit que sa propre progression | `student_id = auth.uid()` |
-| Les sessions sont lisibles par tous | Politique `SELECT` publique |
+<br>
 
 ---
 
-## Routes API
+## ✦ Vercel Deployment
 
-| Méthode | Route | Description |
+> [!CAUTION]
+> **Never commit `.env.local` or any real API / database credentials to Git.** `.gitignore` blocks all `.env*` files while keeping `.env.example`, and `.vercelignore` keeps docs and `.github/assets/` out of production serverless bundles. Inject secrets only inside **Vercel Dashboard → Project Settings → Environment Variables**.
+
+1. Import the repository at [vercel.com/new](https://vercel.com/new) with the default **Next.js** preset (`npm run build`).
+2. Configure environment variables for **Production** and **Preview**:
+
+| Key | Where to Obtain | Requirement |
 |---|---|---|
-| `POST` | `/api/ai-coach` | Envoie un message à Google Gemini 1.5 Flash et retourne la réponse de l'assistant |
-| `GET` | `/api/auth/callback` | Gère le redirect OAuth Google après authentification |
-| `GET` | `/api/seed` | Injecte les données de démonstration (dev uniquement) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard → Project Settings → API → **Project URL** | Live PostgreSQL & Auth |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Dashboard → Project Settings → API → **anon public key** | Live PostgreSQL & Auth |
+| `GROQ_API_KEY` | [Groq Console](https://console.groq.com/keys) → Create API Key | Optional *(structured fallback built-in)* |
+| `NEXT_PUBLIC_DEMO_MODE` | Set to `true` only for pure backend-free demo deployments | Optional |
+
+3. In **Supabase Dashboard → Authentication → URL Configuration**, set **Site URL** to `https://<your-app>.vercel.app` and add redirect URLs `https://<your-app>.vercel.app/**`, `https://<your-app>.vercel.app/api/auth/callback`, `https://<your-app>.vercel.app/auth/update-password`, and `http://localhost:3000/**`.
+
+> [!TIP]
+> For **Google OAuth**, add `https://<your-project-ref>.supabase.co/auth/v1/callback` to Authorized Redirect URIs in Google Cloud Console and enable the Google provider in Supabase Authentication.
+
+<br>
 
 ---
 
-## Pages et Navigation
-
-### Pages Publiques (sans connexion)
-
-| URL | Titre | Contenu |
-|---|---|---|
-| `/` | Landing Page | Hero 3D, fonctionnalités, statistiques, témoignages, CTA |
-| `/sessions` | Catalogue | Grille de tous les cours avec filtres |
-| `/teachers/[id]` | Profil enseignant | Bio et sessions publiées d'un professeur |
-| `/terms` | CGU | Conditions générales d'utilisation |
-| `/privacy` | Confidentialité | Politique de données |
-| `/cookies` | Cookies | Politique cookies avec tableau détaillé |
-
-### Pages Protégées (connexion requise)
-
-| URL | Rôle requis | Description |
-|---|---|---|
-| `/auth` | — | Connexion / inscription |
-| `/auth/forgot-password` | — | Demande de réinitialisation du mot de passe |
-| `/auth/update-password` | — | Saisie du nouveau mot de passe (lien email Supabase) |
-| `/onboarding` | Nouvel utilisateur | Complétion du profil |
-| `/dashboard` | Étudiant | Stats, cours inscrits, upload devoir |
-| `/profile` | Tout utilisateur | Modifier ses informations |
-| `/sessions/[id]` | Tout utilisateur | Détail d'un cours, inscription |
-| `/sessions/[id]/learn` | Étudiant inscrit | Redirection vers première leçon |
-| `/sessions/[id]/learn/[lessonId]` | Étudiant inscrit | Lecteur vidéo + AI Coach |
-| `/sessions/[id]/quiz/[assignmentId]` | Étudiant inscrit | Passer un quiz |
-| `/sessions/[id]/quiz/[assignmentId]/results` | Étudiant inscrit | Résultats du quiz |
-| `/teacher` | Enseignant | Dashboard — liste ses sessions |
-| `/teacher/new` | Enseignant | Créer une nouvelle session |
-| `/teacher/sessions/[id]/lessons` | Enseignant propriétaire | Gérer les leçons vidéo |
-| `/teacher/sessions/[id]/quiz` | Enseignant propriétaire | Créer / gérer les quiz |
-
----
-
-## Installation Locale
-
-### Prérequis
-
-| Outil | Version minimale |
-|---|---|
-| Node.js | 18.x ou supérieur |
-| npm | 9.x ou supérieur |
-| Compte Supabase | Gratuit — [supabase.com](https://supabase.com) |
-| Compte Vercel | Gratuit — [vercel.com](https://vercel.com) (pour le déploiement) |
-| Clé API Gemini | Gratuit — [Google AI Studio](https://aistudio.google.com) |
-
-### Étapes
+## ✦ Local Setup
 
 ```bash
-# 1. Cloner le dépôt
+# 1. Clone the repository
 git clone https://github.com/islemredouane/Dourous-Net.git
 cd dourous-net
 
-# 2. Installer les dépendances
+# 2. Install dependencies
 npm install
 
-# 3. Configurer les variables d'environnement
+# 3. Copy the environment template (leave blank or set NEXT_PUBLIC_DEMO_MODE=true for zero-backend Demo Mode)
 cp .env.example .env.local
-# Remplir .env.local avec vos clés (voir section ci-dessous)
 
-# 4. Lancer le serveur de développement
+# 4. Run locally
 npm run dev
 ```
 
-L'application sera disponible sur `http://localhost:3000`.
-
-### Variables d'Environnement
-
-Créer un fichier `.env.local` à la racine du projet :
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://votre-projet.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_anon_key
-SUPABASE_SERVICE_ROLE_KEY=votre_service_role_key
-GEMINI_API_KEY=votre_cle_gemini
-```
-
-| Variable | Où la trouver |
+| Command | Action |
 |---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard → Project Settings → API → Project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Dashboard → Project Settings → API → anon key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Dashboard → Project Settings → API → service_role key |
-| `GEMINI_API_KEY` | Google AI Studio → Get API Key |
+| `npm run dev` | Start Next.js 16 Turbopack dev server (`http://localhost:3000`) |
+| `npm run build` | Compile optimized production bundle |
+| `npm run start` | Serve production build locally (`http://localhost:3000`) |
+| `npm run lint` | Run ESLint across all source files |
 
-### Configuration Base de Données
+<br>
 
-Exécuter les scripts SQL dans l'ordre dans l'éditeur SQL de Supabase :
+---
 
-| Ordre | Fichier | Description |
+## ✦ Team & Academic Context
+
+Developed for **ISI 2CP 2026 — Module Systèmes d'Information · Thème 4 : Éducation (Année 2025–2026)**.
+
+| Member | Role | Core Focus |
 |---|---|---|
-| 1 | `supabase/migrations/001_create_tables.sql` | Création de toutes les tables |
-| 2 | `supabase/migrations/002_rls_policies.sql` | Politiques de sécurité RLS |
-| 3 | `supabase/migrations/003_storage_buckets.sql` | Création des buckets Storage |
-| 4 | `supabase/migrations/004_auth_trigger.sql` | Trigger création automatique de profil |
-| 5 | `supabase/migrations/006_add_role_field.sql` | Ajout du champ rôle (student/teacher) |
-| 6 | `supabase/seed/005_seed_data.sql` | Données de démonstration |
-| 7 | `supabase/migrations/007_lessons_assignments.sql` | Tables leçons et quiz |
+| **Redouane Mohamed Islem** | Frontend & UI/UX Architecture | Visual design system, interactive workflows, adaptive Member Home, AI Coach UI, API integration |
+| **Boukhanouf Abdelhak** | 3D & Cloud Architecture | Three.js Hero scene, Supabase cloud modeling, Vercel CI/CD & security headers |
+| **Zin Mohamed Khalil** | Backend & DevOps | PostgreSQL migrations (`001`–`007`), RLS policies, Auth OAuth callback & route security |
 
-### Scripts disponibles
+<br>
 
-| Commande | Description |
-|---|---|
-| `npm run dev` | Lance le serveur de développement |
-| `npm run build` | Compile le projet pour la production |
-| `npm run start` | Lance le serveur de production |
-| `npm run lint` | Vérifie la qualité du code (ESLint) |
+<div align="center">
 
----
+[![Star on GitHub](https://img.shields.io/badge/If_this_helped_you_—_Star_Dourous--Net_on_GitHub-121A2E?style=for-the-badge&logo=github&logoColor=F59E0B&labelColor=0B1120)](https://github.com/islemredouane/Dourous-Net)
 
-## Déploiement sur Vercel
+<br><br>
+<sub><b>Dourous-Net</b> · ISI 2CP Theme 4 · Education Cloud Architecture · Algeria · 69 Wilayas</sub>
 
-1. Importer le dépôt GitHub sur [vercel.com](https://vercel.com)
-2. Ajouter les variables d'environnement dans Vercel Dashboard → Settings → Environment Variables
-3. Chaque `git push` sur `main` déclenche un redéploiement automatique
-
-**URL de production :** `https://dourous-net-six.vercel.app`
-
-### Configuration Supabase (Auth → URL Configuration)
-
-| Champ | Valeur |
-|---|---|
-| **Site URL** | `https://dourous-net-six.vercel.app` |
-| **Redirect URLs** | `https://dourous-net-six.vercel.app/**` |
-| | `https://dourous-net-six.vercel.app/auth/update-password` |
-| | `http://localhost:3000/**` |
-| | `http://localhost:3000/auth/update-password` |
-
-> La route `/auth/update-password` doit être explicitement autorisée pour que le lien de réinitialisation du mot de passe fonctionne en production.
-
-### Google OAuth
-
-Pour activer la connexion Google :
-
-1. Créer un projet sur [Google Cloud Console](https://console.cloud.google.com)
-2. Activer l'API Google OAuth 2.0
-3. Ajouter l'URI de redirection autorisé : `https://bmzntbsmjptlpxxxraxs.supabase.co/auth/v1/callback`
-4. Configurer les identifiants dans Supabase Dashboard → Authentication → Providers → Google
-
----
-
-## Mission 4 — Rapport Architecte
-
-### 1. Mapping du Thème — Dourous-Net (Éducation)
-
-Conformément au **Thème 4** du projet, voici la correspondance exacte entre les tables de notre application et l'architecture imposée :
-
-| Rôle imposé | Table dans Supabase | Description dans Dourous-Net |
-|---|---|---|
-| **Table A — Utilisateurs** | `students` | Les élèves (et enseignants) — identités gérées via Supabase Auth |
-| **Table B — Ressources** | `sessions` | Les séances/cours publiés par les professeurs — éléments consultables par les élèves |
-| **Table C — Interactions** | `enrollments` | L'inscription d'un élève à une séance (statut, progression, soumission de devoir) |
-| **Fichier (Storage)** | bucket `submissions` | PDF du devoir rendu par l'élève, uploadé dans Supabase Storage |
-
-**Relations clés :**
-- `sessions.teacher_id → students.id` : chaque séance appartient à un professeur
-- `enrollments.student_id → students.id` : chaque inscription appartient à un élève
-- `enrollments.session_id → sessions.id` : chaque inscription est liée à une séance
-- Contrainte `UNIQUE(student_id, session_id)` : un élève ne peut s'inscrire qu'une seule fois par séance
-- Champ `submission_url` dans `enrollments` : lien vers le fichier PDF soumis dans Storage
-
-**Flux utilisateur complet :**
-Inscription/Connexion → Consulter les séances (Table B) → S'inscrire (créer une ligne Table C) → Regarder les leçons → Passer le quiz → Uploader le PDF du devoir (Storage) → Voir son tableau de bord personnel
-
----
-
-### 2. CAPEX vs. OPEX — Pourquoi Vercel + Supabase ?
-
-**Modèle classique On-Premise (CAPEX) :**
-Héberger Dourous-Net sur des serveurs physiques nécessiterait des investissements en capital (CAPEX) considérables : achat de serveurs (~200 000–500 000 DZD), équipements réseau, onduleurs, espace data center climatisé, et une équipe IT dédiée à la maintenance. Le coût total de possession dépasserait facilement 1 000 000 DZD/an pour une plateforme à faible trafic initial, avec un risque élevé si le projet ne décolle pas.
-
-**Notre modèle Cloud (OPEX) :**
-En choisissant **Supabase** (PostgreSQL managé + Auth + Storage) et **Vercel** (hébergement serverless), nous transformons la totalité du CAPEX en **OPEX (dépenses opérationnelles)** — nous payons uniquement ce que nous consommons :
-
-| Service | Plan gratuit | Plan payant | Usage Dourous-Net |
-|---|---|---|---|
-| Supabase | 500 Mo DB, 1 Go Storage, 50 000 users/mois | Pro : $25/mois (8 Go DB, 100 Go Storage) | Gratuit au lancement |
-| Vercel | Déploiements illimités, CDN mondial | Pro : $20/mois | Gratuit (phase académique) |
-| **Total** | **0 DZD** | **~3 500 DZD/mois à 10 000 utilisateurs** | Démarrage sans capital |
-
-C'est l'avantage fondamental du modèle OPEX : des coûts prévisibles, élastiques, sans engagement initial.
-
----
-
-### 3. Scalabilité Vercel vs. Data Center Physique
-
-| Critère | Data Center Physique | Vercel (Cloud) |
-|---|---|---|
-| Latence Algérie | 200–400 ms (serveur unique) | <50 ms (CDN Francfort/Marseille) |
-| Mise à l'échelle | Semaines (achat matériel) | Millisecondes (auto-scaling) |
-| Coût à faible trafic | Élevé (surprovisionnement permanent) | Nul (scale to zero) |
-| CI/CD | Manuel, intervention requise | Automatique à chaque `git push` |
-| Disponibilité | Dépend de l'équipe locale | 99.99% SLA Vercel |
-| Équipe nécessaire | DevOps + sysadmin dédiés | 0 (binôme d'étudiants suffit) |
-
-**Fonctions Serverless :** Chaque route API Next.js est une fonction serverless isolée — si 500 élèves consultent Dourous-Net simultanément lors d'un examen, la plateforme scale automatiquement puis revient à zéro. Nous ne payons que les millisecondes d'exécution réelles.
-
----
-
-### 4. Données Structurées vs. Non-Structurées
-
-Dourous-Net utilise **les deux types de stockage** de façon stratégique et complémentaire :
-
-| Type | Technologie | Données stockées | Pourquoi ce choix |
-|---|---|---|---|
-| **Structuré** | PostgreSQL (Supabase) | `students`, `sessions`, `enrollments`, `lessons`, `assignments` | Relations, contraintes d'intégrité, requêtes JOIN, RLS, transactions ACID |
-| **Non-structuré** | Supabase Storage (S3) | PDFs de devoirs, images thumbnail | Taille et format variables, accès CDN, URL sécurisée par RLS Storage |
-
-**Pourquoi PostgreSQL pour les données relationnelles :**
-Les politiques **Row Level Security (RLS)** assurent qu'un élève ne voit que ses propres inscriptions, directement au niveau base de données, sans filtrage applicatif. Les requêtes JOIN permettent de récupérer séance + professeur + progression en une seule requête optimisée.
-
-**Pourquoi Storage objet pour les fichiers :**
-Les PDFs de devoirs sont des blobs binaires de taille et format variables — impossibles à stocker dans une table relationnelle. Chaque fichier est accessible via une URL CDN sécurisée, et les politiques Storage RLS garantissent que seul l'élève propriétaire peut accéder à son fichier.
+</div>

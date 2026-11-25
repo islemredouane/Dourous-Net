@@ -1,8 +1,7 @@
 'use client'
 
 import { useEnrollment } from '@/hooks/useEnrollment'
-import { Button } from '@/components/ui/button'
-import { CheckCircle, Loader2, LogIn, Play } from 'lucide-react'
+import { Loader2, LogIn, Play } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -17,50 +16,59 @@ export function EnrollButton({ sessionId, studentId }: EnrollButtonProps) {
 
   if (!studentId) {
     return (
-      <Link href="/auth">
-        <Button size="lg" className="w-full bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-md">
-          <LogIn className="mr-2 h-4 w-4" />
-          Sign in to Enroll
-        </Button>
+      <Link
+        href="/auth"
+        className="flex w-full h-11 items-center justify-center gap-2 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-sm font-semibold text-white transition-colors"
+      >
+        <LogIn className="h-4 w-4" />
+        <span>Sign in to Enroll</span>
       </Link>
     )
   }
 
   if (loading) {
     return (
-      <Button size="lg" disabled className="w-full">
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        Loading…
-      </Button>
+      <button
+        type="button"
+        disabled
+        className="flex w-full h-11 items-center justify-center gap-2 rounded-full bg-[#162038] text-sm font-medium text-[#8A94A8]"
+      >
+        <Loader2 className="h-4 w-4 animate-spin" />
+        <span>Loading...</span>
+      </button>
     )
   }
 
   if (enrollment) {
     return (
-      <Link href={`/sessions/${sessionId}/learn`}>
-        <Button size="lg" className="w-full bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-md">
-          <Play className="mr-2 h-4 w-4" />
-          {(enrollment.progress ?? 0) > 0 ? 'Continue Learning' : 'Start Learning'}
-        </Button>
+      <Link
+        href={`/sessions/${sessionId}/learn`}
+        className="flex w-full h-11 items-center justify-center gap-2 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-sm font-semibold text-white transition-colors"
+      >
+        <Play className="h-4 w-4" />
+        <span>{(enrollment.progress ?? 0) > 0 ? 'Continue Learning' : 'Start Learning'}</span>
       </Link>
     )
   }
 
   return (
-    <Button
-      size="lg"
+    <button
+      type="button"
       onClick={async () => {
         const result = await enroll()
         if (!result?.error) router.push(`/sessions/${sessionId}/learn`)
       }}
       disabled={enrolling}
-      className="w-full bg-indigo-500 text-white hover:bg-indigo-600 shadow-glow-md hover:shadow-glow-lg transition-all"
+      className="flex w-full h-11 items-center justify-center gap-2 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-sm font-semibold text-white transition-colors disabled:opacity-50"
     >
       {enrolling ? (
-        <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Enrolling…</>
+        <>
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span>Enrolling...</span>
+        </>
       ) : (
-        'Enroll Now — Free'
+        <span>Enroll Now — Free</span>
       )}
-    </Button>
+    </button>
   )
 }

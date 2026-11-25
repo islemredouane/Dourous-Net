@@ -2,6 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { error: 'Seed route is disabled in production' },
+      { status: 403 },
+    )
+  }
+
   const supabase = await createClient()
 
   // Get current user

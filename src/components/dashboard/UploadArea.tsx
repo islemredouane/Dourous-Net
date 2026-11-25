@@ -2,9 +2,8 @@
 
 import { useCallback, useState } from 'react'
 import { useUpload } from '@/hooks/useUpload'
-import { GlassCard } from '@/components/shared/GlassCard'
-import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
+import { CustomSelect } from '@/components/ui/custom-select'
 import { CheckCircle, CloudUpload, File, Loader2, X } from 'lucide-react'
 import type { EnrollmentWithSession } from '@/types'
 
@@ -19,8 +18,11 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const activeEnrollments = enrollments.filter((e) => e.status !== 'completed')
+  const selectable = activeEnrollments.length > 0 ? activeEnrollments : enrollments
   const [selectedEnrollmentId, setSelectedEnrollmentId] = useState<string>(
-    enrollments[0]?.id ?? '',
+    selectable[0]?.id ?? '',
   )
 
   const handleFile = useCallback((file: File) => {
@@ -43,7 +45,11 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
     if (!selectedFile) return
     setError(null)
 
-    const { url, error: uploadError } = await upload(selectedFile, 'submissions', studentId)
+    const { url, error: uploadError } = await upload(
+      selectedFile,
+      'submissions',
+      studentId,
+    )
 
     if (uploadError || !url) {
       setError(uploadError?.message ?? 'Upload failed')
@@ -52,75 +58,83 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
 
     setUploadedUrl(url)
 
-    if (selectedEnrollmentId) {
+    const target = enrollments.find((e) => e.id === selectedEnrollmentId)
+    if (selectedEnrollmentId && target) {
       const supabase = createClient()
+      const nextProgress = Math.max(target.progress ?? 0, 50)
+      const nextStatus =
+        target.status === 'completed'
+          ? ('completed' as const)
+          : ('in_progress' as const)
+
       await supabase
         .from('enrollments')
-        .update({ submission_url: url, status: 'in_progress' as const, progress: 50 })
+        .update({
+          submission_url: url,
+          status: nextStatus,
+          progress: nextProgress,
+        })
         .eq('id', selectedEnrollmentId)
     }
 
     setSelectedFile(null)
   }
 
-  const activeEnrollments = enrollments.filter((e) => e.status !== 'completed')
-
   return (
-    <GlassCard className="space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10">
-          <CloudUpload className="h-5 w-5 text-purple-400" />
+    <div className="rounded-2xl border border-[#DDE3EC]/10 bg-[#121A2E] p-6 space-y-5">
+      <div className="flex items-center gap-3 pb-4 border-b border-[#DDE3EC]/10">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#3B82F6]/30 bg-[#2563EB]/15">
+          <CloudUpload className="h-5 w-5 text-[#AEC6FF]" />
         </div>
         <div>
-          <h3 className="font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+          <h3
+            className="text-base font-bold text-white"
+            style={{ fontFamily: 'var(--font-space-grotesk)' }}
+          >
             Submit Assignment
           </h3>
-          <p className="text-xs text-slate-400">Upload your work — max 50 MB</p>
+          <p className="font-mono text-[11px] text-[#8A94A8]">PDF / DOC / ZIP · Max 50 MB</p>
         </div>
       </div>
 
-      {/* Session selector */}
-      {activeEnrollments.length === 0 ? (
-        <p className="rounded-xl border border-slate-700 bg-white/3 px-4 py-3 text-sm text-slate-400 text-center">
-          Enroll in a session to submit assignments.
+      {selectable.length === 0 ? (
+        <p className="rounded-xl border border-[#DDE3EC]/10 bg-[#080E1D] px-4 py-4 text-xs text-[#94A3B8] text-center">
+          Enroll in a session first to submit assignments.
         </p>
       ) : (
         <>
-          {activeEnrollments.length > 1 && (
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">Session</label>
-              <div className="relative">
-                <select
-                  value={selectedEnrollmentId}
-                  onChange={(e) => setSelectedEnrollmentId(e.target.value)}
-                  className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 hover:border-white/20"
-                >
-                  {activeEnrollments.map((e) => (
-                    <option key={e.id} value={e.id} className="bg-[#0f1629] text-white">
-                      {e.session?.title ?? e.id}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          )}
+          <div className="space-y-1.5">
+            <label
+              htmlFor="assignment-session"
+              className="eyebrow text-[#8A94A8] block"
+            >
+              Target Session
+            </label>
+            <CustomSelect
+              id="assignment-session"
+              ariaLabel="Target Session"
+              value={selectedEnrollmentId}
+              onChange={setSelectedEnrollmentId}
+              triggerClassName="h-10 text-xs text-white"
+              options={selectable.map((e) => ({
+                value: e.id,
+                label: e.session?.title ?? e.id,
+              }))}
+            />
+          </div>
 
-          {/* Drop zone */}
           <div
-            onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+            onDragOver={(e) => {
+              e.preventDefault()
+              setDragOver(true)
+            }}
             onDragLeave={() => setDragOver(false)}
             onDrop={handleDrop}
-            className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all duration-200 cursor-pointer ${
-              dragOver
-                ? 'border-indigo-400 bg-indigo-500/10'
-                : 'border-slate-700 hover:border-indigo-500/50 hover:bg-white/5'
-            }`}
             onClick={() => document.getElementById('file-upload')?.click()}
+            className={`rounded-xl border border-dashed p-6 text-center transition-colors cursor-pointer ${dragOver
+              ? 'border-[#3B82F6] bg-[#2563EB]/10'
+              : 'border-[#DDE3EC]/20 bg-[#080E1D] hover:border-[#3B82F6]/60'
+              }`}
           >
             <input
               id="file-upload"
@@ -134,56 +148,66 @@ export function UploadArea({ studentId, enrollments }: UploadAreaProps) {
 
             {selectedFile ? (
               <div className="flex items-center justify-center gap-3">
-                <File className="h-8 w-8 text-indigo-400" />
-                <div className="text-left">
-                  <p className="text-sm font-medium text-white">{selectedFile.name}</p>
-                  <p className="text-xs text-slate-400">
+                <File className="h-7 w-7 text-[#60A5FA] shrink-0" />
+                <div className="text-left min-w-0">
+                  <p className="text-xs font-semibold text-white truncate">
+                    {selectedFile.name}
+                  </p>
+                  <p className="font-mono text-[11px] text-[#8A94A8]">
                     {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                   </p>
                 </div>
                 <button
-                  className="ml-2 text-slate-400 hover:text-red-400"
-                  onClick={(e) => { e.stopPropagation(); setSelectedFile(null) }}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSelectedFile(null)
+                  }}
+                  aria-label="Remove file"
+                  className="ml-2 text-[#8A94A8] hover:text-red-400"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
             ) : (
               <div>
-                <CloudUpload className="mx-auto mb-3 h-10 w-10 text-slate-500" />
-                <p className="text-sm text-slate-400">
-                  Drag & drop a file here, or{' '}
-                  <span className="text-indigo-400">click to browse</span>
+                <CloudUpload className="mx-auto mb-2.5 h-8 w-8 text-[#7F97C7]" />
+                <p className="text-xs text-[#DDE3EC]">
+                  Drop your file here or <span className="text-[#AEC6FF] underline">browse</span>
                 </p>
-                <p className="mt-1 text-xs text-slate-500">PDF, DOC, ZIP, images — up to 50 MB</p>
               </div>
             )}
           </div>
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="text-xs text-red-400">{error}</p>}
 
           {uploadedUrl && (
-            <div className="flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
+            <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2.5 text-xs text-emerald-300">
               <CheckCircle className="h-4 w-4 shrink-0" />
-              Assignment uploaded successfully!
+              <span>Assignment uploaded to your instructor.</span>
             </div>
           )}
 
           {selectedFile && !uploadedUrl && (
-            <Button
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={uploading}
-              className="w-full bg-indigo-500 text-white hover:bg-indigo-600"
+              className="flex w-full h-11 items-center justify-center gap-2 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-sm font-semibold text-white transition-colors disabled:opacity-50"
             >
               {uploading ? (
-                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Uploading…</>
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" /> Uploading...
+                </>
               ) : (
-                <><CloudUpload className="mr-2 h-4 w-4" />Submit Assignment</>
+                <>
+                  <CloudUpload className="h-4 w-4" /> Submit Assignment
+                </>
               )}
-            </Button>
+            </button>
           )}
         </>
       )}
-    </GlassCard>
+    </div>
   )
 }

@@ -19,25 +19,41 @@ export function useUser(): UserState {
   })
 
   useEffect(() => {
+    let active = true
     const supabase = createClient()
 
     const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
 
-      if (!user) {
-        setState({ user: null, profile: null, loading: false })
-        return
+        if (!session) {
+          if (active) setState({ user: null, profile: null, loading: false })
+          return
+        }
+
+        const authResult = await Promise.race([
+          supabase.auth.getUser(),
+          new Promise<null>((resolve) => setTimeout(() => resolve(null), 2500)),
+        ])
+        const user = authResult?.data?.user ?? null
+
+        if (!user) {
+          if (active) setState({ user: null, profile: null, loading: false })
+          return
+        }
+
+        const { data: profile } = await supabase
+          .from('students')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+
+        if (active) setState({ user, profile, loading: false })
+      } catch {
+        if (active) setState({ user: null, profile: null, loading: false })
       }
-
-      const { data: profile } = await supabase
-        .from('students')
-        .select('*')
-        .eq('id', user.id)
-        .single()
-
-      setState({ user, profile, loading: false })
     }
 
     fetchUser()
@@ -46,13 +62,16 @@ export function useUser(): UserState {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
-        setState({ user: null, profile: null, loading: false })
+        if (active) setState({ user: null, profile: null, loading: false })
       } else {
         fetchUser()
       }
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      active = false
+      subscription.unsubscribe()
+    }
   }, [])
 
   return state

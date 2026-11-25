@@ -1,9 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { GlassCard } from '@/components/shared/GlassCard'
-import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, ArrowLeft, RotateCcw } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Play, XCircle } from 'lucide-react'
 
 type QuizQuestion = {
   id: string
@@ -30,275 +28,199 @@ interface QuizResultsProps {
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D']
 
-function PerformanceMessage({ pct }: { pct: number }) {
-  if (pct >= 90) return <p className="text-lg font-semibold text-green-400">🏆 Excellent! Outstanding performance!</p>
-  if (pct >= 70) return <p className="text-lg font-semibold text-green-400">✅ Passed! Good work!</p>
-  if (pct >= 50) return <p className="text-lg font-semibold text-yellow-400">⚠️ Keep practicing!</p>
-  return <p className="text-lg font-semibold text-red-400">❌ Review the material and retry</p>
-}
-
-function ScoreCircle({ score, total, percentage }: { score: number; total: number; percentage: number }) {
-  const radius = 54
-  const circumference = 2 * Math.PI * radius
-  const offset = circumference - (percentage / 100) * circumference
-
-  const color =
-    percentage >= 70 ? '#22c55e' : percentage >= 50 ? '#eab308' : '#ef4444'
-
-  const passed = percentage >= 70
-
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative h-40 w-40">
-        <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
-          {/* Track */}
-          <circle
-            cx="60"
-            cy="60"
-            r={radius}
-            fill="none"
-            stroke="#1e293b"
-            strokeWidth="10"
-          />
-          {/* Progress */}
-          <circle
-            cx="60"
-            cy="60"
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth="10"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            style={{ transition: 'stroke-dashoffset 1s ease' }}
-          />
-        </svg>
-        {/* Center text */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span
-            className="text-2xl font-bold text-white leading-none"
-            style={{ fontFamily: 'var(--font-space-grotesk)' }}
-          >
-            {score}
-          </span>
-          <span className="text-xs text-slate-400">/ {total}</span>
-        </div>
-      </div>
-
-      <div className="text-center space-y-1">
-        <p className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-          {percentage}%
-        </p>
-        <span
-          className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${
-            passed
-              ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-              : 'bg-red-500/20 border border-red-500/30 text-red-400'
-          }`}
-        >
-          {passed ? 'Pass' : 'Fail'}
-        </span>
-      </div>
-    </div>
-  )
-}
-
 export function QuizResults({
   submission,
   questions,
   assignmentTitle,
   sessionId,
-  assignmentId,
 }: QuizResultsProps) {
   const { score, total_points, percentage, answers, graded_at } = submission
-
-  // Build answer map
-  const answerMap = new Map<string, number>(answers.map((a) => [a.question_id, a.selected_index]))
-
+  const answerMap = new Map<string, number>(
+    answers.map((a) => [a.question_id, a.selected_index]),
+  )
   const correctCount = questions.filter(
     (q) => answerMap.get(q.id) === q.correct_index,
   ).length
 
+  const passed = percentage >= 70
   const gradedDate = new Date(graded_at).toLocaleString(undefined, {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
 
   return (
-    <div
-      className="min-h-screen pt-20 pb-24 px-4"
-      style={{ fontFamily: 'var(--font-space-grotesk)' }}
-    >
+    <div className="min-h-screen bg-[#0B1120] py-12 px-4 sm:px-6 pb-24">
       <div className="mx-auto max-w-3xl space-y-8">
-        {/* Back */}
         <Link
           href={`/sessions/${sessionId}`}
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-indigo-400 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#8A94A8] hover:text-white transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5" />
           Back to Course
         </Link>
 
-        {/* Score hero */}
-        <GlassCard className="text-center space-y-6 py-10">
+        {/* Score Card */}
+        <div className="rounded-2xl border border-[#DDE3EC]/12 bg-[#121A2E] p-7 sm:p-10 text-center space-y-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-indigo-400 mb-1">
-              Quiz Results
+            <p className="eyebrow text-[#7F97C7] mb-1">Assessment Graded</p>
+            <h1
+              className="text-2xl sm:text-3xl font-bold text-white"
+              style={{ fontFamily: 'var(--font-space-grotesk)' }}
+            >
+              {assignmentTitle}
+            </h1>
+            <p className="font-mono text-xs text-[#8A94A8] mt-1">
+              Submitted {gradedDate}
             </p>
-            <h1 className="text-2xl font-bold text-white">{assignmentTitle}</h1>
-            <p className="text-xs text-slate-500 mt-1">Submitted {gradedDate}</p>
           </div>
 
-          <ScoreCircle score={score} total={total_points} percentage={percentage} />
+          <div className="py-2">
+            <p
+              className={`text-5xl font-bold tabular-nums ${
+                passed ? 'text-emerald-400' : percentage >= 50 ? 'text-amber-400' : 'text-red-400'
+              }`}
+              style={{ fontFamily: 'var(--font-space-grotesk)' }}
+            >
+              {percentage}%
+            </p>
+            <span
+              className={`mt-3 inline-block rounded-full border px-3.5 py-1 font-mono text-xs font-semibold uppercase ${
+                passed
+                  ? 'border-emerald-400/35 bg-emerald-500/15 text-emerald-300'
+                  : 'border-red-400/35 bg-red-500/15 text-red-300'
+              }`}
+            >
+              {passed ? 'Passed' : 'Review Recommended'}
+            </span>
+          </div>
 
-          <PerformanceMessage pct={percentage} />
-
-          {/* Summary stats */}
-          <div className="grid grid-cols-3 gap-3 pt-2">
+          <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Correct', value: `${correctCount}/${questions.length}`, color: 'text-green-400' },
-              { label: 'Score', value: `${score} pts`, color: 'text-indigo-400' },
-              { label: 'Percentage', value: `${percentage}%`, color: percentage >= 70 ? 'text-green-400' : 'text-red-400' },
-            ].map(({ label, value, color }) => (
-              <div key={label} className="rounded-xl bg-white/5 border border-white/[0.06] p-3">
-                <p className={`text-lg font-bold tabular-nums ${color}`}>{value}</p>
-                <p className="text-xs text-slate-400 mt-0.5">{label}</p>
+              { label: 'Correct', value: `${correctCount}/${questions.length}` },
+              { label: 'Score', value: `${score} / ${total_points}` },
+              { label: 'Grade', value: `${percentage}%` },
+            ].map((s) => (
+              <div key={s.label} className="rounded-xl border border-[#DDE3EC]/10 bg-[#080E1D] p-3.5">
+                <p
+                  className="text-lg font-bold tabular-nums text-white"
+                  style={{ fontFamily: 'var(--font-space-grotesk)' }}
+                >
+                  {s.value}
+                </p>
+                <p className="eyebrow text-[#8A94A8] mt-1">{s.label}</p>
               </div>
             ))}
           </div>
-        </GlassCard>
+        </div>
 
-        {/* Per-question breakdown */}
+        {/* Breakdown */}
         <div>
-          <h2 className="text-lg font-semibold text-white mb-4">Question Review</h2>
+          <h2
+            className="text-lg font-bold text-white mb-4"
+            style={{ fontFamily: 'var(--font-space-grotesk)' }}
+          >
+            Question Review
+          </h2>
           <div className="space-y-4">
             {questions.map((q, qi) => {
               const selectedIndex = answerMap.get(q.id) ?? -1
               const isCorrect = selectedIndex === q.correct_index
-              const wasUnanswered = selectedIndex === -1
 
               return (
                 <div
                   key={q.id}
-                  className={`rounded-2xl border p-5 space-y-4 transition-all ${
+                  className={`rounded-2xl border p-5 space-y-4 ${
                     isCorrect
-                      ? 'border-green-500/20 bg-green-500/[0.04]'
-                      : 'border-red-500/20 bg-red-500/[0.04]'
+                      ? 'border-emerald-500/25 bg-emerald-500/[0.04]'
+                      : 'border-red-500/25 bg-red-500/[0.04]'
                   }`}
                 >
-                  {/* Question header */}
                   <div className="flex items-start gap-3">
                     <span
-                      className={`flex-shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ring-1 ${
+                      className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-lg font-mono text-xs font-bold border ${
                         isCorrect
-                          ? 'bg-green-500/15 text-green-400 ring-green-500/25'
-                          : 'bg-red-500/15 text-red-400 ring-red-500/25'
+                          ? 'border-emerald-400/40 bg-emerald-500/15 text-emerald-300'
+                          : 'border-red-400/40 bg-red-500/15 text-red-300'
                       }`}
                     >
-                      {qi + 1}
+                      {String(qi + 1).padStart(2, '0')}
                     </span>
-                    <p className="text-white font-medium leading-relaxed text-sm pt-0.5">{q.question}</p>
-                    <div className="flex-shrink-0 ml-auto">
-                      {isCorrect ? (
-                        <CheckCircle className="h-5 w-5 text-green-400" />
-                      ) : (
-                        <XCircle className="h-5 w-5 text-red-400" />
-                      )}
-                    </div>
+                    <p className="text-white font-medium text-sm leading-relaxed pt-0.5 flex-1">
+                      {q.question}
+                    </p>
+                    {isCorrect ? (
+                      <CheckCircle className="h-5 w-5 text-emerald-400 shrink-0" />
+                    ) : (
+                      <XCircle className="h-5 w-5 text-red-400 shrink-0" />
+                    )}
                   </div>
 
-                  {/* Options */}
-                  <div className="space-y-2 pl-10">
+                  <div className="space-y-2 sm:pl-10">
                     {q.options.map((opt, oi) => {
                       const isStudentAnswer = selectedIndex === oi
                       const isCorrectAnswer = q.correct_index === oi
-                      let optClass =
-                        'border-white/[0.06] bg-white/[0.02] text-slate-400'
-                      if (isCorrectAnswer)
-                        optClass = 'border-green-500/40 bg-green-500/10 text-green-300'
-                      if (isStudentAnswer && !isCorrect)
-                        optClass = 'border-red-500/40 bg-red-500/10 text-red-300'
+                      let optClass = 'border-[#DDE3EC]/10 bg-[#080E1D] text-[#94A3B8]'
+                      if (isCorrectAnswer) {
+                        optClass = 'border-emerald-500/45 bg-emerald-500/10 text-emerald-200'
+                      } else if (isStudentAnswer && !isCorrect) {
+                        optClass = 'border-red-500/45 bg-red-500/10 text-red-200'
+                      }
 
                       return (
                         <div
                           key={oi}
-                          className={`flex items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-all ${optClass}`}
+                          className={`flex items-center gap-3 rounded-xl border px-3.5 py-2.5 text-sm ${optClass}`}
                         >
-                          <span
-                            className={`flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full border text-xs font-bold ${
-                              isCorrectAnswer
-                                ? 'border-green-500 bg-green-500/20 text-green-400'
-                                : isStudentAnswer && !isCorrect
-                                ? 'border-red-500 bg-red-500/20 text-red-400'
-                                : 'border-slate-700 text-slate-500'
-                            }`}
-                          >
+                          <span className="font-mono text-xs font-bold shrink-0">
                             {OPTION_LABELS[oi]}
                           </span>
                           <span className="flex-1">{opt}</span>
                           {isCorrectAnswer && (
-                            <span className="text-xs font-medium text-green-400">Correct</span>
+                            <span className="font-mono text-[10px] uppercase text-emerald-300">
+                              Correct
+                            </span>
                           )}
                           {isStudentAnswer && !isCorrect && (
-                            <span className="text-xs font-medium text-red-400">Your answer</span>
-                          )}
-                          {isCorrectAnswer && isStudentAnswer && (
-                            <span className="text-xs font-medium text-green-400">Your answer ✓</span>
+                            <span className="font-mono text-[10px] uppercase text-red-300">
+                              Your choice
+                            </span>
                           )}
                         </div>
                       )
                     })}
-
-                    {wasUnanswered && (
-                      <p className="text-xs text-slate-500 italic">No answer submitted</p>
-                    )}
                   </div>
 
-                  {/* Explanation */}
                   {q.explanation && (
-                    <div className="pl-10">
-                      <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-2">
-                        <p className="text-xs font-semibold text-indigo-400 mb-0.5">Explanation</p>
-                        <p className="text-xs text-slate-400 leading-relaxed">{q.explanation}</p>
+                    <div className="sm:pl-10">
+                      <div className="rounded-xl border border-[#3B82F6]/25 bg-[#2563EB]/10 px-4 py-2.5">
+                        <p className="eyebrow text-[#AEC6FF] mb-1">Explanation</p>
+                        <p className="text-xs text-[#DDE3EC]/85 leading-relaxed">
+                          {q.explanation}
+                        </p>
                       </div>
                     </div>
                   )}
-
-                  {/* Points earned */}
-                  <div className="pl-10">
-                    <span
-                      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        isCorrect
-                          ? 'bg-green-500/15 text-green-400'
-                          : 'bg-slate-800 text-slate-400'
-                      }`}
-                    >
-                      {isCorrect ? `+${q.points}` : '0'} / {q.points} pts
-                    </span>
-                  </div>
                 </div>
               )
             })}
           </div>
         </div>
 
-        {/* Action buttons */}
         <div className="flex flex-wrap gap-3">
-          <Link href={`/sessions/${sessionId}`}>
-            <Button variant="outline" className="border-white/10 text-slate-300 hover:bg-white/5 hover:text-white">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Course
-            </Button>
+          <Link
+            href={`/sessions/${sessionId}`}
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-[#DDE3EC]/20 px-5 text-xs font-semibold text-[#DDE3EC] hover:border-white hover:text-white transition-colors"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>Back to Course</span>
           </Link>
-          {percentage < 100 && (
-            <Link href={`/sessions/${sessionId}/quiz/${assignmentId}`}>
-              <Button className="bg-indigo-500 text-white hover:bg-indigo-600">
-                <RotateCcw className="mr-2 h-4 w-4" />
-                Retake Quiz
-              </Button>
-            </Link>
-          )}
+          <Link
+            href={`/sessions/${sessionId}/learn`}
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] px-5 text-xs font-semibold text-white transition-colors"
+          >
+            <Play className="h-3.5 w-3.5" />
+            <span>Continue Lessons</span>
+          </Link>
         </div>
       </div>
     </div>

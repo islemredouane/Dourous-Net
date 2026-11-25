@@ -1,82 +1,158 @@
 import Link from 'next/link'
-import { CATEGORY_COLORS } from '@/lib/constants'
-import { Clock, User, BookOpen } from 'lucide-react'
+import {
+  CATEGORY_COLORS,
+  CATEGORY_COLORS_LIGHT,
+  CATEGORY_GRADIENTS,
+} from '@/lib/constants'
+import { SpotlightCard } from '@/components/shared/SpotlightCard'
+import { ArrowUpRight, BookOpen, Clock, User } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import type { SessionWithTeacher } from '@/types'
-import { TiltCard } from '@/components/ui/tilt-card'
 
 interface SessionCardProps {
   readonly session: SessionWithTeacher
+  readonly tone?: 'dark' | 'light'
 }
 
-export function SessionCard({ session }: SessionCardProps) {
-  const categoryColor = CATEGORY_COLORS[session.category] ?? CATEGORY_COLORS['General']
+export function SessionCard({ session, tone = 'dark' }: SessionCardProps) {
+  const isLight = tone === 'light'
+  const categoryBadge = isLight
+    ? (CATEGORY_COLORS_LIGHT[session.category] ?? CATEGORY_COLORS_LIGHT.General)
+    : (CATEGORY_COLORS[session.category] ?? CATEGORY_COLORS.General)
+  const fallbackGradient =
+    CATEGORY_GRADIENTS[session.category] ?? CATEGORY_GRADIENTS.General
 
   return (
-    <div style={{ perspective: "1000px" }} className="h-full">
-      <Link href={`/sessions/${session.id}`} className="block group h-full">
-        <TiltCard className="h-full w-full">
-          <div className="flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#0f1629] transition-all duration-200 group-hover:border-indigo-500/40 group-hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)]">
-
-            {/* Thumbnail */}
-            <div className="relative h-40 w-full shrink-0 overflow-hidden bg-gradient-to-br from-indigo-900/50 to-slate-800/80">
-              {session.thumbnail_url ? (
-                <img
-                  src={session.thumbnail_url}
-                  alt={session.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center">
-                  <BookOpen className="h-10 w-10 text-slate-500" />
-                </div>
-              )}
-
-              {/* Free badge */}
-              {session.is_free && (
-                <span className="absolute top-2.5 right-2.5 rounded-md bg-emerald-500/90 px-2 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm shadow-xl">
-                  Free
-                </span>
-              )}
-            </div>
-
-            {/* Content */}
-            <div className="flex flex-1 flex-col gap-3 p-4">
-              {/* Category */}
-              <span className={`inline-flex w-fit rounded-md border px-2 py-0.5 text-[11px] font-medium ${categoryColor}`}>
+    <Link href={`/sessions/${session.id}`} className="block group h-full">
+      <SpotlightCard tone={tone} className="h-full flex flex-col">
+        {/* 16:10 Media Header */}
+        <div
+          className={cn(
+            'relative aspect-[16/10] w-full shrink-0 overflow-hidden border-b',
+            isLight ? 'border-[#1B2A55]/10' : 'border-[#DDE3EC]/10',
+            fallbackGradient,
+          )}
+        >
+          {session.thumbnail_url ? (
+            <img
+              src={session.thumbnail_url}
+              alt={session.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-dots">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#DDE3EC]/15 bg-[#0B1120]/70">
+                <BookOpen className="h-5 w-5 text-[#AEC6FF]" />
+              </div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8A94A8]">
                 {session.category}
               </span>
-
-              {/* Title */}
-              <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-white group-hover:text-indigo-300 transition-colors" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                {session.title}
-              </h3>
-
-              {/* Description */}
-              {session.description && (
-                <p className="line-clamp-2 text-xs leading-relaxed text-slate-400">
-                  {session.description}
-                </p>
-              )}
-
-              {/* Footer */}
-              <div className="mt-auto flex items-center justify-between border-t border-white/[0.06] pt-3 text-xs text-slate-400">
-                {session.teacher && (
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <User className="h-3.5 w-3.5 shrink-0 text-slate-500" />
-                    <span className="truncate max-w-[120px]">{session.teacher.full_name}</span>
-                  </div>
-                )}
-                {session.duration_hours > 0 && (
-                  <div className="flex items-center gap-1 shrink-0">
-                    <Clock className="h-3.5 w-3.5 text-slate-500" />
-                    <span>{session.duration_hours}h</span>
-                  </div>
-                )}
-              </div>
             </div>
+          )}
+
+          {/* Top badges */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+            <span
+              className={cn(
+                'inline-flex items-center rounded-full px-2.5 py-0.5 text-[10.5px] font-mono font-semibold uppercase tracking-wider border',
+                session.is_free
+                  ? 'bg-[#0B1120]/85 text-emerald-300 border-emerald-400/35'
+                  : 'bg-[#0B1120]/85 text-amber-300 border-amber-400/35',
+              )}
+            >
+              {session.is_free ? 'Free' : 'Premium'}
+            </span>
           </div>
-        </TiltCard>
-      </Link>
-    </div>
+        </div>
+
+        {/* Body */}
+        <div className="flex flex-1 flex-col p-5">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <span
+              className={cn(
+                'inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-[10.5px] font-medium uppercase tracking-wider',
+                categoryBadge,
+              )}
+            >
+              {session.category}
+            </span>
+            {session.duration_hours > 0 && (
+              <span
+                className={cn(
+                  'inline-flex items-center gap-1 font-mono text-[11px]',
+                  isLight ? 'text-slate-500' : 'text-[#8A94A8]',
+                )}
+              >
+                <Clock className="h-3 w-3" />
+                {session.duration_hours}h
+              </span>
+            )}
+          </div>
+
+          <h3
+            className={cn(
+              'line-clamp-2 text-[17px] font-bold leading-snug tracking-tight transition-colors',
+              isLight
+                ? 'text-[#0B1120] group-hover:text-[#2563EB]'
+                : 'text-white group-hover:text-[#AEC6FF]',
+            )}
+            style={{ fontFamily: 'var(--font-space-grotesk)' }}
+          >
+            {session.title}
+          </h3>
+
+          {session.description && (
+            <p
+              className={cn(
+                'mt-2 line-clamp-2 text-[13.5px] leading-relaxed',
+                isLight ? 'text-[#3A4458]' : 'text-[#94A3B8]',
+              )}
+            >
+              {session.description}
+            </p>
+          )}
+
+          {/* Footer row */}
+          <div
+            className={cn(
+              'mt-auto pt-4 mt-5 flex items-center justify-between border-t text-xs',
+              isLight
+                ? 'border-[#1B2A55]/10 text-slate-600'
+                : 'border-[#DDE3EC]/10 text-[#8A94A8]',
+            )}
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <span
+                className={cn(
+                  'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold',
+                  isLight
+                    ? 'bg-[#1B2A55] text-white'
+                    : 'bg-[#1B2A55] text-[#AEC6FF]',
+                )}
+              >
+                {session.teacher?.full_name ? (
+                  session.teacher.full_name.charAt(0).toUpperCase()
+                ) : (
+                  <User className="h-3 w-3" />
+                )}
+              </span>
+              <span className="truncate font-medium">
+                {session.teacher?.full_name ?? 'Dourous Instructor'}
+              </span>
+            </div>
+
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 font-medium shrink-0 transition-transform group-hover:translate-x-0.5',
+                isLight ? 'text-[#2563EB]' : 'text-[#AEC6FF]',
+              )}
+            >
+              <span>View</span>
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </span>
+          </div>
+        </div>
+      </SpotlightCard>
+    </Link>
   )
 }

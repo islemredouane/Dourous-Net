@@ -1,0 +1,9 @@
+# Exclude repository-only docs and README assets from Vercel bundles
+.github/
+.claude/
+*.md
+.env*
+supabase/
+tsconfig.tsbuildinfo
+playwright-report/
+test-results/

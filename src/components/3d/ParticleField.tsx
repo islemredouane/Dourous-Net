@@ -8,7 +8,12 @@ interface ParticleFieldProps {
   readonly count?: number
 }
 
-export function ParticleField({ count = 1200 }: ParticleFieldProps) {
+function seededUnit(seed: number): number {
+  const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453123
+  return x - Math.floor(x)
+}
+
+export function ParticleField({ count = 750 }: ParticleFieldProps) {
   const pointsRef = useRef<THREE.Points>(null)
 
   const { positions, colors } = useMemo(() => {
@@ -16,20 +21,20 @@ export function ParticleField({ count = 1200 }: ParticleFieldProps) {
     const colors = new Float32Array(count * 3)
 
     const palette = [
-      new THREE.Color('#6366f1'), // indigo
-      new THREE.Color('#8b5cf6'), // purple
-      new THREE.Color('#22d3ee'), // cyan
-      new THREE.Color('#a78bfa'), // violet
+      new THREE.Color('#2563EB'), // Cobalt
+      new THREE.Color('#60A5FA'), // Sky Blue
+      new THREE.Color('#AEC6FF'), // Periwinkle
+      new THREE.Color('#10B981'), // Emerald
     ]
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      positions[i3]     = (Math.random() - 0.5) * 20
-      positions[i3 + 1] = (Math.random() - 0.5) * 12
-      positions[i3 + 2] = (Math.random() - 0.5) * 10
+      positions[i3] = (seededUnit(i * 4 + 1) - 0.5) * 20
+      positions[i3 + 1] = (seededUnit(i * 4 + 2) - 0.5) * 12
+      positions[i3 + 2] = (seededUnit(i * 4 + 3) - 0.5) * 10
 
-      const color = palette[Math.floor(Math.random() * palette.length)]
-      colors[i3]     = color.r
+      const color = palette[Math.floor(seededUnit(i * 4 + 4) * palette.length)]
+      colors[i3] = color.r
       colors[i3 + 1] = color.g
       colors[i3 + 2] = color.b
     }
@@ -39,27 +44,21 @@ export function ParticleField({ count = 1200 }: ParticleFieldProps) {
 
   useFrame((state) => {
     if (!pointsRef.current) return
-    pointsRef.current.rotation.y = state.clock.elapsedTime * 0.03
-    pointsRef.current.rotation.x = state.clock.elapsedTime * 0.01
+    pointsRef.current.rotation.y = state.clock.elapsedTime * 0.02
+    pointsRef.current.rotation.x = state.clock.elapsedTime * 0.008
   })
 
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-        />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
+        size={0.035}
         vertexColors
         transparent
-        opacity={0.7}
+        opacity={0.55}
         sizeAttenuation
       />
     </points>

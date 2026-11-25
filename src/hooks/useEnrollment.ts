@@ -2,35 +2,47 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
 import type { Enrollment } from '@/types'
 
 export function useEnrollment(sessionId: string, studentId?: string) {
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [fetchedKey, setFetchedKey] = useState<string | null>(null)
   const [enrolling, setEnrolling] = useState(false)
 
-  useEffect(() => {
-    if (!studentId) {
-      setLoading(false)
-      return
-    }
+  const queryKey = studentId ? `${studentId}:${sessionId}` : null
+  const loading = queryKey !== null && fetchedKey !== queryKey
 
+  useEffect(() => {
+    if (!studentId || !queryKey) return
+
+    let active = true
     const supabase = createClient()
 
     const fetchEnrollment = async () => {
-      const { data } = await supabase
-        .from('enrollments')
-        .select('*')
-        .eq('session_id', sessionId)
-        .eq('student_id', studentId)
-        .maybeSingle()
+      try {
+        const { data } = await supabase
+          .from('enrollments')
+          .select('*')
+          .eq('session_id', sessionId)
+          .eq('student_id', studentId)
+          .maybeSingle()
 
-      setEnrollment(data)
-      setLoading(false)
+        if (!active) return
+        setEnrollment(data)
+      } catch {
+        if (!active) return
+        setEnrollment(null)
+      } finally {
+        if (active) setFetchedKey(queryKey)
+      }
     }
 
     fetchEnrollment()
-  }, [sessionId, studentId])
+    return () => {
+      active = false
+    }
+  }, [sessionId, studentId, queryKey])
 
   const enroll = useCallback(async () => {
     if (!studentId || enrolling) return
@@ -46,14 +58,19 @@ export function useEnrollment(sessionId: string, studentId?: string) {
 
     if (!error && data) {
       setEnrollment(data as Enrollment)
+      toast.success('Enrolled successfully!')
     } else if (error) {
-      console.error('Enrollment error:', error)
-      alert(`Failed to enroll: ${error.message}`)
+      toast.error(`Failed to enroll: ${error.message}`)
     }
 
     setEnrolling(false)
     return { error }
   }, [sessionId, studentId, enrolling])
 
-  return { enrollment, loading, enrolling, enroll }
+  return {
+    enrollment: queryKey ? enrollment : null,
+    loading,
+    enrolling,
+    enroll,
+  }
 }

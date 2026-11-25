@@ -38,9 +38,8 @@ export function LessonPageClient({
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* Main lesson area */}
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
+        <div className="lg:col-span-8">
           <LessonView
             lesson={currentLesson}
             lessons={lessons}
@@ -51,20 +50,18 @@ export function LessonPageClient({
           />
         </div>
 
-        {/* Sidebar */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-4">
           <CourseSidebar
             lessons={lessons}
             completedIds={completedIds}
             currentLessonId={currentLesson.id}
             sessionId={sessionId}
             assignments={assignments}
-            className="sticky top-[73px] max-h-[calc(100vh-100px)]"
+            className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-100px)]"
           />
         </div>
       </div>
 
-      {/* AI Coach — floating bottom-right */}
       <AICoachChat
         courseTitle={courseTitle}
         courseDescription={courseDescription ?? ''}
