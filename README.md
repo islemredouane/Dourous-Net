@@ -32,7 +32,7 @@ Full-stack Algerian digital academy uniting video curricula, instant-graded quiz
 [**Architecture**](#-architecture) &nbsp;✦&nbsp;
 [**Mission 4 Report**](#-mission-4--architectural-report) &nbsp;✦&nbsp;
 [**Database**](#-database--storage) &nbsp;✦&nbsp;
-[**Deploy & Setup**](#-vercel-deployment) &nbsp;✦&nbsp;
+[**Local Setup**](#-local-setup) &nbsp;✦&nbsp;
 [**Team**](#-team--academic-context)
 
 </div>
@@ -393,30 +393,6 @@ dourous-net/
 ```
 
 </details>
-
-<br>
-
----
-
-## ✦ Vercel Deployment
-
-> [!CAUTION]
-> **Never commit `.env.local` or any real API / database credentials to Git.** `.gitignore` blocks all `.env*` files while keeping `.env.example`, and `.vercelignore` keeps docs and `.github/assets/` out of production serverless bundles. Inject secrets only inside **Vercel Dashboard → Project Settings → Environment Variables**.
-
-1. Import the repository at [vercel.com/new](https://vercel.com/new) with the default **Next.js** preset (`npm run build`).
-2. Configure environment variables for **Production** and **Preview**:
-
-| Key | Where to Obtain | Requirement |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard → Project Settings → API → **Project URL** | Live PostgreSQL & Auth |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Dashboard → Project Settings → API → **anon public key** | Live PostgreSQL & Auth |
-| `GROQ_API_KEY` | [Groq Console](https://console.groq.com/keys) → Create API Key | Optional *(structured fallback built-in)* |
-| `NEXT_PUBLIC_DEMO_MODE` | Set to `true` only for pure backend-free demo deployments | Optional |
-
-3. In **Supabase Dashboard → Authentication → URL Configuration**, set **Site URL** to `https://<your-app>.vercel.app` and add redirect URLs `https://<your-app>.vercel.app/**`, `https://<your-app>.vercel.app/api/auth/callback`, `https://<your-app>.vercel.app/auth/update-password`, and `http://localhost:3000/**`.
-
-> [!TIP]
-> For **Google OAuth**, add `https://<your-project-ref>.supabase.co/auth/v1/callback` to Authorized Redirect URIs in Google Cloud Console and enable the Google provider in Supabase Authentication.
 
 <br>
 
