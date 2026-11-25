@@ -175,7 +175,7 @@ export function QuizTaker({
   return (
     <div className="min-h-screen bg-[#0B1120] pb-24">
       {/* Unobstructed Sticky Workspace Quiz Header */}
-      <header className="sticky top-0 z-40 bg-[#080E1D]/95 backdrop-blur-md border-b border-[#DDE3EC]/10 py-3.5 px-4 sm:px-8">
+      <header className="sticky top-0 z-40 bg-[#080E1D]/95 backdrop-blur-md border-b border-[#DDE3EC]/10 pt-[calc(0.875rem+var(--pwa-safe-top))] pb-3.5 px-4 sm:px-8">
         <div className="mx-auto max-w-3xl flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <Link

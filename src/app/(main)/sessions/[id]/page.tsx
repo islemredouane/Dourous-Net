@@ -388,7 +388,7 @@ export default async function SessionDetailPage(props: Props) {
 
           {/* Sticky Sidebar (Desktop) */}
           <aside className="hidden lg:block lg:col-span-4">
-            <div className="sticky top-28">
+            <div className="sticky top-[calc(7rem+var(--pwa-safe-top))]">
               <EnrollCard
                 session={session}
                 lessons={lessons}

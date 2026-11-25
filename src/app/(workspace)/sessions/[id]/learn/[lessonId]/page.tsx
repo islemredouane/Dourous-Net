@@ -67,7 +67,7 @@ export default async function LessonPage(props: Props) {
   return (
     <div className="min-h-screen bg-[#0B1120]">
       {/* Dedicated Distraction-Free Workspace Bar */}
-      <header className="sticky top-0 z-40 border-b border-[#DDE3EC]/10 bg-[#080E1D]/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 pt-[var(--pwa-safe-top)] border-b border-[#DDE3EC]/10 bg-[#080E1D]/95 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-[1360px] items-center justify-between gap-4 px-4 sm:px-8">
           <div className="flex items-center gap-4 min-w-0">
             <Link

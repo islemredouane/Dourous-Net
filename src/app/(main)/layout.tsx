@@ -10,10 +10,10 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <Suspense fallback={<div className="h-[68px] border-b border-[#DDE3EC]/10 bg-[#0B1120]" />}>
+      <Suspense fallback={<div className="h-[calc(68px+var(--pwa-safe-top))] border-b border-[#DDE3EC]/10 bg-[#0B1120]" />}>
         <Navbar />
       </Suspense>
-      <main id="main" className="flex-1">
+      <main id="main" className="flex-1 pt-[var(--pwa-safe-top)]">
         {children}
       </main>
       <Footer />

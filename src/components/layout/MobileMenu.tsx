@@ -45,7 +45,7 @@ export function MobileMenu({
   return (
     <div
       className={cn(
-        'fixed inset-0 z-40 lg:hidden bg-[#0B1120]/98 transition-all duration-300 pt-[68px]',
+        'fixed inset-0 z-40 lg:hidden bg-[#0B1120]/98 transition-all duration-300 pt-[calc(68px+var(--pwa-safe-top))]',
         isOpen
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none',

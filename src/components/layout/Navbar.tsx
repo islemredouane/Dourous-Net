@@ -163,7 +163,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          'fixed top-0 inset-x-0 z-50 transition-colors duration-300 border-b',
+          'fixed top-0 inset-x-0 z-50 pt-[var(--pwa-safe-top)] transition-colors duration-300 border-b',
           scrolled
             ? 'bg-[#0B1120]/92 backdrop-blur-md border-[#DDE3EC]/10'
             : 'bg-[#0B1120]/60 backdrop-blur-sm border-transparent',

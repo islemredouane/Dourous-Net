@@ -67,7 +67,7 @@ export const ExploreMegaMenu = forwardRef<HTMLDivElement, ExploreMegaMenuProps>(
               transition={{ duration: 0.18 }}
               onClick={onClose}
               aria-hidden="true"
-              className="fixed inset-x-0 top-[68px] bottom-0 z-40 hidden lg:block bg-[#050811]/60 backdrop-blur-[2px]"
+              className="fixed inset-x-0 top-[calc(68px+var(--pwa-safe-top))] bottom-0 z-40 hidden lg:block bg-[#050811]/60 backdrop-blur-[2px]"
             />
 
             {/* Full-width Antigravity-inspired frosted drawer docked below navbar */}
@@ -82,7 +82,7 @@ export const ExploreMegaMenu = forwardRef<HTMLDivElement, ExploreMegaMenuProps>(
               onMouseLeave={onMouseLeave}
               role="region"
               aria-label="Explore academic disciplines"
-              className="fixed inset-x-0 top-[68px] z-50 hidden lg:block border-b border-[#DDE3EC]/10 bg-[#0B1120]/96 backdrop-blur-2xl shadow-[0_24px_60px_-15px_rgba(0,0,0,0.65)]"
+              className="fixed inset-x-0 top-[calc(68px+var(--pwa-safe-top))] z-50 hidden lg:block border-b border-[#DDE3EC]/10 bg-[#0B1120]/96 backdrop-blur-2xl shadow-[0_24px_60px_-15px_rgba(0,0,0,0.65)]"
             >
               <div className="mx-auto max-w-[1240px] px-5 md:px-10 py-8">
                 <div className="grid grid-cols-12 gap-8 items-start">

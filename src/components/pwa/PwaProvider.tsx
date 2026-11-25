@@ -66,6 +66,10 @@ export function PwaProvider({ children }: { readonly children: React.ReactNode }
   const isStandalone = standaloneInitial || installedNow
 
   useEffect(() => {
+    document.documentElement.dataset.standalone = isStandalone ? 'true' : 'false'
+  }, [isStandalone])
+
+  useEffect(() => {
     const onBeforeInstall = (e: Event) => {
       e.preventDefault()
       deferredPromptRef.current = e as BeforeInstallPromptEvent
